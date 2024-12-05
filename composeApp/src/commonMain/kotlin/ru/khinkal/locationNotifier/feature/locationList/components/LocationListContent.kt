@@ -10,14 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ru.khinkal.locationNotifier.feature.locationList.vm.LocationListState
+import ru.khinkal.locationNotifier.feature.locationList.vm.model.LocationListAction
+import ru.khinkal.locationNotifier.feature.locationList.vm.model.LocationListState
 
 @Composable
 fun LocationListContent(
     state: LocationListState,
-    onSetGeoPointButtonClick: () -> Unit,
-    onSettingsButtonClick: () -> Unit,
-    onChangeLocationButtonClick: () -> Unit,
+    sendAction: (LocationListAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val isAdd = state.isAdd
@@ -33,7 +32,10 @@ fun LocationListContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(
-                onClick = onChangeLocationButtonClick,
+                onClick = {
+                    val action = LocationListAction.ChangeIsAdd
+                    sendAction(action)
+                },
             ) {
                 Text(
                     text = if (isAdd) "Add location" else "Remove location",
@@ -41,7 +43,10 @@ fun LocationListContent(
             }
 
             Button(
-                onClick = onSetGeoPointButtonClick,
+                onClick = {
+                    val action = LocationListAction.NavigateTo.SetGeoPoint
+                    sendAction(action)
+                },
             ) {
                 Text(
                     text = "Set geo point",
@@ -49,7 +54,10 @@ fun LocationListContent(
             }
 
             Button(
-                onClick = onSettingsButtonClick,
+                onClick = {
+                    val action = LocationListAction.NavigateTo.Settings
+                    sendAction(action)
+                },
             ) {
                 Text(
                     text = "Settings",
