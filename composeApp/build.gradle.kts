@@ -34,6 +34,7 @@ kotlin {
 
         commonMain.dependencies {
             with(compose) {
+                implementation(libs.compose.navigation)
                 implementation(runtime)
                 implementation(foundation)
                 implementation(material3)
