@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.feature.locationList.components
+package ru.khinkal.locationNotifier.feature.locationList.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ru.khinkal.locationNotifier.feature.locationList.vm.model.LocationListAction
-import ru.khinkal.locationNotifier.feature.locationList.vm.model.LocationListState
+import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListAction
+import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListState
 
 @Composable
 fun LocationListContent(

@@ -1,12 +1,12 @@
-package ru.khinkal.locationNotifier.feature.locationList.vm
+package ru.khinkal.locationNotifier.feature.locationList.presentation.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import ru.khinkal.locationNotifier.feature.locationList.vm.model.LocationListAction
-import ru.khinkal.locationNotifier.feature.locationList.vm.model.LocationListState
+import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListAction
+import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListState
 import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointScreen
 import ru.khinkal.locationNotifier.feature.settings.navigation.SettingsScreen
 

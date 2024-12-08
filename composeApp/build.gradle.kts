@@ -9,6 +9,8 @@ plugins {
             alias(android.application)
             alias(buildConfig)
             alias(kotlinx.serialization)
+            alias(ksp)
+            alias(room)
 
             with(convention) {
                 alias(android.base)
@@ -31,7 +33,6 @@ kotlin {
     }
 
     sourceSets {
-
         commonMain.dependencies {
             with(compose) {
                 implementation(libs.compose.navigation)
@@ -49,6 +50,11 @@ kotlin {
                     implementation(serialization.json)
                     implementation(datetime)
                     implementation(coroutines.core)
+                }
+                with(androidx) {
+                    with(room) {
+                        implementation(runtime)
+                    }
                 }
 
                 implementation(coil)
@@ -93,6 +99,10 @@ android {
     }
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 //https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
     androidTestImplementation(libs.androidx.uitest.junit4)
@@ -101,6 +111,11 @@ dependencies {
     androidTestImplementation("androidx.test:monitor") {
         version { strictly("1.6.1") }
     }
+
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    add("kspIosX64", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
 }
 
 buildConfig {

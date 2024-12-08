@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.feature.locationList.vm.model
+package ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model
 
 sealed interface LocationListAction {
 
