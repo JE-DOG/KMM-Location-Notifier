@@ -5,6 +5,8 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.locationList.presentation.broadcast.startBroadcast
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListAction
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListState
 import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointScreen
@@ -21,6 +23,7 @@ class LocationListViewModel(
         when (action) {
             LocationListAction.ChangeIsAdd -> onChangeIsAdd()
             is LocationListAction.NavigateTo -> onNavigateToAction(action)
+            is LocationListAction.BroadcastLocation -> onBroadcastLocation(geoPoint = action.geoPoint)
         }
     }
 
@@ -37,6 +40,13 @@ class LocationListViewModel(
 
     private fun navigateToSettings() {
         navController.navigate(SettingsScreen)
+    }
+
+    private fun onBroadcastLocation(geoPoint: GeoPoint) {
+        //TODO MAKE IT BETTER
+        startBroadcast(
+            geoPoint = geoPoint,
+        )
     }
 
     private fun onChangeIsAdd() {

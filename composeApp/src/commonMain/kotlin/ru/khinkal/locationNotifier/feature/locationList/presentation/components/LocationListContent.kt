@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListAction
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListState
 
@@ -39,6 +40,22 @@ fun LocationListContent(
             ) {
                 Text(
                     text = if (isAdd) "Add location" else "Remove location",
+                )
+            }
+
+            Button(
+                onClick = {
+                    val action = LocationListAction.BroadcastLocation(
+                        geoPoint = GeoPoint(
+                            id = 1,
+                            name = "Hello there",
+                        )
+                    )
+                    sendAction(action)
+                },
+            ) {
+                Text(
+                    text = "Broadcast location",
                 )
             }
 
