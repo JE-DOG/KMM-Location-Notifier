@@ -3,17 +3,15 @@ package ru.khinkal.locationNotifier.core.notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 
-class ForegroundNotificationChannelService(
+class LocationBroadcastNotificationChannelService(
     context: Context
 ): NotificationChannelService(context) {
 
     override val channel: NotificationChannel = NotificationChannel(
         CHANNEL_ID,
         NAME,
-        NotificationManager.IMPORTANCE_LOW
+        NotificationManager.IMPORTANCE_HIGH,
     )
 
     companion object {

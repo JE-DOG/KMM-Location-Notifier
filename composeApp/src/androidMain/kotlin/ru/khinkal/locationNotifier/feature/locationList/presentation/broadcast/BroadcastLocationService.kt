@@ -4,7 +4,6 @@ import android.app.Notification
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
@@ -14,14 +13,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.encodeToJsonElement
 import ru.khinkal.locationNotifier.core.location.LocationManagerImpl
 import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
 import ru.khinkal.locationNotifier.core.location.utill.distanceInMeters
 import ru.khinkal.locationNotifier.core.location.utill.seconds
-import ru.khinkal.locationNotifier.core.notification.ForegroundNotificationChannelService
+import ru.khinkal.locationNotifier.core.notification.LocationBroadcastNotificationChannelService
 import ru.khinkal.locationNotifier.core.notification.NotificationChannelService
 import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive
 import ru.khinkal.locationNotifier.core.vibration.VibrationService
@@ -32,7 +29,7 @@ class BroadcastLocationService: Service() {
 
     private val locationManager by lazy { LocationManagerImpl(baseContext) }
     private val foregroundNotificationChannel: NotificationChannelService by lazy {
-        ForegroundNotificationChannelService(baseContext).apply {
+        LocationBroadcastNotificationChannelService(baseContext).apply {
             init()
         }
     }

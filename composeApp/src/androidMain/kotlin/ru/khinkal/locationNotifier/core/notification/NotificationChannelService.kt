@@ -27,7 +27,7 @@ abstract class NotificationChannelService(
         notification: Notification
     ){
         context.checkPermission(
-            PERMISSION,
+            permission = PERMISSION,
             onPermissionDenied = ::onPermissionDenied,
         ){
             onPermissionGranted(
