@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.theme
+package ru.khinkal.locationNotifier.shared.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.theme
+package ru.khinkal.locationNotifier.shared.theme
 
 import android.app.Activity
 import androidx.compose.runtime.Composable

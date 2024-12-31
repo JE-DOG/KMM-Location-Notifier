@@ -1,19 +1,21 @@
 import UIKit
 import composeApp
+import CoreLocation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
+     var window: UIWindow?
 
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    ) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        if let window = window {
-            window.rootViewController = MainKt.MainViewController()
-            window.makeKeyAndVisible()
-        }
-        return true
-    }
+     func application(
+         _ application: UIApplication,
+         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+     ) -> Bool {
+         window = UIWindow(frame: UIScreen.main.bounds)
+         if let window = window {
+             let mainViewController = MainKt.MainViewController()
+             window.rootViewController = mainViewController
+             window.makeKeyAndVisible()
+         }
+         return true
+     }
 }

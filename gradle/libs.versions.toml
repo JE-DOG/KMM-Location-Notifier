@@ -3,7 +3,7 @@
 # android sdk
 android-sdk-compile = "34"
 android-sdk-target = "34"
-android-sdk-min = "21"
+android-sdk-min = "29"
 
 kotlin = "2.0.0"
 java = "17"
@@ -24,9 +24,12 @@ ktor = "3.0.0-beta-2"
 multiplatform-settings = "1.2.0"
 koin = "3.2.0"
 jetbrainsKotlinJvm = "1.9.0"
+gms-location = "21.0.1"
 
 [libraries]
 
+#GMS
+gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "gms-location" }
 #AndroidX
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
