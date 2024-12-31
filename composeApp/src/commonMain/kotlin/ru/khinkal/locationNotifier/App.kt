@@ -11,15 +11,6 @@ import ru.khinkal.locationNotifier.shared.theme.AppTheme
 @Composable
 internal fun App() {
     AppTheme {
-        LaunchedEffect(Unit) {
-            val notificationService = getNotificationService()
-            notificationService.sendNotification(
-                0,
-                title = "Hello, world!",
-                description = "First multiplatform notification)",
-                isSoundEnabled = true,
-            )
-        }
         AppHost(
             modifier = Modifier
                 .fillMaxSize(),

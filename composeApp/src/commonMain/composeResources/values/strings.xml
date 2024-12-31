@@ -1,7 +1,11 @@
 <resources>
-    <string name="cyclone">Cyclone</string>
-    <string name="open_github">Open github</string>
-    <string name="run">Run</string>
-    <string name="stop">Stop</string>
-    <string name="theme">Theme</string>
+    <string name="app_name">Location Notifier</string>
+
+    <!--  Create goal  -->
+    <string name="create_goal_screen_title">Create goal</string>
+    <string name="create_goal_name_input_label">Name</string>
+    <string name="create_goal_distance_input_label">Distance</string>
+    <string name="create_goal_location_longitude_input_label">Longitude</string>
+    <string name="create_goal_location_latitude_input_label">Latitude</string>
+    <string name="create_goal_start_broadcast">Start broadcast</string>
 </resources>
