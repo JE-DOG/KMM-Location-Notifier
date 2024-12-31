@@ -5,6 +5,8 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import ru.khinkal.locationNotifier.core.location.utill.returnResult
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
@@ -21,7 +23,7 @@ class CreateGoalViewModel(
     fun onAction(action: CreateGoalAction) {
         when (action) {
             is CreateGoalAction.SetProperty -> onSetPropertyAction(action)
-            CreateGoalAction.Back -> onBack()
+            CreateGoalAction.GoBack -> onBack()
             CreateGoalAction.StartBroadcast -> onStartBroadcast()
         }
     }
@@ -31,9 +33,11 @@ class CreateGoalViewModel(
     }
 
     private fun onStartBroadcast() {
+        val geoPoint = createGeoPoint() ?: return
+        val geoPointJson = Json.encodeToString(geoPoint)
         navController.returnResult(
             key = ResultKeys.GOAL_CREATED,
-            result = createGeoPoint() ?: return,
+            result = geoPointJson,
         )
         navController.popBackStack()
     }
@@ -79,7 +83,7 @@ class CreateGoalViewModel(
     private fun isInputDataValid(state: CreateGoalState): Boolean {
         with(state) {
             if (name.isEmpty()) return false
-            if (meters == null || meters > 0) return false
+            if (meters == null || meters < 0) return false
             if (longitude == null) return false
             if (latitude == null) return false
         }

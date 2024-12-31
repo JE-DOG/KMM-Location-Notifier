@@ -2,7 +2,7 @@ package ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model
 
 sealed interface CreateGoalAction {
 
-    data object Back : CreateGoalAction
+    data object GoBack : CreateGoalAction
 
     sealed interface SetProperty : CreateGoalAction {
 
