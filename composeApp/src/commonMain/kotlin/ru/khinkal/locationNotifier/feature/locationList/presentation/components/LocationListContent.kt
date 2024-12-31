@@ -10,6 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import kmm_location_notifier.composeapp.generated.resources.Res
+import kmm_location_notifier.composeapp.generated.resources.create_goal_screen_title
+import org.jetbrains.compose.resources.stringResource
 import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListAction
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListState
@@ -34,12 +37,12 @@ fun LocationListContent(
         ) {
             Button(
                 onClick = {
-                    val action = LocationListAction.ChangeIsAdd
+                    val action = LocationListAction.NavigateTo.CreateGoal
                     sendAction(action)
                 },
             ) {
                 Text(
-                    text = if (isAdd) "Add location" else "Remove location",
+                    text = "to " + stringResource(Res.string.create_goal_screen_title),
                 )
             }
 
@@ -56,17 +59,6 @@ fun LocationListContent(
             ) {
                 Text(
                     text = "Broadcast location",
-                )
-            }
-
-            Button(
-                onClick = {
-                    val action = LocationListAction.NavigateTo.SetGeoPoint
-                    sendAction(action)
-                },
-            ) {
-                Text(
-                    text = "Set geo point",
                 )
             }
 
