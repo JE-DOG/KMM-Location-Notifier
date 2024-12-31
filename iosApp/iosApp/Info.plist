@@ -4,13 +4,5 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-     <string>This app need your location to provide best feature based on location</string>
-     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-     <string>This app need your location to provide best feature based on location</string>
 </dict>
 </plist>
