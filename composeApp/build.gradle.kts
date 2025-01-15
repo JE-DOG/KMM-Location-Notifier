@@ -9,8 +9,6 @@ plugins {
             alias(android.application)
             alias(buildConfig)
             alias(kotlinx.serialization)
-            alias(ksp)
-            alias(room)
 
             with(convention) {
                 alias(android.base)
@@ -104,9 +102,9 @@ android {
     }
 }
 
-room {
-    schemaDirectory("$projectDir/schemas")
-}
+//room {
+//    schemaDirectory("$projectDir/schemas")
+//}
 
 //https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
@@ -117,9 +115,9 @@ dependencies {
         version { strictly("1.6.1") }
     }
 
-    add("kspAndroid", libs.androidx.room.compiler)
-    add("kspIosX64", libs.androidx.room.compiler)
-    add("kspIosArm64", libs.androidx.room.compiler)
+//    add("kspAndroid", libs.androidx.room.compiler)
+//    add("kspIosX64", libs.androidx.room.compiler)
+//    add("kspIosArm64", libs.androidx.room.compiler)
 }
 
 buildConfig {

@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1296791E2D3007540019D617 /* MapCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1296791D2D3007540019D617 /* MapCore */; };
+		129679202D3007540019D617 /* MapCoreSharedModule in Frameworks */ = {isa = PBXBuildFile; productRef = 1296791F2D3007540019D617 /* MapCoreSharedModule */; };
+		129679222D3007540019D617 /* MapCoreSharedModuleCpp in Frameworks */ = {isa = PBXBuildFile; productRef = 129679212D3007540019D617 /* MapCoreSharedModuleCpp */; };
 		987785F22D20B0120086EF9A /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987785F12D20B0120086EF9A /* iosApp.swift */; };
 		A93A953F29CC810D00F8E227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A953E29CC810D00F8E227 /* Assets.xcassets */; };
 		A93A954229CC810D00F8E227 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A954129CC810D00F8E227 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		127F09EB2D38585000396899 /* iosAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosAppDebug.entitlements; sourceTree = "<group>"; };
 		987785F12D20B0120086EF9A /* iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosApp.swift; sourceTree = "<group>"; };
 		98B8431E2D21E56F00920785 /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
 		A93A953729CC810C00F8E227 /* Location Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Location Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -25,6 +29,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1296791E2D3007540019D617 /* MapCore in Frameworks */,
+				129679202D3007540019D617 /* MapCoreSharedModule in Frameworks */,
+				129679222D3007540019D617 /* MapCoreSharedModuleCpp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +58,7 @@
 		A93A953929CC810C00F8E227 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				127F09EB2D38585000396899 /* iosAppDebug.entitlements */,
 				98B8431E2D21E56F00920785 /* iosApp.entitlements */,
 				987785F12D20B0120086EF9A /* iosApp.swift */,
 				A93A953E29CC810D00F8E227 /* Assets.xcassets */,
@@ -120,6 +128,9 @@
 				Base,
 			);
 			mainGroup = A93A952E29CC810C00F8E227;
+			packageReferences = (
+				1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */,
+			);
 			productRefGroup = A93A953829CC810C00F8E227 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -295,15 +306,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = iosApp/iosAppDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 75J492J2DH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Location Notifier";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app need your location to provide best feature based on location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app need your location to provide best feature based on location";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -330,11 +344,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 75J492J2DH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Location Notifier";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app need your location to provide best feature based on location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app need your location to provide best feature based on location";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -372,6 +389,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/openmobilemaps/maps-core";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1296791D2D3007540019D617 /* MapCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
+			productName = MapCore;
+		};
+		1296791F2D3007540019D617 /* MapCoreSharedModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
+			productName = MapCoreSharedModule;
+		};
+		129679212D3007540019D617 /* MapCoreSharedModuleCpp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
+			productName = MapCoreSharedModuleCpp;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A93A952F29CC810C00F8E227 /* Project object */;
 }
