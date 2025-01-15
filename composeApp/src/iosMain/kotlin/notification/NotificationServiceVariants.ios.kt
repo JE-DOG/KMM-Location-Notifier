@@ -5,7 +5,9 @@ actual fun getNotificationService(): NotificationServiceVariants =
 
 class IosNotificationServiceVariants : NotificationServiceVariants {
 
-    private val notificationManager = NotificationManager()
+    val notificationManager = NotificationManager().apply {
+        requestPermission()
+    }
 
     override fun sendNotification(
         id: Int,
