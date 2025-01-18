@@ -13,6 +13,7 @@ import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
 import ru.khinkal.locationNotifier.feature.locationList.presentation.broadcast.startBroadcast
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListAction
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListState
+import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointScreen
 import ru.khinkal.locationNotifier.feature.settings.navigation.SettingsScreen
 import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 
@@ -38,6 +39,7 @@ class LocationListViewModel(
         when (action) {
             LocationListAction.NavigateTo.Settings -> navigateToSettings()
             LocationListAction.NavigateTo.CreateGoal -> navigateToCreateGoal()
+            LocationListAction.NavigateTo.SetGeoPoint -> navigateToSetGeoPoint()
         }
     }
 
@@ -47,6 +49,10 @@ class LocationListViewModel(
 
     private fun navigateToCreateGoal() {
         navController.navigate(CreateGoalScreen)
+    }
+
+    private fun navigateToSetGeoPoint() {
+        navController.navigate(SetGeoPointScreen)
     }
 
     private fun onBroadcastLocation(geoPoint: GeoPoint) {
