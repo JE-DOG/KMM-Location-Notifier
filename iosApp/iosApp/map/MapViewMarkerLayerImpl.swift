@@ -2,26 +2,29 @@ import MapCore
 import composeApp
 import UIKit
 
-class MapViewMarkerLayerImpl: MapViewMarkerLayer {
+class MapViewMarkerLayerImpl: MapViewMarkerLayer, MapViewLayer {
     
-    let mapView: MCMapView
-    let iconLayer = MCIconLayerInterface.create()
+    var iconLayer: MCIconLayerInterface? = nil
     
-    init(mapView: MCMapView) {
-        self.mapView = mapView
+    func setup(mapView: MCMapView) {
+        let iconLayer = MCIconLayerInterface.create()
+        self.iconLayer = iconLayer
         mapView.add(layer: iconLayer?.asLayerInterface())
     }
     
     func addMarker(marker: MapViewMarker) {
         let image = UIImage(resource: ImageResource.icMyLocation)
         let texture = try! TextureHolder(image.cgImage!)
+        let imageSize = image.size
         let icon = MCIconFactory.createIcon(
             marker.id,
             coordinate: mapToCoordinate(baseGeoPoint: marker.baseGeoPoint),
             texture: texture,
-            iconSize: .init(x: Float(texture.getImageWidth()), y: Float(texture.getImageHeight())),
-            scale: .FIXED,
+            iconSize: .init(x: Float(imageSize.width / 2), y: Float(imageSize.height / 2)),
+            scale: .SCALE_INVARIANT,
             blendMode: .NORMAL
         )
+        iconLayer?.removeIdentifier(marker.id)
+        iconLayer?.add(icon)
     }
 }

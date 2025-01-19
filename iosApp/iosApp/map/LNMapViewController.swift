@@ -41,6 +41,15 @@ class MapViewControllerImpl: MapViewController {
     
 }
 
+func mapToBaseGeoPoint(coord: MCCoord) -> BaseGeoPoint {
+    let coordinate = coord.clLocation?.coordinate
+    if coordinate == nil {
+        return BaseGeoPoint(latitude: 0, longitude: 0)
+    } else {
+        return BaseGeoPoint(latitude: coordinate!.latitude, longitude: coordinate!.longitude)
+    }
+}
+
 func mapToCoordinate(baseGeoPoint: BaseGeoPoint) -> MCCoord {
     return MCCoord(lat: baseGeoPoint.latitude, lon: baseGeoPoint.longitude)
 }

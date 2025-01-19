@@ -12,6 +12,7 @@
 		129679222D3007540019D617 /* MapCoreSharedModuleCpp in Frameworks */ = {isa = PBXBuildFile; productRef = 129679212D3007540019D617 /* MapCoreSharedModuleCpp */; };
 		9808FD0C2D3C587D001E5707 /* DependencyInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9808FD0B2D3C587D001E5707 /* DependencyInitializer.swift */; };
 		987785F22D20B0120086EF9A /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987785F12D20B0120086EF9A /* iosApp.swift */; };
+		98C7AA652D3CFC5C006A6B88 /* MapViewLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C7AA642D3CFC5C006A6B88 /* MapViewLayer.swift */; };
 		98D3579B2D3C59FF00E21AB1 /* LNMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579A2D3C59FF00E21AB1 /* LNMapView.swift */; };
 		98D3579D2D3C5A1C00E21AB1 /* LNMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579C2D3C5A1C00E21AB1 /* LNMapViewController.swift */; };
 		98D3579F2D3C5A3200E21AB1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579E2D3C5A3200E21AB1 /* MapViewController.swift */; };
@@ -25,6 +26,7 @@
 		9808FD0B2D3C587D001E5707 /* DependencyInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInitializer.swift; sourceTree = "<group>"; };
 		987785F12D20B0120086EF9A /* iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosApp.swift; sourceTree = "<group>"; };
 		98B8431E2D21E56F00920785 /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
+		98C7AA642D3CFC5C006A6B88 /* MapViewLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewLayer.swift; sourceTree = "<group>"; };
 		98D3579A2D3C59FF00E21AB1 /* LNMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LNMapView.swift; sourceTree = "<group>"; };
 		98D3579C2D3C5A1C00E21AB1 /* LNMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LNMapViewController.swift; sourceTree = "<group>"; };
 		98D3579E2D3C5A3200E21AB1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				98D3579C2D3C5A1C00E21AB1 /* LNMapViewController.swift */,
 				98D3579E2D3C5A3200E21AB1 /* MapViewController.swift */,
 				98D357A02D3C5A4700E21AB1 /* MapViewMarkerLayerImpl.swift */,
+				98C7AA642D3CFC5C006A6B88 /* MapViewLayer.swift */,
 			);
 			path = map;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				987785F22D20B0120086EF9A /* iosApp.swift in Sources */,
+				98C7AA652D3CFC5C006A6B88 /* MapViewLayer.swift in Sources */,
 				98D3579B2D3C59FF00E21AB1 /* LNMapView.swift in Sources */,
 				9808FD0C2D3C587D001E5707 /* DependencyInitializer.swift in Sources */,
 				98D357A12D3C5A4700E21AB1 /* MapViewMarkerLayerImpl.swift in Sources */,

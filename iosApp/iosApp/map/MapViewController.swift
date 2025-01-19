@@ -5,8 +5,19 @@ import UIKit
 class UiMapViewController: UIViewController {
     
     lazy var mapView = MCMapView()
-    let mapViewClickListener = MapViewClickListener()
+    let mapViewClickListener: MapViewListener
     let mapProperty = MapViewProperty.shared
+    let iconLayer: MapViewLayer
+
+    init(mapViewClickListener: MapViewListener, iconLayer: MapViewLayer) {
+        self.mapViewClickListener = mapViewClickListener
+        self.iconLayer = iconLayer
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() { view = mapView }
     
@@ -14,6 +25,7 @@ class UiMapViewController: UIViewController {
         super.viewDidLoad()
         setupCamera()
         setupTileOverlay()
+        setupIconLayer()
     }
 
     private func setupTileOverlay() {
@@ -21,13 +33,17 @@ class UiMapViewController: UIViewController {
         mapView.add(layer: tileOverlay)
         tileOverlay.tiledLayerInterface.setCallbackHandler(mapViewClickListener)
     }
+    
+    private func setupIconLayer() {
+        iconLayer.setup(mapView: mapView)
+    }
 
     private func setupCamera() {
         mapView.camera.setBoundsRestrictWholeVisibleRect(true)
     }
 }
 
-class MapViewClickListener: MCTiled2dMapRasterLayerCallbackInterface {
+class MapViewListener: MCTiled2dMapRasterLayerCallbackInterface {
     
     private var onClickListener: ((MCCoord) -> Void)? = nil
     

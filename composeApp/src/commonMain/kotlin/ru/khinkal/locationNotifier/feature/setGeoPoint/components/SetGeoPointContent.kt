@@ -1,13 +1,12 @@
 package ru.khinkal.locationNotifier.feature.setGeoPoint.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import map.components.MapViewProperty
+import map.model.MapViewMarker
 import map.rememberMapViewManager
 
 @Composable
@@ -16,20 +15,26 @@ fun SetGeoPointContent(
 ) {
     val mapViewManager = rememberMapViewManager()
 
+    LaunchedEffect(Unit) {
+        with(mapViewManager.controller) {
+            setCenter(MapViewProperty.START_BASE_GEO_POINT)
+            zoomTo(MapViewProperty.START_ZOOM)
+        }
+        mapViewManager.handler.setOnClickListener { baseGeoPoint ->
+            val marker = MapViewMarker(
+                id = "1",
+                baseGeoPoint = baseGeoPoint,
+            )
+            mapViewManager.markerLayer.addMarker(marker)
+        }
+    }
+
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
-    ) { paddingValues ->
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            mapViewManager.Content(
-                Modifier.fillMaxSize(),
-            )
-        }
+    ) { _ ->
+        mapViewManager.Content(
+            Modifier.fillMaxSize(),
+        )
     }
 }
