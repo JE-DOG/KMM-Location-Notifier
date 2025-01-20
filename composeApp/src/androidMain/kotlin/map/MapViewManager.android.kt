@@ -3,6 +3,7 @@ package map
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import map.components.MapViewController
+import map.components.MapViewHandler
 import map.components.MapViewMarkerLayer
 
 class AndroidMapViewManager: MapViewManager() {
@@ -10,6 +11,8 @@ class AndroidMapViewManager: MapViewManager() {
     override val controller: MapViewController
         get() = TODO("Not yet implemented")
     override val markerLayer: MapViewMarkerLayer
+        get() = TODO("Not yet implemented")
+    override val handler: MapViewHandler
         get() = TODO("Not yet implemented")
 
     @Composable
