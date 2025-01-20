@@ -8,8 +8,7 @@ import ru.khinkal.locationNotifier.feature.setGeoPoint.components.SetGeoPointCon
 fun SetGeoPointScreen(
     modifier: Modifier = Modifier,
 ) {
-
-    SetGeoPointContent(
-        modifier = modifier,
-    )
+//    SetGeoPointContent(
+//        modifier = modifier,
+//    )
 }

@@ -8,4 +8,8 @@
     <string name="create_goal_location_longitude_input_label">Longitude</string>
     <string name="create_goal_location_latitude_input_label">Latitude</string>
     <string name="create_goal_start_broadcast">Start broadcast</string>
+
+    <!--  Set geo point  -->
+    <string name="set_geo_point_screen_title">Set geo point</string>
+    <string name="set_geo_point_confirm_button_text">Confirm</string>
 </resources>
