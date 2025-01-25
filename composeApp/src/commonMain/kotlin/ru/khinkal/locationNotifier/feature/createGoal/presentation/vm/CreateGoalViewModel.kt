@@ -96,7 +96,7 @@ class CreateGoalViewModel(
                 name = name,
                 meters = meters!!,
                 latitude = baseGeoPoint!!.latitude,
-                longitude = baseGeoPoint.latitude,
+                longitude = baseGeoPoint.longitude,
             )
         }
     }
