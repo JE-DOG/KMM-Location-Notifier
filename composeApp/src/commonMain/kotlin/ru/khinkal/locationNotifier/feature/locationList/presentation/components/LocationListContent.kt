@@ -64,12 +64,12 @@ fun LocationListContent(
 
             Button(
                 onClick = {
-                    val action = LocationListAction.NavigateTo.Settings
+                    val action = LocationListAction.NavigateTo.SetGeoPoint
                     sendAction(action)
                 },
             ) {
                 Text(
-                    text = "Settings",
+                    text = "Set geo point",
                 )
             }
         }

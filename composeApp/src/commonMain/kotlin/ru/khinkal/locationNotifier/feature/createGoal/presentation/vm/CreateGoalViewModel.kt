@@ -1,16 +1,23 @@
 package ru.khinkal.locationNotifier.feature.createGoal.presentation.vm
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.utill.observeResult
 import ru.khinkal.locationNotifier.core.location.utill.returnResult
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
 import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointScreen
 import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 
 class CreateGoalViewModel(
@@ -20,11 +27,31 @@ class CreateGoalViewModel(
     private val _state = MutableStateFlow(CreateGoalState())
     val state = _state.asStateFlow()
 
+    init {
+        observeBaseGeoPoint()
+    }
+
+    private fun observeBaseGeoPoint() {
+        viewModelScope.launch {
+            val baseGeoPointSelectedJsonFlow = navController.observeResult<String?>(
+                key = ResultKeys.GEO_POINT_SELECTED,
+                initialValue = null,
+            ) ?: return@launch
+            val geoPointSelectedJson = baseGeoPointSelectedJsonFlow
+                .filterNotNull()
+                .first()
+            val baseGeoPointSelected = Json.decodeFromString<BaseGeoPoint>(geoPointSelectedJson)
+
+            _state.update { it.copy(baseGeoPoint = baseGeoPointSelected) }
+        }
+    }
+
     fun onAction(action: CreateGoalAction) {
         when (action) {
             is CreateGoalAction.SetProperty -> onSetPropertyAction(action)
             CreateGoalAction.GoBack -> onBack()
             CreateGoalAction.StartBroadcast -> onStartBroadcast()
+            CreateGoalAction.OnSetBaseGeoPointClicked -> onSetBaseGeoPointClicked()
         }
     }
 
@@ -42,12 +69,14 @@ class CreateGoalViewModel(
         navController.popBackStack()
     }
 
+    private fun onSetBaseGeoPointClicked() {
+        navController.navigate(SetGeoPointScreen)
+    }
+
     private fun onSetPropertyAction(action: CreateGoalAction.SetProperty) {
         when (action) {
             is CreateGoalAction.SetProperty.SetName -> onSetName(action.name)
             is CreateGoalAction.SetProperty.SetMeters -> onSetMeters(action.meters)
-            is CreateGoalAction.SetProperty.SetLatitude -> onSetLatitude(action.latitude)
-            is CreateGoalAction.SetProperty.SetLongitude -> onSetLongitude(action.longitude)
         }
     }
 
@@ -59,14 +88,6 @@ class CreateGoalViewModel(
         _state.update { it.copy(meters = meters) }
     }
 
-    private fun onSetLatitude(latitude: Double?) {
-        _state.update { it.copy(latitude = latitude) }
-    }
-
-    private fun onSetLongitude(longitude: Double?) {
-        _state.update { it.copy(longitude = longitude) }
-    }
-
     private fun createGeoPoint(): GeoPoint? {
         val state = state.value
         if (!isInputDataValid(state)) return null
@@ -74,8 +95,8 @@ class CreateGoalViewModel(
             GeoPoint(
                 name = name,
                 meters = meters!!,
-                latitude = latitude!!,
-                longitude = longitude!!,
+                latitude = baseGeoPoint!!.latitude,
+                longitude = baseGeoPoint.longitude,
             )
         }
     }
@@ -84,8 +105,7 @@ class CreateGoalViewModel(
         with(state) {
             if (name.isEmpty()) return false
             if (meters == null || meters < 0) return false
-            if (longitude == null) return false
-            if (latitude == null) return false
+            if (baseGeoPoint == null) return false
         }
         return true
     }

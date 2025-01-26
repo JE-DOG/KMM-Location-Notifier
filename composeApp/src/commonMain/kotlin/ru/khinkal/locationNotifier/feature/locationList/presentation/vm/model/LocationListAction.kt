@@ -8,6 +8,7 @@ sealed interface LocationListAction {
 
         data object Settings : NavigateTo
         data object CreateGoal : NavigateTo
+        data object SetGeoPoint : NavigateTo
     }
 
     data class BroadcastLocation(val geoPoint: GeoPoint) : LocationListAction

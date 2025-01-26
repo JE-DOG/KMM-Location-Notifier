@@ -23,7 +23,7 @@ fun AppHost(
     ) {
         locationList(navController)
         settings()
-        setGeoPoint()
+        setGeoPoint(navController)
         createGoal(navController)
     }
 }

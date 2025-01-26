@@ -28,6 +28,11 @@ gms-location = "21.0.1"
 
 [libraries]
 
+#Android deps
+android-map-core = { module = "io.openmobilemaps:mapscore", version = "3.0.0-rc.6" }
+android-ktx = { module = "androidx.activity:activity-ktx", version = "1.8.2" }
+android-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version = "2.7.0" }
+android-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version = "1.7.3" }
 #GMS
 gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "gms-location" }
 #AndroidX
