@@ -72,6 +72,12 @@ kotlin {
 
         androidMain.dependencies {
             with(libs) {
+                with(android) {
+                    implementation(map.core)
+                    implementation(lifecycle)
+                    implementation(coroutines)
+                    implementation(ktx)
+                }
                 with(gms) {
                     implementation(location)
                 }

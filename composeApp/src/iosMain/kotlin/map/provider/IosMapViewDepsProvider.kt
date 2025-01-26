@@ -13,6 +13,11 @@ interface IosMapViewDepsProvider {
     val handler: MapViewHandler
 
     companion object {
-        var INSTANCE: IosMapViewDepsProvider by notNull()
+        var INSTANCE: IosMapViewDepsProviderFactory by notNull()
     }
+}
+
+interface IosMapViewDepsProviderFactory {
+
+    fun create(): IosMapViewDepsProvider
 }
