@@ -26,7 +26,8 @@ class MapViewControllerImpl: MapViewController {
     }
     
     func moveTo(baseGeoPoint: BaseGeoPoint, zoom: Double) {
-        move(baseGeoPoint: baseGeoPoint, zoom: zoom, animated: true)
+        // TODO: Make animated true when map animation will work normally
+        move(baseGeoPoint: baseGeoPoint, zoom: zoom, animated: false)
     }
     
     func zoomTo(zoom: Double) {
