@@ -7,6 +7,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import io.openmobilemaps.mapscore.map.layers.TiledRasterLayer
 import io.openmobilemaps.mapscore.map.view.MapView
+import io.openmobilemaps.mapscore.shared.graphics.common.Color
 import io.openmobilemaps.mapscore.shared.map.MapConfig
 import io.openmobilemaps.mapscore.shared.map.coordinates.Coord
 import io.openmobilemaps.mapscore.shared.map.coordinates.CoordinateSystemFactory
@@ -48,6 +49,7 @@ class AndroidMapViewManager(
     }
 
     private fun addTileOverlay() {
+        mapView.mapInterface?.setBackgroundColor(TRANSPARENT_COLOR)
         val tiledRasterLayer = TiledRasterLayer(
             context = context,
             tileUrl = MapViewProperty.TILE_OVERLAY,
@@ -55,6 +57,11 @@ class AndroidMapViewManager(
         mapView.addLayer(tiledRasterLayer)
         tiledRasterLayer.rasterLayerInterface()
             .setCallbackHandler(mapViewOverlayHandler)
+    }
+
+    companion object {
+
+        private val TRANSPARENT_COLOR get() = Color(0f,0f,0f,100f)
     }
 }
 

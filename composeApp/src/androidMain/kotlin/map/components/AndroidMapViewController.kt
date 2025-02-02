@@ -26,7 +26,8 @@ class AndroidMapViewController(
         moveTo(baseGeoPoint, zoom, false)
 
     override fun moveTo(baseGeoPoint: BaseGeoPoint, zoom: Double) =
-        moveTo(baseGeoPoint, zoom, true)
+        // TODO: Make animated true when map animation will work normally
+        moveTo(baseGeoPoint, zoom, false)
 
     private fun moveTo(baseGeoPoint: BaseGeoPoint, zoom: Double, animated: Boolean) {
         val coord = baseGeoPoint.toCoord()
