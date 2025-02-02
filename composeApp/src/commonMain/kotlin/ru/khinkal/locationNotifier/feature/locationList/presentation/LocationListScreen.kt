@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import ru.khinkal.locationNotifier.feature.locationList.presentation.components.LocationListContent
+import ru.khinkal.locationNotifier.feature.locationList.presentation.content.LocationListContent
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.LocationListViewModel
 
 @Composable
@@ -17,6 +17,6 @@ fun LocationListScreen(
     LocationListContent(
         modifier = modifier,
         state = state,
-        sendAction = viewModel::action
+        sendAction = viewModel::action,
     )
 }
