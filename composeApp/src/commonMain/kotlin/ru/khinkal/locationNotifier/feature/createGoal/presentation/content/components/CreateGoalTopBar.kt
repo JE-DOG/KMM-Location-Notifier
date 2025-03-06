@@ -13,6 +13,7 @@ fun CreateGoalTopBar(
     onBackClicked: () -> Unit,
 ) {
     BaseTopBar(
+        modifier = modifier,
         title = stringResource(Res.string.create_goal_screen_title),
         onBackClicked = onBackClicked,
     )

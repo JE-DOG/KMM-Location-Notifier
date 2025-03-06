@@ -4,8 +4,11 @@
     <!--  Create goal  -->
     <string name="create_goal_screen_title">Create goal</string>
     <string name="create_goal_name_input_label">Name</string>
-    <string name="create_goal_distance_input_label">Distance</string>
-    <string name="create_goal_location_longitude_input_label">Longitude</string>
-    <string name="create_goal_location_latitude_input_label">Latitude</string>
+    <string name="create_goal_meters_distance_input_label">Meters distance</string>
+    <string name="create_goal_location_input_label">Location</string>
     <string name="create_goal_start_broadcast">Start broadcast</string>
+
+    <!--  Set geo point  -->
+    <string name="set_geo_point_screen_title">Set geo point</string>
+    <string name="set_geo_point_confirm_button_text">Confirm</string>
 </resources>

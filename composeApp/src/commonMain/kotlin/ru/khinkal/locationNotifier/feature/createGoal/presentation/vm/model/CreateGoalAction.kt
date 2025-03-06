@@ -9,11 +9,9 @@ sealed interface CreateGoalAction {
         data class SetName(val name: String) : SetProperty
 
         data class SetMeters(val meters: Int?) : SetProperty
-
-        data class SetLongitude(val longitude: Double?) : SetProperty
-
-        data class SetLatitude(val latitude: Double?) : SetProperty
     }
+
+    data object OnSetBaseGeoPointClicked : CreateGoalAction
 
     data object StartBroadcast : CreateGoalAction
 }

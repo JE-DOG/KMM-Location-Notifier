@@ -16,8 +16,8 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import ru.khinkal.locationNotifier.core.location.LocationManagerImpl
 import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
-import ru.khinkal.locationNotifier.core.location.utill.distanceInMeters
-import ru.khinkal.locationNotifier.core.location.utill.seconds
+import ru.khinkal.locationNotifier.core.ext.location.distanceInMeters
+import ru.khinkal.locationNotifier.core.ext.location.seconds
 import ru.khinkal.locationNotifier.core.notification.LocationBroadcastNotificationChannelService
 import ru.khinkal.locationNotifier.core.notification.NotificationChannelService
 import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive

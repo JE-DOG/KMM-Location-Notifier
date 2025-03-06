@@ -1,7 +1,6 @@
-package ru.khinkal.locationNotifier.core.location.utill
+package ru.khinkal.locationNotifier.core.ext.location
 
 import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
-import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
 import kotlin.math.asin
 import kotlin.math.cos
 import kotlin.math.pow

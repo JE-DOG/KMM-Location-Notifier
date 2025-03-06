@@ -4,11 +4,9 @@ import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
 
 sealed interface LocationListAction {
 
-    sealed interface NavigateTo : LocationListAction {
+    class OnSettingsClick : LocationListAction
 
-        data object Settings : NavigateTo
-        data object CreateGoal : NavigateTo
-    }
+    class OnLocationClick(val geoPoint: GeoPoint) : LocationListAction
 
-    data class BroadcastLocation(val geoPoint: GeoPoint) : LocationListAction
+    class OnAddLocationClick : LocationListAction
 }
