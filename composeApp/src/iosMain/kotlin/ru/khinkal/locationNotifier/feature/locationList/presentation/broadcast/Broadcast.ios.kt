@@ -3,7 +3,7 @@ package ru.khinkal.locationNotifier.feature.locationList.presentation.broadcast
 import location.getLocationService
 import notification.getNotificationService
 import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
-import ru.khinkal.locationNotifier.core.location.utill.distanceInMeters
+import ru.khinkal.locationNotifier.core.ext.location.distanceInMeters
 import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
 
 actual fun startBroadcast(

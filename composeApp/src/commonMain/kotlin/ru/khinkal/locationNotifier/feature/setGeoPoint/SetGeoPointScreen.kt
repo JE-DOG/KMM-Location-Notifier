@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import ru.khinkal.locationNotifier.core.location.utill.returnResult
+import ru.khinkal.locationNotifier.core.ext.location.returnResult
 import ru.khinkal.locationNotifier.feature.setGeoPoint.components.SetGeoPointContent
 import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 

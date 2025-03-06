@@ -6,11 +6,9 @@ interface LocationRepository {
 
     suspend fun getAllLocation(): List<GeoPoint>
 
-    suspend fun addLocation(geoPoint: GeoPoint): Boolean
+    suspend fun addLocation(geoPoint: GeoPoint)
 
-    suspend fun updateLocation(geoPoint: GeoPoint): Boolean
+    suspend fun updateLocation(geoPoint: GeoPoint)
 
-    suspend fun deleteLocation(geoPoint: GeoPoint): Boolean
-
-    suspend fun deleteAllLocation(): Boolean
+    suspend fun deleteLocation(geoPoint: GeoPoint)
 }

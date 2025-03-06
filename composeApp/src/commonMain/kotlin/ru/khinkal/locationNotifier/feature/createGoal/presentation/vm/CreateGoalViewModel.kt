@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
-import ru.khinkal.locationNotifier.core.location.utill.observeResult
-import ru.khinkal.locationNotifier.core.location.utill.returnResult
+import ru.khinkal.locationNotifier.core.ext.location.observeResult
+import ru.khinkal.locationNotifier.core.ext.location.returnResult
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
 import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint

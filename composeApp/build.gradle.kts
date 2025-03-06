@@ -9,6 +9,8 @@ plugins {
             alias(android.application)
             alias(buildConfig)
             alias(kotlinx.serialization)
+            alias(room)
+            alias(ksp)
 
             with(convention) {
                 alias(android.base)
@@ -50,9 +52,8 @@ kotlin {
                     implementation(coroutines.core)
                 }
                 with(androidx) {
-                    with(room) {
-                        implementation(runtime)
-                    }
+                    implementation(room.runtime)
+                    implementation(sqlite.bundled)
                 }
 
                 implementation(coil)
@@ -108,9 +109,9 @@ android {
     }
 }
 
-//room {
-//    schemaDirectory("$projectDir/schemas")
-//}
+room {
+    schemaDirectory("$projectDir/schemas")
+}
 
 //https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
@@ -121,9 +122,10 @@ dependencies {
         version { strictly("1.6.1") }
     }
 
-//    add("kspAndroid", libs.androidx.room.compiler)
-//    add("kspIosX64", libs.androidx.room.compiler)
-//    add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosX64", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
 }
 
 buildConfig {
