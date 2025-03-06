@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.core.location.utill
+package ru.khinkal.locationNotifier.core.ext.location
 
 import androidx.navigation.NavController
 

@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.core.location.utill
+package ru.khinkal.locationNotifier.core.ext.location
 
 import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
 import kotlin.math.asin

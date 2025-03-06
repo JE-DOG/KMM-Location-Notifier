@@ -17,7 +17,7 @@ import kmm_location_notifier.composeapp.generated.resources.create_goal_location
 import kmm_location_notifier.composeapp.generated.resources.create_goal_meters_distance_input_label
 import kmm_location_notifier.composeapp.generated.resources.create_goal_name_input_label
 import org.jetbrains.compose.resources.stringResource
-import ru.khinkal.locationNotifier.core.compose.ext.clickableWithoutRipple
+import ru.khinkal.locationNotifier.core.ext.compose.clickableWithoutRipple
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
 import ru.khinkal.locationNotifier.shared.theme.BaseTypography

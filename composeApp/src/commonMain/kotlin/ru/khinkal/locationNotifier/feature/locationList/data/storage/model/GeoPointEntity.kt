@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.feature.locationList.data.model
+package ru.khinkal.locationNotifier.feature.locationList.data.storage.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
