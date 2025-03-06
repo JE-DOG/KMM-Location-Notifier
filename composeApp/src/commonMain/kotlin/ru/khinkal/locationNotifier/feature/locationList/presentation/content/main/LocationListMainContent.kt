@@ -1,6 +1,7 @@
 package ru.khinkal.locationNotifier.feature.locationList.presentation.content.main
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +23,8 @@ fun LocationListMainContent(
         ),
     ) {
         locations(
+            modifier = Modifier
+                .padding(bottom = 5.dp),
             geoPoints = geoPoints,
             onItemClick = { geoPoint ->
                 val action = LocationListAction.OnLocationClick(geoPoint)

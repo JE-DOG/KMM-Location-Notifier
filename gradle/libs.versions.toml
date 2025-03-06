@@ -15,6 +15,7 @@ compose = "1.7.0-beta01"
 compose-icons = "1.1.0"
 compose-navigation = "2.8.0-alpha10"
 androidx-room = "2.7.0-alpha07"
+androidx-sqlite = "2.5.0-alpha07"
 agp = "8.2.2"
 androidx-activityCompose = "1.9.1"
 androidx-uiTest = "1.6.8"
@@ -62,6 +63,7 @@ koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = 
 #Room
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
+androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "androidx-sqlite" }
 #Other
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 

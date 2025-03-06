@@ -50,11 +50,10 @@ fun LazyListScope.locations(
 ) {
     items(
         count = geoPoints.size,
-//        TODO: When add room to project
-//        key = { index ->
-//            val geoPoint = geoPoints[index]
-//            geoPoint.id
-//        },
+        key = { index ->
+            val geoPoint = geoPoints[index]
+            geoPoint.id
+        },
     ) { index ->
         val geoPoint = geoPoints[index]
         val shape = getLocationItemShape(
