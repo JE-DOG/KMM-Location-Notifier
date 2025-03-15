@@ -10,11 +10,11 @@ import ru.khinkal.locationNotifier.shared.components.topBar.BaseTopBar
 @Composable
 fun CreateGoalTopBar(
     modifier: Modifier = Modifier,
-    onBackClicked: () -> Unit,
+    onBackClick: () -> Unit,
 ) {
     BaseTopBar(
         modifier = modifier,
         title = stringResource(Res.string.create_goal_screen_title),
-        onBackClicked = onBackClicked,
+        onBackClick = onBackClick,
     )
 }

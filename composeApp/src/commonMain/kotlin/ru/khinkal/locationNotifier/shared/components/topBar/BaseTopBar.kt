@@ -27,17 +27,17 @@ import androidx.compose.ui.unit.dp
 import kmm_location_notifier.composeapp.generated.resources.Res
 import kmm_location_notifier.composeapp.generated.resources.ic_back_arrow
 import org.jetbrains.compose.resources.vectorResource
-import ru.khinkal.locationNotifier.shared.theme.BaseTypography
+import ru.khinkal.locationNotifier.shared.theme.AppTypography
 
 private val TITLE_STYLE: TextStyle
-    @Composable @ReadOnlyComposable get() = BaseTypography.Normal_18_400
+    @Composable @ReadOnlyComposable get() = AppTypography.Normal_20_500
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseTopBar(
     title: String,
     modifier: Modifier = Modifier,
-    onBackClicked: (() -> Unit)? = null,
+    onBackClick: (() -> Unit)? = null,
     actions: @Composable () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
@@ -53,9 +53,9 @@ fun BaseTopBar(
             )
         },
         navigationIcon = {
-            if (onBackClicked != null) {
+            if (onBackClick != null) {
                 IconButton(
-                    onClick = onBackClicked,
+                    onClick = onBackClick,
                 ) {
                     Icon(
                         imageVector = vectorResource(Res.drawable.ic_back_arrow),

@@ -20,7 +20,7 @@ import org.jetbrains.compose.resources.stringResource
 import ru.khinkal.locationNotifier.core.ext.compose.clickableWithoutRipple
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
-import ru.khinkal.locationNotifier.shared.theme.BaseTypography
+import ru.khinkal.locationNotifier.shared.theme.AppTypography
 
 @Composable
 fun CreateGoalMainContent(
@@ -121,7 +121,7 @@ private fun InputField(
             if (label.isNotEmpty()) {
                 Text(
                     text = label,
-                    style = BaseTypography.Normal_14_400,
+                    style = AppTypography.Normal_14_400,
                 )
             }
         }
