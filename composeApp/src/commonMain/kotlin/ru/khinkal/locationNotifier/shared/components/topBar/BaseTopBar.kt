@@ -17,7 +17,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,17 +26,17 @@ import androidx.compose.ui.unit.dp
 import kmm_location_notifier.composeapp.generated.resources.Res
 import kmm_location_notifier.composeapp.generated.resources.ic_back_arrow
 import org.jetbrains.compose.resources.vectorResource
-import ru.khinkal.locationNotifier.shared.theme.BaseTypography
+import ru.khinkal.locationNotifier.shared.theme.AppTypography
 
 private val TITLE_STYLE: TextStyle
-    @Composable @ReadOnlyComposable get() = BaseTypography.Normal_18_400
+    get() = AppTypography.Medium_20_500
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseTopBar(
     title: String,
     modifier: Modifier = Modifier,
-    onBackClicked: (() -> Unit)? = null,
+    onBackClick: (() -> Unit)? = null,
     actions: @Composable () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
@@ -53,9 +52,9 @@ fun BaseTopBar(
             )
         },
         navigationIcon = {
-            if (onBackClicked != null) {
+            if (onBackClick != null) {
                 IconButton(
-                    onClick = onBackClicked,
+                    onClick = onBackClick,
                 ) {
                     Icon(
                         imageVector = vectorResource(Res.drawable.ic_back_arrow),

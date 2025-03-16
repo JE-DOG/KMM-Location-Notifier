@@ -74,7 +74,7 @@ class LocationManagerImpl(
 
     @SuppressLint("MissingPermission")
     override fun broadcastLocation(
-        secondsInterval: Int,
+        updateSeconds: Int,
     ): Flow<BaseGeoPoint> = callbackFlow {
         val scope = CoroutineScope(coroutineContext)
         val locationCallback = object : LocationCallback(){
@@ -93,7 +93,7 @@ class LocationManagerImpl(
         }
 
         fusedLocationProviderClient.requestLocationUpdates(
-            LocationRequest.Builder(secondsInterval * 1000L).apply {
+            LocationRequest.Builder(updateSeconds * 1000L).apply {
                 setPriority(Priority.PRIORITY_HIGH_ACCURACY)
             }.build(),
             locationCallback,

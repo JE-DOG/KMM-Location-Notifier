@@ -17,7 +17,7 @@ import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
 import ru.khinkal.locationNotifier.feature.locationList.presentation.broadcast.startBroadcast
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListAction
 import ru.khinkal.locationNotifier.feature.locationList.presentation.vm.model.LocationListState
-import ru.khinkal.locationNotifier.feature.settings.navigation.SettingsScreen
+import ru.khinkal.locationNotifier.feature.settings.presentation.navigation.SettingsScreen
 import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 
 class LocationListViewModel(
@@ -100,8 +100,6 @@ class LocationListViewModel(
     }
 
     private fun onLocationClick(geoPoint: GeoPoint) {
-        startBroadcast(
-            geoPoint = geoPoint,
-        )
+        startBroadcast(geoPoint)
     }
 }

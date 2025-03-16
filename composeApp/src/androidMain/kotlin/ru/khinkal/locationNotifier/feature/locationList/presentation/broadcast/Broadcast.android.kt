@@ -3,17 +3,9 @@ package ru.khinkal.locationNotifier.feature.locationList.presentation.broadcast
 import ru.khinkal.locationNotifier.LocationNotifierApp
 import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
 
-actual fun startBroadcast(
-    geoPoint: GeoPoint,
-    locationUpdateSecondsInterval: Int,
-    vibrationState: Boolean
-) {
-    val application = LocationNotifierApp.INSTANCE
-
+actual fun startBroadcast(geoPoint: GeoPoint) {
     BroadcastLocationService.startBroadcast(
-        context = application,
+        context = LocationNotifierApp.INSTANCE,
         geoPoint = geoPoint,
-        locationUpdateSecondsInterval = locationUpdateSecondsInterval,
-        vibrationState = vibrationState,
     )
 }

@@ -7,7 +7,7 @@ interface NotificationServiceVariants {
     fun sendNotification(
         id: Int,
         title: String,
-        description: String,
-        isSoundEnabled: Boolean,
+        description: String = "",
+        isSoundEnabled: Boolean = false,
     )
 }

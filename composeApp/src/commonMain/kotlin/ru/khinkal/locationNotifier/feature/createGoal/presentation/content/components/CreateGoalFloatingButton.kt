@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import kmm_location_notifier.composeapp.generated.resources.Res
 import kmm_location_notifier.composeapp.generated.resources.create_goal_start_broadcast
 import org.jetbrains.compose.resources.stringResource
-import ru.khinkal.locationNotifier.shared.theme.BaseTypography
+import ru.khinkal.locationNotifier.shared.theme.AppTypography
 
 @Composable
 fun CreateGoalFloatingButton(
@@ -28,7 +28,7 @@ fun CreateGoalFloatingButton(
     ) {
         Text(
             text = stringResource(Res.string.create_goal_start_broadcast),
-            style = BaseTypography.Medium_14_500,
+            style = AppTypography.Medium_14_500,
         )
     }
 }
