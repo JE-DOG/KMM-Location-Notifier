@@ -9,11 +9,9 @@ import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import ru.khinkal.locationNotifier.core.ext.coroutines.launchCatching
 import ru.khinkal.locationNotifier.core.location.LocationManagerImpl
 import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
 import ru.khinkal.locationNotifier.core.ext.location.distanceInMeters
@@ -24,6 +22,8 @@ import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive
 import ru.khinkal.locationNotifier.core.vibration.VibrationService
 import ru.khinkal.locationNotifier.core.vibration.VibrationServiceImpl
 import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.settings.data.factory.SettingsManagerImplFactory
+import ru.khinkal.locationNotifier.feature.settings.domain.SettingsManager
 
 class BroadcastLocationService: Service() {
 
@@ -37,13 +37,12 @@ class BroadcastLocationService: Service() {
         VibrationServiceImpl(baseContext)
     }
     private val lifecycleScope = CoroutineScope(Dispatchers.Main)
+    private val settingsManager: SettingsManager = SettingsManagerImplFactory.create()
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val goalGeoPoint: GeoPoint = intent.goalLocation
-        val vibrationState = intent.vibrationState
-        val locationUpdateSecondsInterval = intent.locationUpdateSecondsInterval
         val foregroundNotification = foregroundNotificationChannel.getStartBroadcastNotification()
 
         startForeground(
@@ -51,30 +50,33 @@ class BroadcastLocationService: Service() {
             foregroundNotification,
         )
 
-        locationManager.broadcastLocation(
-            secondsInterval = locationUpdateSecondsInterval
-        )
-            .catch {
-                Toast.makeText(baseContext, "Something went wrong", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launchCatching(
+            onFailure = {
+                Toast.makeText(baseContext, "Something went wrong", Toast.LENGTH_SHORT)
+                    .show()
                 stopSelf()
             }
-            .onEach { geoPoint ->
-                val goalBaseGeoPoint = BaseGeoPoint(goalGeoPoint)
-                val metersToGoal = geoPoint distanceInMeters goalBaseGeoPoint
+        ) {
+            locationManager.broadcastLocation(
+                updateSeconds = settingsManager.getLocationUpdateSeconds(),
+            )
+                .collect { geoPoint ->
+                    val goalBaseGeoPoint = BaseGeoPoint(goalGeoPoint)
+                    val metersToGoal = geoPoint distanceInMeters goalBaseGeoPoint
 
-                if (metersToGoal <= goalGeoPoint.meters){
-                    actionOnGetToGoal(
-                        goalName = goalGeoPoint.name,
-                        vibrationState = vibrationState
-                    )
-                }else {
-                    actionOnProgress(
-                        goalGeoPoint.name,
-                        metersToGoal,
-                    )
+                    if (metersToGoal <= goalGeoPoint.meters){
+                        actionOnGetToGoal(
+                            goalName = goalGeoPoint.name,
+                            vibrationState = settingsManager.isVibrationEnabled(),
+                        )
+                    }else {
+                        actionOnProgress(
+                            goalGeoPoint.name,
+                            metersToGoal,
+                        )
+                    }
                 }
-            }
-            .launchIn(lifecycleScope)
+        }
 
         return START_NOT_STICKY
     }
@@ -106,7 +108,7 @@ class BroadcastLocationService: Service() {
             notificationId = GET_TO_LOCATION_NOTIFICATION_ID,
             notification = getToLocationNotification,
         )
-        if (vibrationState){
+        if (vibrationState) {
             vibrationService.vibrate(1.seconds)
         }
         stopSelf()
@@ -120,9 +122,8 @@ class BroadcastLocationService: Service() {
     private fun NotificationChannelService.getGetToLocationNotification(
         goalName: String,
     ): Notification {
-        val notificationTitle = goalName
         val notification = getNotificationBuilder {
-            setContentTitle(notificationTitle)
+            setContentTitle(goalName)
         }
             .build()
 
@@ -158,12 +159,6 @@ class BroadcastLocationService: Service() {
         return notification
     }
 
-    private val Intent.locationUpdateSecondsInterval: Int
-        get() = getIntExtra(LOCATION_UPDATE_INTERVAL_KEY,5)
-
-    private val Intent.vibrationState: Boolean
-        get() = getBooleanExtra(VIBRATION_ENABLED_KEY,true)
-
     private val Intent.goalLocation: GeoPoint get() {
         val geoPointJson = getStringExtra(GOAL_GEO_POINT_KEY)!!
         val geoPoint = Json.decodeFromString<GeoPoint>(geoPointJson)
@@ -174,8 +169,6 @@ class BroadcastLocationService: Service() {
         private const val FOREGROUND_ACTIVE_NOTIFICATION_ID = 2
         private const val GET_TO_LOCATION_NOTIFICATION_ID = 1
 
-        private const val LOCATION_UPDATE_INTERVAL_KEY = "LOCATION_UPDATE_INTERVAL_KEY"
-        private const val VIBRATION_ENABLED_KEY = "VIBRATION_ENABLED_KEY"
         private const val GOAL_GEO_POINT_KEY = "GOAL_GEO_POINT_KEY"
 
         /**
@@ -185,14 +178,10 @@ class BroadcastLocationService: Service() {
         fun startBroadcast(
             context: Context,
             geoPoint: GeoPoint,
-            locationUpdateSecondsInterval: Int = 5,
-            vibrationState: Boolean = true,
         ): Boolean {
             val geoPointJson = Json.encodeToString(geoPoint)
             if (context.isServiceActive(BroadcastLocationService::class.java)) return false
             val intent = Intent(context, BroadcastLocationService::class.java).apply {
-                putExtra(LOCATION_UPDATE_INTERVAL_KEY, locationUpdateSecondsInterval)
-                putExtra(VIBRATION_ENABLED_KEY,vibrationState)
                 putExtra(GOAL_GEO_POINT_KEY, geoPointJson)
             }
 

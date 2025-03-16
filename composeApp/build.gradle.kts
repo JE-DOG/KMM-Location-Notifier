@@ -60,7 +60,7 @@ kotlin {
                 implementation(coil.network.ktor)
                 implementation(ktor.core)
                 implementation(composeIcons.featherIcons)
-                implementation(multiplatformSettings)
+                implementation(datastore.preferences)
             }
         }
 
@@ -76,7 +76,6 @@ kotlin {
                 with(android) {
                     implementation(map.core)
                     implementation(lifecycle)
-                    implementation(coroutines)
                     implementation(ktx)
                 }
                 with(gms) {

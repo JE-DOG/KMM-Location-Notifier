@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.feature.settings.navigation
+package ru.khinkal.locationNotifier.feature.settings.presentation.navigation
 
 import kotlinx.serialization.Serializable
 

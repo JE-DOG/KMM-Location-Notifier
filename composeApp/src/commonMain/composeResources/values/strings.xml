@@ -11,4 +11,9 @@
     <!--  Set geo point  -->
     <string name="set_geo_point_screen_title">Set geo point</string>
     <string name="set_geo_point_confirm_button_text">Confirm</string>
+
+    <!--  Settings  -->
+    <string name="settings_topbar_title">Settings</string>
+    <string name="settings_vibration_title">Notification vibration</string>
+    <string name="settings_location_update_seconds_title">Location update seconds</string>
 </resources>

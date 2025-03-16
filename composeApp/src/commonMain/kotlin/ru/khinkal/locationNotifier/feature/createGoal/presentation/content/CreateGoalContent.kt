@@ -30,7 +30,7 @@ fun CreateGoalContent(
             .add(WindowInsets.ime),
         topBar = {
             CreateGoalTopBar(
-                onBackClicked = {
+                onBackClick = {
                     val action = CreateGoalAction.GoBack
                     sendAction(action)
                 },
