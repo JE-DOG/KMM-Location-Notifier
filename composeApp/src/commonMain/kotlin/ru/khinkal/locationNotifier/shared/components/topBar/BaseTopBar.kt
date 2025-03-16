@@ -17,7 +17,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,7 +29,7 @@ import org.jetbrains.compose.resources.vectorResource
 import ru.khinkal.locationNotifier.shared.theme.AppTypography
 
 private val TITLE_STYLE: TextStyle
-    @Composable @ReadOnlyComposable get() = AppTypography.Normal_20_500
+    get() = AppTypography.Medium_20_500
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

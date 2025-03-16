@@ -62,7 +62,7 @@ class IOSLocationService : LocationServiceVariants {
         },
         onLocationFail = { error ->
             println("Location update failed: ${error.localizedDescription}")
-        }
+        },
     )
 
     init {
@@ -91,18 +91,16 @@ class IOSLocationService : LocationServiceVariants {
             interval = interval,
             repeats = true,
             block = { _ ->
-                val location = locationManager.location
-                if (location != null) {
-                    val coordinate = location.coordinate.getPointer(MemScope())
-                    val point = coordinate.pointed
-                    onLocationUpdated(
-                        BaseGeoPoint(
-                            latitude = point.latitude,
-                            longitude = point.longitude,
-                        )
+                val location = locationManager.location ?: return@scheduledTimerWithTimeInterval
+                val coordinate = location.coordinate.getPointer(MemScope())
+                val point = coordinate.pointed
+                onLocationUpdated(
+                    BaseGeoPoint(
+                        latitude = point.latitude,
+                        longitude = point.longitude,
                     )
-                    println("Timer tick: lat=${point.latitude}, lon=${point.longitude}")
-                }
+                )
+                println("Timer tick: lat=${point.latitude}, lon=${point.longitude}")
             }
         )
         NSRunLoop.mainRunLoop.addTimer(timer!!, NSRunLoopCommonModes)

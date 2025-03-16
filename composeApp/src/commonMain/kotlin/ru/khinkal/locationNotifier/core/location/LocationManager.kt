@@ -9,5 +9,5 @@ interface LocationManager {
 
     suspend fun getCurrentLocation(): BaseGeoPoint?
 
-    fun broadcastLocation(secondsInterval: Int): Flow<BaseGeoPoint>
+    fun broadcastLocation(updateSeconds: Int): Flow<BaseGeoPoint>
 }

@@ -1,11 +1,11 @@
-package ru.khinkal.locationNotifier.feature.settings.components.topbar
+package ru.khinkal.locationNotifier.feature.settings.presentation.components.topbar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kmm_location_notifier.composeapp.generated.resources.Res
 import kmm_location_notifier.composeapp.generated.resources.settings_topbar_title
 import org.jetbrains.compose.resources.stringResource
-import ru.khinkal.locationNotifier.feature.settings.vm.model.SettingsAction
+import ru.khinkal.locationNotifier.feature.settings.presentation.vm.model.SettingsAction
 import ru.khinkal.locationNotifier.shared.components.topBar.BaseTopBar
 
 @Composable

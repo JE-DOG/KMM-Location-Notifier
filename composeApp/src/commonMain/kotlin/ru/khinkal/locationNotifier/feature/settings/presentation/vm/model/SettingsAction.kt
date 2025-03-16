@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.feature.settings.vm.model
+package ru.khinkal.locationNotifier.feature.settings.presentation.vm.model
 
 interface SettingsAction {
 
@@ -6,7 +6,7 @@ interface SettingsAction {
 
     // Set values
     data class SetVibrationEnabled(val vibrationEnabled: Boolean) : SettingsAction
-    data class SetLocationUpdateSecondsInterval(
+    data class SetLocationUpdateSeconds(
         val locationUpdateSecondsInterval: Int,
     ) : SettingsAction
 }

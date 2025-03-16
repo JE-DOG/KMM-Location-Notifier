@@ -1,16 +1,14 @@
-package ru.khinkal.locationNotifier.feature.setGeoPoint.navigation
+package ru.khinkal.locationNotifier.feature.settings.presentation.navigation
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ru.khinkal.locationNotifier.feature.setGeoPoint.SetGeoPointScreen
+import ru.khinkal.locationNotifier.feature.settings.presentation.SettingsScreen
 
-fun NavGraphBuilder.setGeoPoint(
-    navController: NavController,
-) {
-    composable<SetGeoPointScreen>(
+fun NavGraphBuilder.settings(navController: NavController) {
+    composable<SettingsScreen>(
         enterTransition = {
             slideInHorizontally { it }
         },
@@ -24,6 +22,6 @@ fun NavGraphBuilder.setGeoPoint(
             slideInHorizontally { -it }
         },
     ) {
-        SetGeoPointScreen(navController)
+        SettingsScreen(navController)
     }
 }

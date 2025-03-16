@@ -13,17 +13,24 @@ object AppTypography {
             lineHeight = 17.sp,
         )
 
-    val Normal_20_500
-        get() = TextStyle(
-            fontWeight = FontWeight.Medium,
-            fontSize = 20.sp,
-            lineHeight = 17.sp,
-        )
-
     val Medium_14_500
         get() = TextStyle(
             fontWeight = FontWeight.Medium,
             fontSize = 14.sp,
+            lineHeight = 17.sp,
+        )
+
+    val Medium_18_500
+        get() = TextStyle(
+            fontWeight = FontWeight.Medium,
+            fontSize = 18.sp,
+            lineHeight = 17.sp,
+        )
+
+    val Medium_20_500
+        get() = TextStyle(
+            fontWeight = FontWeight.Medium,
+            fontSize = 20.sp,
             lineHeight = 17.sp,
         )
 }

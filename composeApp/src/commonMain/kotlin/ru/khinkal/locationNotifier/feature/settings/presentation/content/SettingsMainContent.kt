@@ -1,4 +1,4 @@
-package ru.khinkal.locationNotifier.feature.settings.content
+package ru.khinkal.locationNotifier.feature.settings.presentation.content
 
 import androidx.annotation.IntRange
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -21,12 +21,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kmm_location_notifier.composeapp.generated.resources.Res
-import kmm_location_notifier.composeapp.generated.resources.settings_location_update_seconds_interval_title
+import kmm_location_notifier.composeapp.generated.resources.settings_location_update_seconds_title
 import kmm_location_notifier.composeapp.generated.resources.settings_vibration_title
 import org.jetbrains.compose.resources.stringResource
-import ru.khinkal.locationNotifier.feature.settings.components.SwitchItem
-import ru.khinkal.locationNotifier.feature.settings.vm.model.SettingsAction
-import ru.khinkal.locationNotifier.feature.settings.vm.model.SettingsUiState
+import ru.khinkal.locationNotifier.feature.settings.presentation.components.SwitchItem
+import ru.khinkal.locationNotifier.feature.settings.presentation.vm.model.SettingsAction
+import ru.khinkal.locationNotifier.feature.settings.presentation.vm.model.SettingsUiState
+import ru.khinkal.locationNotifier.shared.theme.AppTypography
 
 @Composable
 fun SettingsMainContent(
@@ -43,7 +44,7 @@ fun SettingsMainContent(
             ),
     ) {
         Vibration(
-            vibrationIsEnabled = state.vibrationEnabled,
+            vibrationIsEnabled = state.isVibrationEnabled,
             onValueChange = { vibrationIsEnabled ->
                 val action = SettingsAction.SetVibrationEnabled(vibrationIsEnabled)
                 sendAction(action)
@@ -53,10 +54,10 @@ fun SettingsMainContent(
         HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp))
 
         SetLocationUpdateSecondsInterval(
-            locationUpdateSecondsInterval = state.locationUpdateSecondsInterval,
+            locationUpdateSecondsInterval = state.locationUpdateSeconds,
             onValueChange = { locationUpdateSecondsInterval ->
                 val action = SettingsAction
-                    .SetLocationUpdateSecondsInterval(locationUpdateSecondsInterval)
+                    .SetLocationUpdateSeconds(locationUpdateSecondsInterval)
                 sendAction(action)
             },
         )
@@ -87,8 +88,8 @@ private fun SetLocationUpdateSecondsInterval(
     val thumbInteractionSource = remember { MutableInteractionSource() }
 
     Text(
-        text = stringResource(Res.string.settings_location_update_seconds_interval_title),
-        style = MaterialTheme.typography.titleLarge,
+        text = stringResource(Res.string.settings_location_update_seconds_title),
+        style = AppTypography.Medium_18_500,
     )
 
     Slider(
@@ -114,7 +115,7 @@ private fun SetLocationUpdateSecondsInterval(
                                 .requiredSize(45.dp, 25.dp)
                                 .wrapContentSize(),
                             text = sliderText,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = AppTypography.Normal_14_400,
                         )
                     }
                 },

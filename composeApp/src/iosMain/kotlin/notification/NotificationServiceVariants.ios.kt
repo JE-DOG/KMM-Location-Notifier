@@ -5,7 +5,7 @@ actual fun getNotificationService(): NotificationServiceVariants =
 
 class IosNotificationServiceVariants : NotificationServiceVariants {
 
-    val notificationManager = NotificationManager().apply {
+    private val notificationManager = NotificationManager().apply {
         requestPermission()
     }
 
