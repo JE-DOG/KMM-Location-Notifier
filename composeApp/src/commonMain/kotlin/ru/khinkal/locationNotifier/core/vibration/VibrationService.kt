@@ -6,5 +6,4 @@ interface VibrationService {
      * @param interval vibration interval
      * */
     fun vibrate(interval: Long)
-
 }

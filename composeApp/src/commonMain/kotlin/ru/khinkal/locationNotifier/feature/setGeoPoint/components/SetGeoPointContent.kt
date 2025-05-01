@@ -11,9 +11,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import map.Map
-import map.components.MapViewProperty
-import map.model.MapViewMarker
+import kmp.map.Map
+import kmp.map.components.MapViewProperty
+import kmp.map.model.MapViewMarker
 import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
 
 @Composable

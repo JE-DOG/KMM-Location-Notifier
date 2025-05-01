@@ -1,5 +1,6 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
 
+// TODO: LN-21 Clean and update dependencies(Tech-debt iteration 5)
 plugins {
     with(libs) {
         with(plugins) {
@@ -81,7 +82,6 @@ kotlin {
                 with(gms) {
                     implementation(location)
                 }
-
                 implementation(androidx.activityCompose)
                 implementation(kotlinx.coroutines.android)
                 implementation(ktor.client.okhttp)
@@ -104,7 +104,7 @@ android {
 
         applicationId = "ru.khinkal.locationNotifier"
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "0.0.1"
     }
 }
 
@@ -114,6 +114,7 @@ room {
 
 //https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
+    implementation(libs.androidx.runtime.android)
     androidTestImplementation(libs.androidx.uitest.junit4)
     debugImplementation(libs.androidx.uitest.testManifest)
     //temporary fix: https://youtrack.jetbrains.com/issue/CMP-5864

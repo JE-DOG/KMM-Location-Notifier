@@ -4,11 +4,12 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.navigation.createGoal
-import ru.khinkal.locationNotifier.feature.locationList.presentation.navigation.LocationListScreen
-import ru.khinkal.locationNotifier.feature.locationList.presentation.navigation.locationList
+import ru.khinkal.locationNotifier.feature.main.presentation.navigation.MainScreen
+import ru.khinkal.locationNotifier.feature.main.presentation.navigation.main
 import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.setGeoPoint
 import ru.khinkal.locationNotifier.feature.settings.presentation.navigation.settings
 
@@ -16,18 +17,18 @@ import ru.khinkal.locationNotifier.feature.settings.presentation.navigation.sett
 fun AppHost(
     modifier: Modifier = Modifier,
 ) {
-    val navController = rememberNavController()
+    val navController: NavHostController = rememberNavController()
 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = LocationListScreen,
+        startDestination = MainScreen,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None },
     ) {
-        locationList(navController)
+        main(navController)
         settings(navController)
         setGeoPoint(navController)
         createGoal(navController)

@@ -16,7 +16,7 @@ import ru.khinkal.locationNotifier.core.ext.location.observeResult
 import ru.khinkal.locationNotifier.core.ext.location.returnResult
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
-import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
 import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointScreen
 import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 
