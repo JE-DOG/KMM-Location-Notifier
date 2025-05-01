@@ -28,7 +28,7 @@
         </activity>
 
         <service
-            android:name=".feature.locationList.presentation.broadcast.BroadcastLocationService"
+            android:name=".feature.main.presentation.broadcast.BroadcastLocationService"
             android:foregroundServiceType="location"/>
     </application>
 

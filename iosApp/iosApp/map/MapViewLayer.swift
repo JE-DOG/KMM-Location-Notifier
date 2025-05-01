@@ -1,6 +1,5 @@
-import MapCore
 
 protocol MapViewLayer {
     
-    func setup(mapView: MCMapView)
+//    func setup(mapView: MCMapView)
 }

@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1296791E2D3007540019D617 /* MapCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1296791D2D3007540019D617 /* MapCore */; };
-		129679202D3007540019D617 /* MapCoreSharedModule in Frameworks */ = {isa = PBXBuildFile; productRef = 1296791F2D3007540019D617 /* MapCoreSharedModule */; };
-		129679222D3007540019D617 /* MapCoreSharedModuleCpp in Frameworks */ = {isa = PBXBuildFile; productRef = 129679212D3007540019D617 /* MapCoreSharedModuleCpp */; };
 		9808FD0C2D3C587D001E5707 /* DependencyInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9808FD0B2D3C587D001E5707 /* DependencyInitializer.swift */; };
 		987785F22D20B0120086EF9A /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987785F12D20B0120086EF9A /* iosApp.swift */; };
 		98C4CBFE2D46A5F500D6EAA9 /* LNIosMapViewDepsProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C4CBFD2D46A5F500D6EAA9 /* LNIosMapViewDepsProviderFactory.swift */; };
@@ -43,9 +40,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1296791E2D3007540019D617 /* MapCore in Frameworks */,
-				129679202D3007540019D617 /* MapCoreSharedModule in Frameworks */,
-				129679222D3007540019D617 /* MapCoreSharedModuleCpp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +160,6 @@
 			);
 			mainGroup = A93A952E29CC810C00F8E227;
 			packageReferences = (
-				1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */,
 			);
 			productRefGroup = A93A953829CC810C00F8E227 /* Products */;
 			projectDirPath = "";
@@ -354,7 +347,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 75J492J2DH;
+				DEVELOPMENT_TEAM = W7647ZCRWJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -369,7 +362,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.khinkal.locationNotifier.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.khinkal.locationNotifier;
 				PRODUCT_NAME = "Location Notifier";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -388,7 +381,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 75J492J2DH;
+				DEVELOPMENT_TEAM = W7647ZCRWJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -403,7 +396,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.khinkal.locationNotifier.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.khinkal.locationNotifier;
 				PRODUCT_NAME = "Location Notifier";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -433,35 +426,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/openmobilemaps/maps-core";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		1296791D2D3007540019D617 /* MapCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
-			productName = MapCore;
-		};
-		1296791F2D3007540019D617 /* MapCoreSharedModule */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
-			productName = MapCoreSharedModule;
-		};
-		129679212D3007540019D617 /* MapCoreSharedModuleCpp */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
-			productName = MapCoreSharedModuleCpp;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A93A952F29CC810C00F8E227 /* Project object */;
 }

@@ -16,20 +16,21 @@ abstract class NotificationChannelService(
 ) {
 
     abstract val channel: NotificationChannel
-    private val notificationService: NotificationManagerCompat = NotificationManagerCompat.from(context)
+    private val notificationService: NotificationManagerCompat =
+        NotificationManagerCompat.from(context)
 
-    fun init(){
+    fun init() {
         notificationService.createNotificationChannel(channel)
     }
 
     fun notify(
         notificationId: Int,
         notification: Notification
-    ){
+    ) {
         context.checkPermission(
             permission = PERMISSION,
             onPermissionDenied = ::onPermissionDenied,
-        ){
+        ) {
             onPermissionGranted(
                 notificationId,
                 notification
@@ -42,7 +43,7 @@ abstract class NotificationChannelService(
         notificationBuilder: Notification.Builder.() -> Notification.Builder
     ): Notification.Builder {
         notification.apply {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O){
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                 setChannelId(channel.id)
             }
             setSmallIcon(com.google.android.gms.base.R.drawable.googleg_standard_color_18)
@@ -51,7 +52,7 @@ abstract class NotificationChannelService(
         return notificationBuilder(notification)
     }
 
-    protected open fun onPermissionDenied(){
+    protected open fun onPermissionDenied() {
         Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
     }
 
@@ -59,7 +60,7 @@ abstract class NotificationChannelService(
     protected open fun onPermissionGranted(
         notificationId: Int,
         notification: Notification
-    ){
+    ) {
         notificationService.notify(
             notificationId,
             notification

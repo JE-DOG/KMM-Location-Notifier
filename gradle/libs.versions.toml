@@ -1,8 +1,9 @@
-[versions]
+# TODO: LN-21 Clean and update dependencies(Tech-debt iteration 5)
 
+[versions]
 # android sdk
-android-sdk-compile = "34"
-android-sdk-target = "34"
+android-sdk-compile = "35"
+android-sdk-target = "35"
 android-sdk-min = "29"
 
 kotlin = "2.0.0"
@@ -22,9 +23,9 @@ androidx-uiTest = "1.6.8"
 coil = "3.0.0-alpha10"
 buildConfig = "5.4.0"
 ktor = "3.0.0-beta-2"
-koin = "3.2.0"
 jetbrainsKotlinJvm = "1.9.0"
 gms-location = "21.0.1"
+runtimeAndroid = "1.8.0"
 
 [libraries]
 #Android deps
@@ -60,10 +61,6 @@ ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 
-#Koin
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-
 #Room
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
@@ -76,6 +73,7 @@ gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref 
 gradleplugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose" }
 gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "compose" }
 gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 
 [plugins]
 
