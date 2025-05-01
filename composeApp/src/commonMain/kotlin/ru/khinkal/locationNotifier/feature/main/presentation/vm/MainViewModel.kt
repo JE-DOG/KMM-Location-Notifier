@@ -16,7 +16,7 @@ import ru.khinkal.locationNotifier.core.ext.coroutines.launchCatching
 import ru.khinkal.locationNotifier.core.ext.location.observeResult
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.navigation.CreateGoalScreen
 import ru.khinkal.locationNotifier.feature.main.domain.LocationRepository
-import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 import ru.khinkal.locationNotifier.feature.main.presentation.broadcast.startBroadcast
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainAction
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainState
@@ -49,7 +49,7 @@ class MainViewModel(
         val locations = locationRepository.getAllLocation()
         _state.update { state ->
             state.copy(
-                geoPoints = locations,
+                goalGeoPoints = locations,
                 isLoading = false,
                 error = null,
             )
@@ -62,18 +62,18 @@ class MainViewModel(
                 .observeResult<String?>(ResultKeys.GOAL_CREATED, null)
                 ?.collect { geoPointJson ->
                     if (geoPointJson == null) return@collect
-                    val geoPoint = Json.decodeFromString<GeoPoint>(geoPointJson)
-                    onGeoPointCreated(geoPoint)
+                    val goalGeoPoint = Json.decodeFromString<GoalGeoPoint>(geoPointJson)
+                    onGeoPointCreated(goalGeoPoint)
                 }
         }
     }
 
-    private fun onGeoPointCreated(geoPoint: GeoPoint) {
+    private fun onGeoPointCreated(goalGeoPoint: GoalGeoPoint) {
         viewModelScope.launchCatching(
             onFailure = {
                 _state.update { state ->
                     state.copy(
-                        geoPoints = state.geoPoints - geoPoint,
+                        goalGeoPoints = state.goalGeoPoints - goalGeoPoint,
                         error = UiError(
                             title = it.message.orEmpty(),
                             description = it::class.simpleName.toString(),
@@ -84,10 +84,10 @@ class MainViewModel(
         ) {
             _state.update { state ->
                 state.copy(
-                    geoPoints = state.geoPoints + geoPoint,
+                    goalGeoPoints = state.goalGeoPoints + goalGeoPoint,
                 )
             }
-            locationRepository.addLocation(geoPoint)
+            locationRepository.addLocation(goalGeoPoint)
         }
     }
 
@@ -95,7 +95,7 @@ class MainViewModel(
         when (action) {
             is MainAction.OnAddLocationClick -> onAddLocationClick()
             is MainAction.OnSettingsClick -> onSettingsClick()
-            is MainAction.OnLocationClick -> onLocationClick(action.geoPoint)
+            is MainAction.OnLocationClick -> onLocationClick(action.goalGeoPoint)
         }
     }
 
@@ -107,7 +107,7 @@ class MainViewModel(
         navController.navigate(SettingsScreen)
     }
 
-    private fun onLocationClick(geoPoint: GeoPoint) {
-        startBroadcast(geoPoint)
+    private fun onLocationClick(goalGeoPoint: GoalGeoPoint) {
+        startBroadcast(goalGeoPoint)
     }
 }

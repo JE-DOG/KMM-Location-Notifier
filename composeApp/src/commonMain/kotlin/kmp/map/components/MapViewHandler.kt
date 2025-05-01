@@ -1,14 +1,14 @@
 package kmp.map.components
 
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 
 class MapViewHandler {
 
-    private var clickListener: (BaseGeoPoint) -> Unit = {}
+    private var clickListener: (GeoPoint) -> Unit = {}
 
-    fun setOnClickListener(action: (BaseGeoPoint) -> Unit) { clickListener = action }
+    fun setOnClickListener(action: (GeoPoint) -> Unit) { clickListener = action }
 
-    fun onClick(geoPoint: BaseGeoPoint) {
+    fun onClick(geoPoint: GeoPoint) {
         clickListener(geoPoint)
     }
 }

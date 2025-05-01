@@ -1,6 +1,6 @@
 package kmp.map.components
 
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 
 interface MapViewController {
 
@@ -10,6 +10,6 @@ interface MapViewController {
 
     fun zoomTo(zoom: Double)
 
-    fun setCenter(baseGeoPoint: BaseGeoPoint, zoom: Double = getZoom())
-    fun moveTo(baseGeoPoint: BaseGeoPoint, zoom: Double = getZoom())
+    fun setCenter(geoPoint: GeoPoint, zoom: Double = getZoom())
+    fun moveTo(geoPoint: GeoPoint, zoom: Double = getZoom())
 }

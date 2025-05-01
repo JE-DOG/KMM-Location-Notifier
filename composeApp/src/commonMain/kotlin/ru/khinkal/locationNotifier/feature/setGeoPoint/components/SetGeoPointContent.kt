@@ -14,15 +14,17 @@ import androidx.compose.ui.unit.dp
 import kmp.map.Map
 import kmp.map.components.MapViewProperty
 import kmp.map.model.MapViewMarker
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
+
+private const val SET_GEO_POINT_MARKER_ID = "SET_GEO_POINT_MARKER_ID"
 
 @Composable
 fun SetGeoPointContent(
     modifier: Modifier = Modifier,
     onBackClicked: () -> Unit,
-    onConfirm: (BaseGeoPoint) -> Unit,
+    onConfirm: (GeoPoint) -> Unit,
 ) {
-    var selectedGeoPoint: BaseGeoPoint? by remember {
+    var selectedGeoPoint: GeoPoint? by remember {
         mutableStateOf(null)
     }
 
@@ -61,8 +63,8 @@ fun SetGeoPointContent(
                 val selectedGeoPoint = selectedGeoPoint
                 if (selectedGeoPoint != null) {
                     val marker = MapViewMarker(
-                        id = "1",
-                        baseGeoPoint = selectedGeoPoint,
+                        id = SET_GEO_POINT_MARKER_ID,
+                        geoPoint = selectedGeoPoint,
                     )
                     mapViewManager.markerLayer.addMarker(marker)
                     mapViewManager.controller.moveTo(selectedGeoPoint)

@@ -6,12 +6,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainAction
 
 @Composable
 fun LocationsList(
-    geoPoints: List<GeoPoint>,
+    goalGeoPoints: List<GoalGeoPoint>,
     sendAction: (MainAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -25,7 +25,7 @@ fun LocationsList(
         locations(
             modifier = Modifier
                 .padding(bottom = 5.dp),
-            geoPoints = geoPoints,
+            goalGeoPoints = goalGeoPoints,
             onItemClick = { geoPoint ->
                 val action = MainAction.OnLocationClick(geoPoint)
                 sendAction(action)

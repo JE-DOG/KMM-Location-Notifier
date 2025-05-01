@@ -46,7 +46,7 @@ private fun InputBlock(
     sendAction: (CreateGoalAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val baseGeoPoint = state.baseGeoPoint
+    val geoPoint = state.geoPoint
 
     Column(
         modifier = modifier
@@ -76,8 +76,8 @@ private fun InputBlock(
             label = stringResource(Res.string.create_goal_meters_distance_input_label),
         )
 
-        val locationText = if (baseGeoPoint != null) {
-            "${baseGeoPoint.latitude}, ${baseGeoPoint.longitude}"
+        val locationText = if (geoPoint != null) {
+            "${geoPoint.latitude}, ${geoPoint.longitude}"
         } else {
             ""
         }

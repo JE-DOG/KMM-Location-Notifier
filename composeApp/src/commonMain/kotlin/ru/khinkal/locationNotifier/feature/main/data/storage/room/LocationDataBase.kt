@@ -4,10 +4,10 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import kmp.room.locations.LocationDataBaseConstructor
-import ru.khinkal.locationNotifier.feature.main.data.storage.model.GeoPointEntity
+import ru.khinkal.locationNotifier.feature.main.data.storage.model.GoalGeoPointEntity
 
 @Database(
-    entities = [GeoPointEntity::class],
+    entities = [GoalGeoPointEntity::class],
     version = 1,
 )
 @ConstructedBy(LocationDataBaseConstructor::class)

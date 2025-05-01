@@ -17,13 +17,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 
 @Composable
 fun LocationItem(
-    geoPoint: GeoPoint,
+    goalGeoPoint: GoalGeoPoint,
     shape: Shape,
-    onItemClick: (GeoPoint) -> Unit,
+    onItemClick: (GoalGeoPoint) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Text(
@@ -33,37 +33,37 @@ fun LocationItem(
             .clip(shape)
             .background(MaterialTheme.colorScheme.primaryContainer)
             .clickable {
-                onItemClick(geoPoint)
+                onItemClick(goalGeoPoint)
             }
             .padding(horizontal = 16.dp, vertical = 5.dp)
             .wrapContentSize(Alignment.CenterStart),
-        text = geoPoint.name,
+        text = goalGeoPoint.name,
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.primary,
     )
 }
 
 fun LazyListScope.locations(
-    geoPoints: List<GeoPoint>,
-    onItemClick: (GeoPoint) -> Unit,
+    goalGeoPoints: List<GoalGeoPoint>,
+    onItemClick: (GoalGeoPoint) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     items(
-        count = geoPoints.size,
+        count = goalGeoPoints.size,
         key = { index ->
-            val geoPoint = geoPoints[index]
+            val geoPoint = goalGeoPoints[index]
             geoPoint.id
         },
     ) { index ->
-        val geoPoint = geoPoints[index]
+        val geoPoint = goalGeoPoints[index]
         val shape = getLocationItemShape(
-            lastIndex = geoPoints.lastIndex,
+            lastIndex = goalGeoPoints.lastIndex,
             index = index,
         )
 
         LocationItem(
             modifier = modifier,
-            geoPoint = geoPoint,
+            goalGeoPoint = geoPoint,
             shape = shape,
             onItemClick = onItemClick,
         )

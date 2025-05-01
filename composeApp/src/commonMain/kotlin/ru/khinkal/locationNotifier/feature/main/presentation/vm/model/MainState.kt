@@ -1,10 +1,10 @@
 package ru.khinkal.locationNotifier.feature.main.presentation.vm.model
 
 import ru.khinkal.locationNotifier.core.errors.UiError
-import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 
 data class MainState(
-    val geoPoints: List<GeoPoint>,
+    val goalGeoPoints: List<GoalGeoPoint>,
     val isLoading: Boolean,
     val error: UiError?,
 ) {
@@ -13,7 +13,7 @@ data class MainState(
 
         val EMPTY
             get() = MainState(
-                geoPoints = emptyList(),
+                goalGeoPoints = emptyList(),
                 isLoading = false,
                 error = null,
             )

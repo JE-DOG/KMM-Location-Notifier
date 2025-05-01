@@ -18,13 +18,12 @@ import ru.khinkal.locationNotifier.core.ext.coroutines.launchCatching
 import ru.khinkal.locationNotifier.core.ext.location.distanceInMeters
 import ru.khinkal.locationNotifier.core.ext.location.seconds
 import ru.khinkal.locationNotifier.core.location.LocationManagerImpl
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
 import ru.khinkal.locationNotifier.core.notification.LocationBroadcastNotificationChannelService
 import ru.khinkal.locationNotifier.core.notification.NotificationChannelService
 import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive
 import ru.khinkal.locationNotifier.core.vibration.VibrationService
 import ru.khinkal.locationNotifier.core.vibration.VibrationServiceImpl
-import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 import ru.khinkal.locationNotifier.feature.settings.domain.SettingsManager
 import ru.khinkal.locationNotifier.feature.settings.presentation.di.SettingsComponent
 import ru.khinkal.locationNotifier.feature.settings.presentation.di.deps.SettingsDeps
@@ -55,7 +54,7 @@ class BroadcastLocationService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val goalGeoPoint: GeoPoint = intent.goalLocation
+        val goalGeoPoint: GoalGeoPoint = intent.goalGeoPoint
         val foregroundNotification = foregroundNotificationChannel.getStartBroadcastNotification()
 
         startForeground(
@@ -74,8 +73,7 @@ class BroadcastLocationService : Service() {
                 updateSeconds = settingsManager.getLocationUpdateSeconds(),
             )
                 .collect { geoPoint ->
-                    val goalBaseGeoPoint = BaseGeoPoint(goalGeoPoint)
-                    val metersToGoal = geoPoint distanceInMeters goalBaseGeoPoint
+                    val metersToGoal = geoPoint distanceInMeters goalGeoPoint.geoPoint
 
                     if (metersToGoal <= goalGeoPoint.meters) {
                         actionOnGetToGoal(
@@ -173,11 +171,11 @@ class BroadcastLocationService : Service() {
         return notification
     }
 
-    private val Intent.goalLocation: GeoPoint
+    private val Intent.goalGeoPoint: GoalGeoPoint
         get() {
             val geoPointJson = getStringExtra(GOAL_GEO_POINT_KEY)!!
-            val geoPoint = Json.decodeFromString<GeoPoint>(geoPointJson)
-            return geoPoint
+            val goalGeoPoint = Json.decodeFromString<GoalGeoPoint>(geoPointJson)
+            return goalGeoPoint
         }
 
     companion object {
@@ -187,14 +185,14 @@ class BroadcastLocationService : Service() {
         private const val GOAL_GEO_POINT_KEY = "GOAL_GEO_POINT_KEY"
 
         /**
-         * @param geoPoint Точка до которой будет активен слушатель
+         * @param goalGeoPoint Точка до которой будет активен слушатель
          * @return true - Нет активного сервиса и был создан новый, false - Есть активный сервис, новый сервис не создан
          */
         fun startBroadcast(
             context: Context,
-            geoPoint: GeoPoint,
+            goalGeoPoint: GoalGeoPoint,
         ): Boolean {
-            val geoPointJson = Json.encodeToString(geoPoint)
+            val geoPointJson = Json.encodeToString(goalGeoPoint)
             if (context.isServiceActive(BroadcastLocationService::class.java)) return false
             val intent = Intent(context, BroadcastLocationService::class.java).apply {
                 putExtra(GOAL_GEO_POINT_KEY, geoPointJson)

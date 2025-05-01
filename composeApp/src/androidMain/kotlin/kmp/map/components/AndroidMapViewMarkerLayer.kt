@@ -29,7 +29,7 @@ class AndroidMapViewMarkerLayer(
     override fun addMarker(marker: MapViewMarker) {
         val drawable = context.getDrawable(R.drawable.ic_my_location) ?: return
         val texture = BitmapTextureHolder(drawable)
-        val coord = marker.baseGeoPoint.toCoord()
+        val coord = marker.geoPoint.toCoord()
         val markerIcon = IconFactory.createIconWithAnchor(
             identifier = marker.id,
             coordinate = coord,

@@ -20,7 +20,7 @@ import platform.Foundation.NSRunLoop
 import platform.Foundation.NSRunLoopCommonModes
 import platform.Foundation.NSTimer
 import platform.darwin.NSObject
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 
 class IOSLocationService : LocationServiceVariants {
 
@@ -76,7 +76,7 @@ class IOSLocationService : LocationServiceVariants {
     @OptIn(ExperimentalForeignApi::class)
     override fun startBroadcast(
         interval: Double,
-        onLocationUpdated: (BaseGeoPoint) -> Unit,
+        onLocationUpdated: (GeoPoint) -> Unit,
     ) {
         this.interval = interval
 
@@ -95,7 +95,7 @@ class IOSLocationService : LocationServiceVariants {
                 val coordinate = location.coordinate.getPointer(MemScope())
                 val point = coordinate.pointed
                 onLocationUpdated(
-                    BaseGeoPoint(
+                    GeoPoint(
                         latitude = point.latitude,
                         longitude = point.longitude,
                     )

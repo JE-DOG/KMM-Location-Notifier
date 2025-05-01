@@ -2,7 +2,7 @@ package kmp.map.components
 
 import io.openmobilemaps.mapscore.map.view.MapView
 import kmp.map.ext.toCoord
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 
 class AndroidMapViewController(
     private val mapView: MapView,
@@ -22,15 +22,15 @@ class AndroidMapViewController(
 
     override fun zoomTo(zoom: Double) = camera.setZoom(zoom, false)
 
-    override fun setCenter(baseGeoPoint: BaseGeoPoint, zoom: Double) =
-        moveTo(baseGeoPoint, zoom, false)
+    override fun setCenter(geoPoint: GeoPoint, zoom: Double) =
+        moveTo(geoPoint, zoom, false)
 
-    override fun moveTo(baseGeoPoint: BaseGeoPoint, zoom: Double) =
+    override fun moveTo(geoPoint: GeoPoint, zoom: Double) =
         // TODO: Make animated true when map animation will work normally
-        moveTo(baseGeoPoint, zoom, false)
+        moveTo(geoPoint, zoom, false)
 
-    private fun moveTo(baseGeoPoint: BaseGeoPoint, zoom: Double, animated: Boolean) {
-        val coord = baseGeoPoint.toCoord()
+    private fun moveTo(geoPoint: GeoPoint, zoom: Double, animated: Boolean) {
+        val coord = geoPoint.toCoord()
         camera.moveToCenterPositionZoom(coord, zoom, animated)
     }
 }

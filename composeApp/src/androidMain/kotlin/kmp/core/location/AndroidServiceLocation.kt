@@ -6,7 +6,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import ru.khinkal.locationNotifier.LocationNotifierApp
 import ru.khinkal.locationNotifier.core.location.LocationManagerImpl
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 
 actual fun getLocationService(): LocationServiceVariants = object : LocationServiceVariants {
 
@@ -17,7 +17,7 @@ actual fun getLocationService(): LocationServiceVariants = object : LocationServ
 
     override fun startBroadcast(
         interval: Double,
-        onLocationUpdated: (BaseGeoPoint) -> Unit,
+        onLocationUpdated: (GeoPoint) -> Unit,
     ) {
         locationBroadcastJob?.cancel()
         locationBroadcastJob = coroutineScope.launch {

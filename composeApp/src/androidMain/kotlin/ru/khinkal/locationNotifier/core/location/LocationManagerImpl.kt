@@ -17,7 +17,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -33,13 +33,13 @@ class LocationManagerImpl(
     }
 
     @SuppressLint("MissingPermission")
-    override suspend fun getCurrentLocation(): BaseGeoPoint? = suspendCoroutine { continuation ->
+    override suspend fun getCurrentLocation(): GeoPoint? = suspendCoroutine { continuation ->
         fusedLocationProviderClient.getCurrentLocation(
             Priority.PRIORITY_HIGH_ACCURACY,
             CancellationTokenSource().token
         )
             .addOnSuccessListener { location ->
-                val baseLocation = BaseGeoPoint(
+                val baseLocation = GeoPoint(
                     longitude = location.longitude,
                     latitude = location.latitude,
                 )
@@ -75,13 +75,13 @@ class LocationManagerImpl(
     @SuppressLint("MissingPermission")
     override fun broadcastLocation(
         updateSeconds: Int,
-    ): Flow<BaseGeoPoint> = callbackFlow {
+    ): Flow<GeoPoint> = callbackFlow {
         val scope = CoroutineScope(coroutineContext)
         val locationCallback = object : LocationCallback(){
             override fun onLocationResult(locationResult: LocationResult) {
                 scope.launch {
                     locationResult.lastLocation?.let { location ->
-                        val geoPoint = BaseGeoPoint(
+                        val geoPoint = GeoPoint(
                             latitude = location.latitude,
                             longitude = location.longitude
                         )
