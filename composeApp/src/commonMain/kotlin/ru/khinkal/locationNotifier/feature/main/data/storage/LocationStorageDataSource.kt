@@ -1,14 +1,14 @@
 package ru.khinkal.locationNotifier.feature.main.data.storage
 
-import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 
 interface LocationStorageDataSource {
 
-    suspend fun getAllLocation(): List<GeoPoint>
+    suspend fun getAllLocation(): List<GoalGeoPoint>
 
-    suspend fun addLocation(geoPoint: GeoPoint)
+    suspend fun addLocation(goalGeoPoint: GoalGeoPoint)
 
-    suspend fun updateLocation(geoPoint: GeoPoint)
+    suspend fun updateLocation(goalGeoPoint: GoalGeoPoint)
 
-    suspend fun deleteLocation(geoPoint: GeoPoint)
+    suspend fun deleteLocation(goalGeoPoint: GoalGeoPoint)
 }

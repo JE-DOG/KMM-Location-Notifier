@@ -43,7 +43,7 @@ fun MainContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            geoPoints = state.geoPoints,
+            goalGeoPoints = state.goalGeoPoints,
             sendAction = sendAction,
         )
     }

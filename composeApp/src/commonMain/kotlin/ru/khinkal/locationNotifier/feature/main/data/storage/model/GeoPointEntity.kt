@@ -1,40 +1,28 @@
 package ru.khinkal.locationNotifier.feature.main.data.storage.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 
-// TODO: LN-20 - Rebuild geoPoint structure(Tech-debt iteration 2)
-@Entity(tableName = "geo_point_table")
 data class GeoPointEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val name: String = "",
-    val meters: Int = 0,
-    val latitude: Double = 0.0,
-    val longitude: Double = 0.0,
+    val longitude: Double,
+    val latitude: Double,
 ) {
-
-    fun toDomain() = GeoPoint(
-        id = id,
-        name = name,
-        meters = meters,
-        latitude = latitude,
-        longitude = longitude
-    )
 
     companion object {
 
-        fun fromDomain(
-            geoPointDomain: GeoPoint
-        ) = geoPointDomain.run {
-            GeoPointEntity(
-                id = id,
-                name = name,
-                latitude = latitude,
-                longitude = longitude,
-                meters = meters
-            )
+        fun fromDomain(geoPoint: GeoPoint): GeoPointEntity {
+            return with(geoPoint) {
+                GeoPointEntity(
+                    longitude = longitude,
+                    latitude = latitude,
+                )
+            }
         }
     }
+}
+
+fun GeoPointEntity.toDomain(): GeoPoint {
+    return GeoPoint(
+        latitude = latitude,
+        longitude = longitude,
+    )
 }

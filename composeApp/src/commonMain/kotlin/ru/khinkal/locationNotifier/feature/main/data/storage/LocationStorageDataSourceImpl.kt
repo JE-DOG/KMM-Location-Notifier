@@ -1,28 +1,28 @@
 package ru.khinkal.locationNotifier.feature.main.data.storage
 
-import ru.khinkal.locationNotifier.feature.main.data.storage.model.GeoPointEntity
+import ru.khinkal.locationNotifier.feature.main.data.storage.model.GoalGeoPointEntity
 import ru.khinkal.locationNotifier.feature.main.data.storage.room.LocationDao
-import ru.khinkal.locationNotifier.feature.main.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 
 class LocationStorageDataSourceImpl(
     private val locationListDao: LocationDao,
 ) : LocationStorageDataSource {
 
-    override suspend fun getAllLocation(): List<GeoPoint> =
+    override suspend fun getAllLocation(): List<GoalGeoPoint> =
         locationListDao.getAllLocation()
             .map { geoPointEntity ->
                 geoPointEntity.toDomain()
             }
 
-    override suspend fun addLocation(geoPoint: GeoPoint) {
-        locationListDao.addLocation(GeoPointEntity.fromDomain(geoPoint))
+    override suspend fun addLocation(goalGeoPoint: GoalGeoPoint) {
+        locationListDao.addLocation(GoalGeoPointEntity.fromDomain(goalGeoPoint))
     }
 
-    override suspend fun updateLocation(geoPoint: GeoPoint) {
-        locationListDao.updateLocation(GeoPointEntity.fromDomain(geoPoint))
+    override suspend fun updateLocation(goalGeoPoint: GoalGeoPoint) {
+        locationListDao.updateLocation(GoalGeoPointEntity.fromDomain(goalGeoPoint))
     }
 
-    override suspend fun deleteLocation(geoPoint: GeoPoint) {
-        locationListDao.deleteLocation(geoPoint.id)
+    override suspend fun deleteLocation(goalGeoPoint: GoalGeoPoint) {
+        locationListDao.deleteLocation(goalGeoPoint.id)
     }
 }

@@ -1,13 +1,13 @@
 package kmp.core.location
 
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 
 expect fun getLocationService(): LocationServiceVariants
 
 interface LocationServiceVariants {
     fun startBroadcast(
         interval: Double,
-        onLocationUpdated: (BaseGeoPoint) -> Unit
+        onLocationUpdated: (GeoPoint) -> Unit
     )
 
     fun stopBroadcast()
