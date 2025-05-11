@@ -1,13 +1,10 @@
 package ru.khinkal.locationNotifier.core.map.ext
 
-import io.openmobilemaps.mapscore.shared.map.coordinates.Coord
-import io.openmobilemaps.mapscore.shared.map.coordinates.CoordinateSystemIdentifiers
+import org.maplibre.android.geometry.LatLng
 import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 
-fun GeoPoint.toCoord(zoom: Double = 0.0): Coord =
-    Coord(
-        systemIdentifier = CoordinateSystemIdentifiers.EPSG4326(),
-        x = longitude,
-        y = latitude,
-        z = zoom,
+fun GeoPoint.toLatLng(): LatLng =
+    LatLng(
+        longitude = longitude,
+        latitude = latitude,
     )

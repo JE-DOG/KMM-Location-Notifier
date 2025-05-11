@@ -5,9 +5,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import io.openmobilemaps.mapscore.map.view.MapView
-import io.openmobilemaps.mapscore.shared.map.MapConfig
-import io.openmobilemaps.mapscore.shared.map.coordinates.CoordinateSystemFactory
+import org.maplibre.android.MapLibre
+import org.maplibre.android.maps.MapView
 import ru.khinkal.locationNotifier.core.map.AndroidMapViewManager
 import ru.khinkal.locationNotifier.core.map.MapViewManager
 
@@ -18,16 +17,18 @@ actual fun ExpectMap(
     initialize: (MapViewManager) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
-    var mapViewManager: MapViewManager? = remember { null }
+    var mapViewManager: AndroidMapViewManager? = remember { null }
 
     AndroidView(
         modifier = modifier,
         factory = { context ->
+            if (!MapLibre.hasInstance()) {
+                MapLibre.getInstance(context)
+            }
             MapView(context).apply {
-                setupMap(MapConfig(CoordinateSystemFactory.getEpsg4326System()))
-                registerLifecycle(lifecycleOwner.lifecycle)
                 val newMapViewManager = AndroidMapViewManager(this)
                 mapViewManager = newMapViewManager
+                newMapViewManager.registerLifecycle(lifecycleOwner.lifecycle)
                 initialize(newMapViewManager)
             }
         },

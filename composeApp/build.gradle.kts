@@ -1,4 +1,5 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.compose.internal.utils.getLocalProperty
 
 // TODO: LN-21 Clean and update dependencies(Tech-debt iteration 5)
 plugins {
@@ -75,7 +76,7 @@ kotlin {
         androidMain.dependencies {
             with(libs) {
                 with(android) {
-                    implementation(map.core)
+                    implementation(map)
                     implementation(lifecycle)
                     implementation(ktx)
                 }
@@ -131,9 +132,12 @@ dependencies {
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+
+    val mapStyleUrl = getLocalProperty("MAP_STYLE_URL")
+        ?.replace("\"","")
     buildConfigField(
         type = "String",
         name = "STYLE_URL",
-        value = "<style url>"
+        value = requireNotNull(mapStyleUrl),
     )
 }

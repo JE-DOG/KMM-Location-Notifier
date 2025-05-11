@@ -21,7 +21,7 @@ agp = "8.2.2"
 androidx-activityCompose = "1.9.1"
 androidx-uiTest = "1.6.8"
 coil = "3.0.0-alpha10"
-buildConfig = "5.4.0"
+buildConfig = "5.6.5"
 ktor = "3.0.0-beta-2"
 jetbrainsKotlinJvm = "1.9.0"
 gms-location = "21.0.1"
@@ -29,7 +29,7 @@ runtimeAndroid = "1.8.0"
 
 [libraries]
 #Android deps
-android-map-core = { module = "io.openmobilemaps:mapscore", version = "3.0.0-rc.6" }
+android-map = { module = "org.maplibre.gl:android-sdk", version = "11.8.7" }
 android-ktx = { module = "androidx.activity:activity-ktx", version = "1.8.2" }
 android-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version = "2.7.0" }
 

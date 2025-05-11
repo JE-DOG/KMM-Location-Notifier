@@ -1,7 +1,6 @@
 package ru.khinkal.locationNotifier
 
 import android.app.Application
-import io.openmobilemaps.mapscore.MapsCore
 import kmp.core.AndroidSystemDeps
 import ru.khinkal.locationNotifier.di.AppComponent
 import ru.khinkal.locationNotifier.di.deps.DepsProvidingHelper
@@ -17,7 +16,6 @@ class LocationNotifierApp : Application() {
         INSTANCE = this
         DepsProvidingHelper.provideDepsToFeatures(appComponent.depsProvider)
         super.onCreate()
-        MapsCore.initialize()
     }
 
     companion object {
