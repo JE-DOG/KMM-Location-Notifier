@@ -1,4 +1,4 @@
-package kmp.map.ext
+package ru.khinkal.locationNotifier.core.map.ext
 
 import io.openmobilemaps.mapscore.shared.map.coordinates.Coord
 import io.openmobilemaps.mapscore.shared.map.coordinates.CoordinateSystemIdentifiers

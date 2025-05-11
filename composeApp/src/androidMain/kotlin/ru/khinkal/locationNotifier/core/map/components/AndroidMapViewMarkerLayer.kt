@@ -1,4 +1,4 @@
-package kmp.map.components
+package ru.khinkal.locationNotifier.core.map.components
 
 import io.openmobilemaps.mapscore.graphics.BitmapTextureHolder
 import io.openmobilemaps.mapscore.map.view.MapView
@@ -7,9 +7,9 @@ import io.openmobilemaps.mapscore.shared.graphics.shader.BlendMode
 import io.openmobilemaps.mapscore.shared.map.layers.icon.IconFactory
 import io.openmobilemaps.mapscore.shared.map.layers.icon.IconLayerInterface
 import io.openmobilemaps.mapscore.shared.map.layers.icon.IconType
-import kmp.map.ext.toCoord
-import kmp.map.model.MapViewMarker
 import ru.khinkal.locationNotifier.R
+import ru.khinkal.locationNotifier.core.map.ext.toCoord
+import ru.khinkal.locationNotifier.core.map.model.MapViewMarker
 
 class AndroidMapViewMarkerLayer(
     private val mapView: MapView,

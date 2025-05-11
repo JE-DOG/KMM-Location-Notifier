@@ -131,4 +131,9 @@ dependencies {
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+    buildConfigField(
+        type = "String",
+        name = "STYLE_URL",
+        value = "<style url>"
+    )
 }
