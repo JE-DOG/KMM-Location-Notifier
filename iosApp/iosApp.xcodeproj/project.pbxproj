@@ -14,6 +14,7 @@
 		98D3579B2D3C59FF00E21AB1 /* MapUiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579A2D3C59FF00E21AB1 /* MapUiViewController.swift */; };
 		98D3579D2D3C5A1C00E21AB1 /* MapControllerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579C2D3C5A1C00E21AB1 /* MapControllerImpl.swift */; };
 		98D357A12D3C5A4700E21AB1 /* MapMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D357A02D3C5A4700E21AB1 /* MapMarkerLayer.swift */; };
+		98D980172DD2844000E40B79 /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 98D980162DD2844000E40B79 /* MapLibre */; };
 		98F29B682DD0C92800150661 /* MapViewProviderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F29B672DD0C92800150661 /* MapViewProviderImpl.swift */; };
 		98F29B6A2DD0D38800150661 /* MapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F29B692DD0D38800150661 /* MapUtil.swift */; };
 		A93A953F29CC810D00F8E227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A953E29CC810D00F8E227 /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98D980172DD2844000E40B79 /* MapLibre in Frameworks */,
 				98480A812DC5737900BD9CAF /* MapLibre in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,6 +461,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		98480A802DC5737900BD9CAF /* MapLibre */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98480A7F2DC5737900BD9CAF /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
+			productName = MapLibre;
+		};
+		98D980162DD2844000E40B79 /* MapLibre */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 98480A7F2DC5737900BD9CAF /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
 			productName = MapLibre;
