@@ -1,4 +1,4 @@
-package kmp.map.model
+package ru.khinkal.locationNotifier.core.map.model
 
 import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 

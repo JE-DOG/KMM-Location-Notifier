@@ -11,12 +11,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kmp.map.Map
-import kmp.map.components.MapViewProperty
-import kmp.map.model.MapViewMarker
 import ru.khinkal.locationNotifier.core.location.model.GeoPoint
+import ru.khinkal.locationNotifier.core.map.components.MapViewProperty
+import ru.khinkal.locationNotifier.core.map.model.MapViewMarker
+import ru.khinkal.locationNotifier.core.map.ui.Map
 
-private const val SET_GEO_POINT_MARKER_ID = "SET_GEO_POINT_MARKER_ID"
+private const val SET_GEO_POINT_MARKER_ID = "Set geo point marker"
 
 @Composable
 fun SetGeoPointContent(
@@ -42,24 +42,28 @@ fun SetGeoPointContent(
             SetGeoPointBottomBar(
                 modifier = Modifier
                     .navigationBarsPadding()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp),
                 onClick = {
                     onConfirm(selectedGeoPoint)
                 },
             )
-        }
+        },
     ) { _ ->
         Map(
             modifier = Modifier.fillMaxSize(),
-            mapViewManagerUpdate = { mapViewManager ->
+            initialize = { mapViewManager ->
                 with(mapViewManager.controller) {
-                    setCenter(MapViewProperty.START_BASE_GEO_POINT)
-                    zoomTo(MapViewProperty.START_ZOOM)
+                    setCenter(
+                        geoPoint = MapViewProperty.START_GEO_POINT,
+                        zoom = MapViewProperty.START_ZOOM,
+                    )
                 }
                 mapViewManager.handler.setOnClickListener { baseGeoPoint ->
                     selectedGeoPoint = baseGeoPoint
                 }
-
+            },
+            update = { mapViewManager ->
                 val selectedGeoPoint = selectedGeoPoint
                 if (selectedGeoPoint != null) {
                     val marker = MapViewMarker(
