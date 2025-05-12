@@ -137,7 +137,7 @@ buildConfig {
         ?.replace("\"","")
     buildConfigField(
         type = "String",
-        name = "STYLE_URL",
+        name = "MAP_STYLE_URL",
         value = requireNotNull(mapStyleUrl),
     )
 }

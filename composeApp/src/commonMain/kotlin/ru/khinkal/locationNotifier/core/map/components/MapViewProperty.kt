@@ -8,7 +8,7 @@ object MapViewProperty {
     const val MIN_ZOOM = 3.0
     const val START_ZOOM = 12.0
 
-    const val STYLE_URL = BuildConfig.STYLE_URL
+    const val STYLE_URL = BuildConfig.MAP_STYLE_URL
 
     // TODO: LN-23 - Add button which set map location by user geolocation and zoom controllers
     val START_GEO_POINT
