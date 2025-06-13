@@ -5,6 +5,7 @@ import com.android.build.api.dsl.BuildFeatures
 import com.android.build.api.dsl.BuildType
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.DefaultConfig
+import com.android.build.api.dsl.Installation
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.ProductFlavor
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
@@ -21,7 +22,8 @@ private typealias AndroidExtensions = CommonExtension<
         out BuildType,
         out DefaultConfig,
         out ProductFlavor,
-        out AndroidResources>
+        out AndroidResources,
+        out Installation>
 
 private val Project.androidExtension: AndroidExtensions
     get() = extensions.findByType(BaseAppModuleExtension::class)

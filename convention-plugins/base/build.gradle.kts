@@ -11,8 +11,6 @@ dependencies {
     with(libs) {
         with(gradleplugin) {
             implementation(android)
-            implementation(compose)
-            implementation(composeCompiler)
             implementation(kotlin)
         }
         // Workaround for version catalog working inside precompiled scripts

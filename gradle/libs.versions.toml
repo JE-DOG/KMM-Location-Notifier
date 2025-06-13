@@ -1,79 +1,59 @@
-# TODO: LN-21 Clean and update dependencies(Tech-debt iteration 5)
-
 [versions]
+# -------------------------- Not for depencencies --------------------------
 # android sdk
 android-sdk-compile = "35"
 android-sdk-target = "35"
 android-sdk-min = "29"
 
-kotlin = "2.0.0"
 java = "17"
-kotlinx-datetime = "0.6.1"
-kotlinx-coroutines = "1.9.0-RC.2"
-kotlinx-serialization = "1.7.2"
-ksp = "2.0.10-1.0.24"
-compose = "1.7.0-beta01"
-compose-icons = "1.1.0"
-compose-navigation = "2.8.0-alpha10"
-androidx-room = "2.7.0-alpha07"
-androidx-sqlite = "2.5.0-alpha07"
-agp = "8.2.2"
-androidx-activityCompose = "1.9.1"
-androidx-uiTest = "1.6.8"
-coil = "3.0.0-alpha10"
+# -------------------------- Not for depencencies --------------------------
+
+kotlin = "2.2.0-RC2"
+kotlinx-coroutines = "1.10.2"
+kotlinx-serialization = "1.8.1"
+ksp = "2.2.0-RC2-2.0.2"
+compose = "1.8.1"
+compose-navigation = "2.9.0-beta02"
+room = "2.7.1"
+sqlite = "2.5.1"
+agp = "8.7.3"
 buildConfig = "5.6.5"
-ktor = "3.0.0-beta-2"
 jetbrainsKotlinJvm = "1.9.0"
-gms-location = "21.0.1"
-runtimeAndroid = "1.8.0"
+gms-location = "21.3.0"
 
 [libraries]
-#Android deps
+# -------------------------- Android --------------------------
+# Map
 android-map = { module = "org.maplibre.gl:android-sdk", version = "11.8.7" }
-android-ktx = { module = "androidx.activity:activity-ktx", version = "1.8.2" }
-android-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version = "2.7.0" }
 
+# GMS
 gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "gms-location" }
 
 #AndroidX
-androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
-androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.10.1" }
+androidx-ktx = { module = "androidx.activity:activity-ktx", version = "1.10.1" }
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version = "2.9.1" }
+# -------------------------- Android --------------------------
 
-#Compose
-composeIcons-featherIcons = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "compose-icons" }
+# Compose
 compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
 
-#Coil
-coil = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
-
-#Kotlin
+# Kotlin
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
-#Ktor
-ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
-ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+# Room
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "sqlite" }
 
-#Room
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
-androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "androidx-sqlite" }
-
-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.3"
+# Settings storage
+datastore-preferences = "androidx.datastore:datastore-preferences:1.1.7"
 
 # Plugins for composite build
 gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-gradleplugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose" }
-gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "compose" }
 gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
+androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version = "1.8.2" }
 
 [plugins]
 
@@ -85,7 +65,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-room = { id = "androidx.room", version.ref = "androidx-room" }
+room = { id = "androidx.room", version.ref = "room" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
 # Convetion plugins
