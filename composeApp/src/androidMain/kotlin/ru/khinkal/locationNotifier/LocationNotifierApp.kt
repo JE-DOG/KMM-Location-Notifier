@@ -8,14 +8,20 @@ import ru.khinkal.locationNotifier.di.deps.DepsProvidingHelper
 class LocationNotifierApp : Application() {
 
     private val appComponent by lazy {
-        AppComponent(AndroidSystemDeps(this))
+        AppComponent(
+            systemDeps = AndroidSystemDeps(this),
+        )
     }
 
     // Add class for initialize?
     override fun onCreate() {
         INSTANCE = this
-        DepsProvidingHelper.provideDepsToFeatures(appComponent.depsProvider)
+        provideDeps()
         super.onCreate()
+    }
+
+    private fun provideDeps() {
+        DepsProvidingHelper.provideDepsToFeatures(appComponent.depsProvider)
     }
 
     companion object {

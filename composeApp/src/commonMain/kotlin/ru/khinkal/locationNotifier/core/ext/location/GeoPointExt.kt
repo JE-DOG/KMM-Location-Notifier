@@ -11,7 +11,7 @@ private const val RADIANS = 0.017453292519943295
 
 private fun toRadians(agree: Double) = agree * RADIANS
 
-infix fun GeoPoint.distanceInMeters(point: GeoPoint): Int {
+infix fun GeoPoint.distanceInMetersTo(point: GeoPoint): Int {
     val lon1 = toRadians(point.longitude)
     val lon2 = toRadians(longitude)
     val lat1 = toRadians(point.latitude)

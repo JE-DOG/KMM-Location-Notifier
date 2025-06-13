@@ -7,6 +7,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -44,7 +45,7 @@ class SettingsViewModel(
             _state.update { state ->
                 state.copy(isLoading = true)
             }
-            val locationUpdateSeconds = async { settingsManager.getLocationUpdateSeconds() }
+            val locationUpdateSeconds = async { settingsManager.getLocationUpdateSeconds().first() }
             val isVibrationEnabled = async { settingsManager.isVibrationEnabled() }
 
             _state.update { state ->

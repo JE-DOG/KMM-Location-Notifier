@@ -1,5 +1,5 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.compose.internal.utils.getLocalProperty
+import ru.khinkal.locationNotifier.convention_plugins.base.ext.project.getLocalPropertyRawValue
 
 // TODO: LN-21 Clean and update dependencies(Tech-debt iteration 5)
 plugins {
@@ -133,8 +133,7 @@ buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
 
-    val mapStyleUrl = getLocalProperty("MAP_STYLE_URL")
-        ?.replace("\"","")
+    val mapStyleUrl = getLocalPropertyRawValue("MAP_STYLE_URL")
     buildConfigField(
         type = "String",
         name = "MAP_STYLE_URL",

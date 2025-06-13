@@ -17,16 +17,16 @@ class AppActivity : ComponentActivity() {
     }
 
     private fun requestNeededPermissions() {
+        val permissions = buildList {
+            add(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                add(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
         requestPermissions(
-            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            permissions.toTypedArray(),
             1,
         )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestPermissions(
-                arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
-                1,
-            )
-        }
     }
 }
 
