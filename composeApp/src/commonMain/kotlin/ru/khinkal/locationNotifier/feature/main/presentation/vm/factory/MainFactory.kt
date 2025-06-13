@@ -18,7 +18,8 @@ fun rememberMainViewModelFactory(
         initializer {
             MainViewModel(
                 navController = navController,
-                locationRepository = component.locationListRepository,
+                goalGeoPointRepository = component.goalGeoPointRepository,
+                goalGeoPointBroadcaster = component.goalGeoPointBroadcaster,
             )
         }
     }

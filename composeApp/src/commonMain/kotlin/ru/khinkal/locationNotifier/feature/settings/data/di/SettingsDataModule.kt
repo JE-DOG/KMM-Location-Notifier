@@ -8,23 +8,29 @@ import ru.khinkal.locationNotifier.feature.settings.data.SettingsManagerImpl
 import ru.khinkal.locationNotifier.feature.settings.data.storage.SettingsLocalDataSource
 import ru.khinkal.locationNotifier.feature.settings.domain.SettingsManager
 
-class SettingsDataModule(
-    private val pathManager: PathManager,
-) {
+class SettingsDataModule {
 
-    private fun provideSettingsDatastore(): DataStore<Preferences> {
+    private fun provideSettingsDatastore(
+        pathManager: PathManager,
+    ): DataStore<Preferences> {
         return DataStoreHelper.create(
             name = STORAGE_NAME,
             pathManager = pathManager,
         )
     }
 
-    private fun provideSettingsLocalDataSource(): SettingsLocalDataSource {
-        return SettingsLocalDataSource(provideSettingsDatastore())
+    private fun provideSettingsLocalDataSource(
+        settingsDataStore: DataStore<Preferences>,
+    ): SettingsLocalDataSource {
+        return SettingsLocalDataSource(settingsDataStore)
     }
 
-    fun provideSettingsRepository(): SettingsManager {
-        return SettingsManagerImpl(provideSettingsLocalDataSource())
+    fun provideSettingsManager(
+        pathManager: PathManager,
+    ): SettingsManager {
+        val dataStore = provideSettingsDatastore(pathManager)
+        val localDataSource = provideSettingsLocalDataSource(dataStore)
+        return SettingsManagerImpl(localDataSource)
     }
 
     companion object {

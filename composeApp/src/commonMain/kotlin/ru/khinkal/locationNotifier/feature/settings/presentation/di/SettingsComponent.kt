@@ -9,9 +9,13 @@ class SettingsComponent(
     private val deps: SettingsDeps = SettingsDepsFactory.INSTANCE.create(),
 ) {
 
-    private val settingsDataModule by lazy { SettingsDataModule(deps.pathManager) }
+    private val settingsDataModule by lazy {
+        SettingsDataModule()
+    }
 
     val settingsManager: SettingsManager by lazy {
-        settingsDataModule.provideSettingsRepository()
+        settingsDataModule.provideSettingsManager(
+            pathManager = deps.pathManager,
+        )
     }
 }

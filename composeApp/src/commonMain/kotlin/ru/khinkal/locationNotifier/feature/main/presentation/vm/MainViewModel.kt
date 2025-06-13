@@ -15,9 +15,9 @@ import ru.khinkal.locationNotifier.core.errors.UiError
 import ru.khinkal.locationNotifier.core.ext.coroutines.launchCatching
 import ru.khinkal.locationNotifier.core.ext.location.observeResult
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.navigation.CreateGoalScreen
-import ru.khinkal.locationNotifier.feature.main.domain.LocationRepository
+import ru.khinkal.locationNotifier.feature.goalBroadcaster.GoalGeoPointBroadcaster
+import ru.khinkal.locationNotifier.feature.main.domain.GoalGeoPointRepository
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
-import ru.khinkal.locationNotifier.feature.main.presentation.broadcast.startBroadcast
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainAction
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainState
 import ru.khinkal.locationNotifier.feature.settings.presentation.navigation.SettingsScreen
@@ -25,11 +25,11 @@ import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 
 class MainViewModel(
     private val navController: NavController,
-    private val locationRepository: LocationRepository,
+    private val goalGeoPointRepository: GoalGeoPointRepository,
+    private val goalGeoPointBroadcaster: GoalGeoPointBroadcaster,
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<MainState> =
-        MutableStateFlow(MainState.EMPTY)
+    private val _state: MutableStateFlow<MainState> = MutableStateFlow(MainState.EMPTY)
     val state: StateFlow<MainState> = _state
         .onStart { fetchLocations() }
         .stateIn(
@@ -46,7 +46,7 @@ class MainViewModel(
         _state.update { state ->
             state.copy(isLoading = true)
         }
-        val locations = locationRepository.getAllLocation()
+        val locations = goalGeoPointRepository.getAll()
         _state.update { state ->
             state.copy(
                 goalGeoPoints = locations,
@@ -87,7 +87,7 @@ class MainViewModel(
                     goalGeoPoints = state.goalGeoPoints + goalGeoPoint,
                 )
             }
-            locationRepository.addLocation(goalGeoPoint)
+            goalGeoPointRepository.add(goalGeoPoint)
         }
     }
 
@@ -108,6 +108,6 @@ class MainViewModel(
     }
 
     private fun onLocationClick(goalGeoPoint: GoalGeoPoint) {
-        startBroadcast(goalGeoPoint)
+        goalGeoPointBroadcaster.startBroadcast(goalGeoPoint)
     }
 }

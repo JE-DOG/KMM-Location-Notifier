@@ -1,5 +1,6 @@
 package ru.khinkal.locationNotifier.feature.settings.data
 
+import kotlinx.coroutines.flow.Flow
 import ru.khinkal.locationNotifier.feature.settings.data.storage.SettingsLocalDataSource
 import ru.khinkal.locationNotifier.feature.settings.domain.SettingsManager
 
@@ -13,7 +14,7 @@ class SettingsManagerImpl(
     override suspend fun setIsVibrationEnabled(enable: Boolean) =
         settingsLocalDataSource.setIsVibrationEnabled(enable)
 
-    override suspend fun getLocationUpdateSeconds(): Int =
+    override fun getLocationUpdateSeconds(): Flow<Int> =
         settingsLocalDataSource.getLocationUpdateSeconds()
 
     override suspend fun setLocationUpdateSeconds(seconds: Int) =
