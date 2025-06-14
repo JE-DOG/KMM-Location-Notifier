@@ -18,7 +18,6 @@ room = "2.7.1"
 sqlite = "2.5.1"
 agp = "8.7.3"
 buildConfig = "5.6.5"
-jetbrainsKotlinJvm = "1.9.0"
 gms-location = "21.3.0"
 
 [libraries]
@@ -66,7 +65,7 @@ buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 
 # Convetion plugins
 convention-android-base = { id = "android.base" }
