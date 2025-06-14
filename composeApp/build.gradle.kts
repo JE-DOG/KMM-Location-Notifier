@@ -73,6 +73,17 @@ android {
         debug {
             applicationIdSuffix = ".debug"
         }
+
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+//            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
+    lint {
+        // Without it crush on release build
+        disable.add("NullSafeMutableLiveData")
     }
 }
 
