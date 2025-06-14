@@ -4,13 +4,15 @@ import android.app.ActivityManager
 import android.app.ActivityManager.RunningServiceInfo
 import android.app.Service
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import androidx.core.content.getSystemService
 
 fun Context.checkPermission(
     permission: String,
     onPermissionDenied: () -> Unit = {},
-    onPermissionGranted: () -> Unit
+    onPermissionGranted: () -> Unit,
 ) {
     val permissionResult = ActivityCompat.checkSelfPermission(this, permission)
     if (permissionResult == PackageManager.PERMISSION_GRANTED) {
@@ -18,16 +20,20 @@ fun Context.checkPermission(
     } else {
         onPermissionDenied()
     }
-
 }
 
-fun <S : Service> Context.isServiceActive(serviceClass: Class<S>): Boolean {
-    val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+inline fun <reified S : Service> Context.isServiceActive(): Boolean {
+    val activityManager = requireNotNull(getSystemService<ActivityManager>())
     for (service: RunningServiceInfo in activityManager.getRunningServices(Int.MAX_VALUE)) {
-        if (service.service.className == serviceClass.name) {
+        if (service.service.className == S::class.java.name) {
             return true
         }
     }
 
     return false
+}
+
+inline fun <reified S : Service> Context.cancelServie() {
+    val intent = Intent(this, S::class.java)
+    stopService(intent)
 }

@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import ru.khinkal.locationNotifier.core.ext.location.observeResult
 import ru.khinkal.locationNotifier.core.ext.location.returnResult
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
-import ru.khinkal.locationNotifier.feature.locationList.domain.model.GeoPoint
+import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointScreen
 import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 
@@ -40,9 +40,9 @@ class CreateGoalViewModel(
             val geoPointSelectedJson = baseGeoPointSelectedJsonFlow
                 .filterNotNull()
                 .first()
-            val baseGeoPointSelected = Json.decodeFromString<BaseGeoPoint>(geoPointSelectedJson)
+            val geoPointSelected = Json.decodeFromString<GeoPoint>(geoPointSelectedJson)
 
-            _state.update { it.copy(baseGeoPoint = baseGeoPointSelected) }
+            _state.update { it.copy(geoPoint = geoPointSelected) }
         }
     }
 
@@ -88,25 +88,13 @@ class CreateGoalViewModel(
         _state.update { it.copy(meters = meters) }
     }
 
-    private fun createGeoPoint(): GeoPoint? {
+    private fun createGeoPoint(): GoalGeoPoint? {
         val state = state.value
-        if (!isInputDataValid(state)) return null
-        return state.run {
-            GeoPoint(
-                name = name,
-                meters = meters!!,
-                latitude = baseGeoPoint!!.latitude,
-                longitude = baseGeoPoint.longitude,
-            )
-        }
-    }
-
-    private fun isInputDataValid(state: CreateGoalState): Boolean {
-        with(state) {
-            if (name.isEmpty()) return false
-            if (meters == null || meters < 0) return false
-            if (baseGeoPoint == null) return false
-        }
-        return true
+        if (state.name.isEmpty())  return null
+        return GoalGeoPoint(
+            name = state.name,
+            meters = state.meters ?: return null,
+            geoPoint = state.geoPoint ?: return null,
+        )
     }
 }

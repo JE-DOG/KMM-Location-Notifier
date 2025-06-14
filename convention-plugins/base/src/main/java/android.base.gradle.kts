@@ -16,7 +16,6 @@ androidConfig {
 }
 
 multiplatformAndroidConfig {
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions { jvmTarget.set(JvmTarget.JVM_1_8) }
     //https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
     @OptIn(ExperimentalKotlinGradlePluginApi::class)

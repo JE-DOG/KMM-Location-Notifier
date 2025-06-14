@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".LocationNotifierApp"
         android:icon="@android:drawable/ic_menu_compass"
@@ -28,7 +30,7 @@
         </activity>
 
         <service
-            android:name=".feature.locationList.presentation.broadcast.BroadcastLocationService"
+            android:name=".feature.main.presentation.broadcast.GoalGeoPointBroadcastForegroundService"
             android:foregroundServiceType="location"/>
     </application>
 

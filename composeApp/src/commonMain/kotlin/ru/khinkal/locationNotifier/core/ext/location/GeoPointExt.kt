@@ -1,6 +1,6 @@
 package ru.khinkal.locationNotifier.core.ext.location
 
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import kotlin.math.asin
 import kotlin.math.cos
 import kotlin.math.pow
@@ -11,7 +11,7 @@ private const val RADIANS = 0.017453292519943295
 
 private fun toRadians(agree: Double) = agree * RADIANS
 
-infix fun BaseGeoPoint.distanceInMeters(point: BaseGeoPoint): Int {
+infix fun GeoPoint.distanceInMetersTo(point: GeoPoint): Int {
     val lon1 = toRadians(point.longitude)
     val lon2 = toRadians(longitude)
     val lat1 = toRadians(point.latitude)

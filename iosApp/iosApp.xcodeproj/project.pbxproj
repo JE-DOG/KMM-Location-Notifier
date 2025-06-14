@@ -7,17 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1296791E2D3007540019D617 /* MapCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1296791D2D3007540019D617 /* MapCore */; };
-		129679202D3007540019D617 /* MapCoreSharedModule in Frameworks */ = {isa = PBXBuildFile; productRef = 1296791F2D3007540019D617 /* MapCoreSharedModule */; };
-		129679222D3007540019D617 /* MapCoreSharedModuleCpp in Frameworks */ = {isa = PBXBuildFile; productRef = 129679212D3007540019D617 /* MapCoreSharedModuleCpp */; };
 		9808FD0C2D3C587D001E5707 /* DependencyInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9808FD0B2D3C587D001E5707 /* DependencyInitializer.swift */; };
+		98480A812DC5737900BD9CAF /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 98480A802DC5737900BD9CAF /* MapLibre */; };
 		987785F22D20B0120086EF9A /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987785F12D20B0120086EF9A /* iosApp.swift */; };
-		98C4CBFE2D46A5F500D6EAA9 /* LNIosMapViewDepsProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C4CBFD2D46A5F500D6EAA9 /* LNIosMapViewDepsProviderFactory.swift */; };
-		98C7AA652D3CFC5C006A6B88 /* MapViewLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C7AA642D3CFC5C006A6B88 /* MapViewLayer.swift */; };
-		98D3579B2D3C59FF00E21AB1 /* LNMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579A2D3C59FF00E21AB1 /* LNMapView.swift */; };
-		98D3579D2D3C5A1C00E21AB1 /* LNMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579C2D3C5A1C00E21AB1 /* LNMapViewController.swift */; };
-		98D3579F2D3C5A3200E21AB1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579E2D3C5A3200E21AB1 /* MapViewController.swift */; };
-		98D357A12D3C5A4700E21AB1 /* MapViewMarkerLayerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D357A02D3C5A4700E21AB1 /* MapViewMarkerLayerImpl.swift */; };
+		98C4CBFE2D46A5F500D6EAA9 /* MapViewProviderFactoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C4CBFD2D46A5F500D6EAA9 /* MapViewProviderFactoryImpl.swift */; };
+		98D3579B2D3C59FF00E21AB1 /* MapUiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579A2D3C59FF00E21AB1 /* MapUiViewController.swift */; };
+		98D3579D2D3C5A1C00E21AB1 /* MapControllerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3579C2D3C5A1C00E21AB1 /* MapControllerImpl.swift */; };
+		98D357A12D3C5A4700E21AB1 /* MapMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D357A02D3C5A4700E21AB1 /* MapMarkerLayer.swift */; };
+		98D980172DD2844000E40B79 /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 98D980162DD2844000E40B79 /* MapLibre */; };
+		98F29B682DD0C92800150661 /* MapViewProviderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F29B672DD0C92800150661 /* MapViewProviderImpl.swift */; };
+		98F29B6A2DD0D38800150661 /* MapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F29B692DD0D38800150661 /* MapUtil.swift */; };
 		A93A953F29CC810D00F8E227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A953E29CC810D00F8E227 /* Assets.xcassets */; };
 		A93A954229CC810D00F8E227 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A954129CC810D00F8E227 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -27,12 +26,12 @@
 		9808FD0B2D3C587D001E5707 /* DependencyInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInitializer.swift; sourceTree = "<group>"; };
 		987785F12D20B0120086EF9A /* iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosApp.swift; sourceTree = "<group>"; };
 		98B8431E2D21E56F00920785 /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
-		98C4CBFD2D46A5F500D6EAA9 /* LNIosMapViewDepsProviderFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LNIosMapViewDepsProviderFactory.swift; sourceTree = "<group>"; };
-		98C7AA642D3CFC5C006A6B88 /* MapViewLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewLayer.swift; sourceTree = "<group>"; };
-		98D3579A2D3C59FF00E21AB1 /* LNMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LNMapView.swift; sourceTree = "<group>"; };
-		98D3579C2D3C5A1C00E21AB1 /* LNMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LNMapViewController.swift; sourceTree = "<group>"; };
-		98D3579E2D3C5A3200E21AB1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		98D357A02D3C5A4700E21AB1 /* MapViewMarkerLayerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewMarkerLayerImpl.swift; sourceTree = "<group>"; };
+		98C4CBFD2D46A5F500D6EAA9 /* MapViewProviderFactoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewProviderFactoryImpl.swift; sourceTree = "<group>"; };
+		98D3579A2D3C59FF00E21AB1 /* MapUiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUiViewController.swift; sourceTree = "<group>"; };
+		98D3579C2D3C5A1C00E21AB1 /* MapControllerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapControllerImpl.swift; sourceTree = "<group>"; };
+		98D357A02D3C5A4700E21AB1 /* MapMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerLayer.swift; sourceTree = "<group>"; };
+		98F29B672DD0C92800150661 /* MapViewProviderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewProviderImpl.swift; sourceTree = "<group>"; };
+		98F29B692DD0D38800150661 /* MapUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUtil.swift; sourceTree = "<group>"; };
 		A93A953729CC810C00F8E227 /* Location Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Location Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93A953E29CC810D00F8E227 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A93A954129CC810D00F8E227 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -43,9 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1296791E2D3007540019D617 /* MapCore in Frameworks */,
-				129679202D3007540019D617 /* MapCoreSharedModule in Frameworks */,
-				129679222D3007540019D617 /* MapCoreSharedModuleCpp in Frameworks */,
+				98D980172DD2844000E40B79 /* MapLibre in Frameworks */,
+				98480A812DC5737900BD9CAF /* MapLibre in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				9808FD0B2D3C587D001E5707 /* DependencyInitializer.swift */,
+				9808FD0D2D3C59A6001E5707 /* map */,
 			);
 			path = deps;
 			sourceTree = "<group>";
@@ -63,14 +62,30 @@
 		9808FD0D2D3C59A6001E5707 /* map */ = {
 			isa = PBXGroup;
 			children = (
-				98D3579A2D3C59FF00E21AB1 /* LNMapView.swift */,
-				98D3579C2D3C5A1C00E21AB1 /* LNMapViewController.swift */,
-				98D3579E2D3C5A3200E21AB1 /* MapViewController.swift */,
-				98D357A02D3C5A4700E21AB1 /* MapViewMarkerLayerImpl.swift */,
-				98C7AA642D3CFC5C006A6B88 /* MapViewLayer.swift */,
-				98C4CBFD2D46A5F500D6EAA9 /* LNIosMapViewDepsProviderFactory.swift */,
+				98F29B6C2DD12FB100150661 /* components */,
+				98F29B6B2DD12FA500150661 /* util */,
+				98D3579A2D3C59FF00E21AB1 /* MapUiViewController.swift */,
 			);
 			path = map;
+			sourceTree = "<group>";
+		};
+		98F29B6B2DD12FA500150661 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				98F29B692DD0D38800150661 /* MapUtil.swift */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		98F29B6C2DD12FB100150661 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				98F29B672DD0C92800150661 /* MapViewProviderImpl.swift */,
+				98D3579C2D3C5A1C00E21AB1 /* MapControllerImpl.swift */,
+				98D357A02D3C5A4700E21AB1 /* MapMarkerLayer.swift */,
+				98C4CBFD2D46A5F500D6EAA9 /* MapViewProviderFactoryImpl.swift */,
+			);
+			path = components;
 			sourceTree = "<group>";
 		};
 		A93A952E29CC810C00F8E227 = {
@@ -93,7 +108,6 @@
 		A93A953929CC810C00F8E227 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				9808FD0D2D3C59A6001E5707 /* map */,
 				9808FD0A2D3C5866001E5707 /* deps */,
 				127F09EB2D38585000396899 /* iosAppDebug.entitlements */,
 				98B8431E2D21E56F00920785 /* iosApp.entitlements */,
@@ -166,7 +180,7 @@
 			);
 			mainGroup = A93A952E29CC810C00F8E227;
 			packageReferences = (
-				1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */,
+				98480A7F2DC5737900BD9CAF /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */,
 			);
 			productRefGroup = A93A953829CC810C00F8E227 /* Products */;
 			projectDirPath = "";
@@ -215,13 +229,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				987785F22D20B0120086EF9A /* iosApp.swift in Sources */,
-				98C7AA652D3CFC5C006A6B88 /* MapViewLayer.swift in Sources */,
-				98D3579B2D3C59FF00E21AB1 /* LNMapView.swift in Sources */,
+				98D3579B2D3C59FF00E21AB1 /* MapUiViewController.swift in Sources */,
 				9808FD0C2D3C587D001E5707 /* DependencyInitializer.swift in Sources */,
-				98D357A12D3C5A4700E21AB1 /* MapViewMarkerLayerImpl.swift in Sources */,
-				98C4CBFE2D46A5F500D6EAA9 /* LNIosMapViewDepsProviderFactory.swift in Sources */,
-				98D3579F2D3C5A3200E21AB1 /* MapViewController.swift in Sources */,
-				98D3579D2D3C5A1C00E21AB1 /* LNMapViewController.swift in Sources */,
+				98F29B682DD0C92800150661 /* MapViewProviderImpl.swift in Sources */,
+				98F29B6A2DD0D38800150661 /* MapUtil.swift in Sources */,
+				98D357A12D3C5A4700E21AB1 /* MapMarkerLayer.swift in Sources */,
+				98C4CBFE2D46A5F500D6EAA9 /* MapViewProviderFactoryImpl.swift in Sources */,
+				98D3579D2D3C5A1C00E21AB1 /* MapControllerImpl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,11 +368,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 75J492J2DH;
+				DEVELOPMENT_TEAM = W7647ZCRWJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Location Notifier";
+				INFOPLIST_KEY_CFBundleDisplayName = "D Location Notifier";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app need your location to provide best feature based on location";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app need your location to provide best feature based on location";
@@ -369,12 +383,15 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.khinkal.locationNotifier.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.khinkal.locationNotifier.debug;
 				PRODUCT_NAME = "Location Notifier";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -388,7 +405,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 75J492J2DH;
+				DEVELOPMENT_TEAM = W7647ZCRWJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -403,11 +420,14 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.khinkal.locationNotifier.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.khinkal.locationNotifier;
 				PRODUCT_NAME = "Location Notifier";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -435,31 +455,26 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */ = {
+		98480A7F2DC5737900BD9CAF /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/openmobilemaps/maps-core";
+			repositoryURL = "https://github.com/maplibre/maplibre-gl-native-distribution.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.2;
+				minimumVersion = 6.12.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1296791D2D3007540019D617 /* MapCore */ = {
+		98480A802DC5737900BD9CAF /* MapLibre */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
-			productName = MapCore;
+			package = 98480A7F2DC5737900BD9CAF /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
+			productName = MapLibre;
 		};
-		1296791F2D3007540019D617 /* MapCoreSharedModule */ = {
+		98D980162DD2844000E40B79 /* MapLibre */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
-			productName = MapCoreSharedModule;
-		};
-		129679212D3007540019D617 /* MapCoreSharedModuleCpp */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1296791C2D3007540019D617 /* XCRemoteSwiftPackageReference "maps-core" */;
-			productName = MapCoreSharedModuleCpp;
+			package = 98480A7F2DC5737900BD9CAF /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
+			productName = MapLibre;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
