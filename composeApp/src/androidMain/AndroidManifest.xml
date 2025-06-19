@@ -14,7 +14,7 @@
 
     <application
         android:name=".LocationNotifierApp"
-        android:icon="@android:drawable/ic_menu_compass"
+        android:icon="@mipmap/ic_launcher"
         android:label="Location Notifier"
         android:theme="@android:style/Theme.Material.NoActionBar">
         <activity

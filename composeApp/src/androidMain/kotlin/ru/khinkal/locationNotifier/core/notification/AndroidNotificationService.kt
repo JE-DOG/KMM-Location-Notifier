@@ -64,8 +64,7 @@ class AndroidNotificationService(
             .apply(builder)
             .apply {
                 setContentTitle(title)
-                // TODO-R set normal icon
-                setSmallIcon(R.drawable.ic_my_location)
+                setSmallIcon(R.drawable.app_icon)
             }
     }
 
