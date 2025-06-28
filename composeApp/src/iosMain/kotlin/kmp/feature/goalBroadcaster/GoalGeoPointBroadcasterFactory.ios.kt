@@ -21,6 +21,7 @@ actual object GoalGeoPointBroadcasterFactory {
             notificationService = component.notificationService,
             locationService = component.locationService,
             coroutineScope = component.coroutineScope,
+            settingsManager = component.settingsManager,
         )
     }
 }

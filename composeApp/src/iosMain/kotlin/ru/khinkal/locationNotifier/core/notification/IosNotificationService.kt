@@ -81,7 +81,6 @@ class IosNotificationService : NotificationService {
     private fun UNMutableNotificationContent.setNotifyType(
         notifyType: NotificationNotifyType,
     ): UNMutableNotificationContent {
-
         when (notifyType) {
             NotificationNotifyType.Silent -> {
                 setInterruptionLevel(
@@ -90,7 +89,6 @@ class IosNotificationService : NotificationService {
             }
 
             is NotificationNotifyType.Sound -> {
-                // Vibration will be used manually after success send
                 setSound(UNNotificationSound.defaultSound)
                 setInterruptionLevel(
                     UNNotificationInterruptionLevel.UNNotificationInterruptionLevelActive,
