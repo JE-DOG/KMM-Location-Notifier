@@ -10,10 +10,12 @@ import ru.khinkal.locationNotifier.core.notification.NotificationService
 import ru.khinkal.locationNotifier.core.notification.model.NotificationData
 import ru.khinkal.locationNotifier.core.notification.model.NotificationNotifyType
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
+import ru.khinkal.locationNotifier.feature.settings.domain.SettingsManager
 
 class IosGoalGeoPointBroadcaster(
     private val notificationService: NotificationService,
     private val locationService: LocationService,
+    private val settingsManager: SettingsManager,
     private val coroutineScope: CoroutineScope,
 ) : GoalGeoPointBroadcaster {
 
@@ -30,7 +32,7 @@ class IosGoalGeoPointBroadcaster(
                     true
                 } else {
                     val updatedNotificationData = notificationData
-                        .copyAndUpdateForReachGoal()
+                        .copyAndUpdateForReachGoal(settingsManager.isNotifyEnabled())
                     notificationService.notify(updatedNotificationData)
                     false
                 }
@@ -58,9 +60,13 @@ class IosGoalGeoPointBroadcaster(
         return "$metersToGoal meters"
     }
 
-    private fun NotificationData.copyAndUpdateForReachGoal(): NotificationData {
+    private fun NotificationData.copyAndUpdateForReachGoal(
+        notifyEnabled: Boolean,
+    ): NotificationData {
         return copy(
-            notifyType = NotificationNotifyType.Sound,
+            notifyType =
+                if (notifyEnabled) NotificationNotifyType.Sound
+                else NotificationNotifyType.Silent,
         )
     }
 }

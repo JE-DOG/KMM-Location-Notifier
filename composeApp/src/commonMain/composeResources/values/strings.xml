@@ -14,6 +14,5 @@
 
     <!--  Settings  -->
     <string name="settings_topbar_title">Settings</string>
-    <string name="settings_vibration_title">Notification vibration</string>
-    <string name="settings_location_update_seconds_title">Location update seconds</string>
+    <string name="settings_notify_title">Notify enabled</string>
 </resources>

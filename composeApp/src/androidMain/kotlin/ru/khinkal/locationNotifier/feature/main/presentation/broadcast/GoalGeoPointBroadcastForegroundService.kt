@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import ru.khinkal.locationNotifier.core.ext.location.distanceInMetersTo
 import ru.khinkal.locationNotifier.core.location.LocationService
@@ -91,7 +90,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
                 if (metersToGoal <= goalGeoPoint.meters) {
                     onReachGoal(
                         goalGeoPoint = goalGeoPoint,
-                        vibrationEnabled = settingsManager.isVibrationEnabled(),
+                        notifyEnabled = settingsManager.isNotifyEnabled(),
                     )
                 } else {
                     onProgressToReachGoal(
@@ -110,21 +109,27 @@ class GoalGeoPointBroadcastForegroundService : Service() {
     }
 
     private fun onReachGoal(
-        vibrationEnabled: Boolean,
+        notifyEnabled: Boolean,
         goalGeoPoint: GoalGeoPoint,
     ) {
-        val notificationData = goalGeoPoint.createReachGoalGeoPointNotificationData()
+        val notificationData = goalGeoPoint.createReachGoalGeoPointNotificationData(
+            notifyEnabled = notifyEnabled,
+        )
         notificationService.notify(notificationData)
-        if (vibrationEnabled) {
+        if (notifyEnabled) {
             vibrationService.vibrate()
         }
         stopSelf()
     }
 
-    private fun GoalGeoPoint.createReachGoalGeoPointNotificationData(): NotificationData {
+    private fun GoalGeoPoint.createReachGoalGeoPointNotificationData(
+        notifyEnabled: Boolean,
+    ): NotificationData {
         return NotificationData(
             id = FOREGROUND_FINISH_NOTIFICATION_ID,
-            notifyType = NotificationNotifyType.Sound,
+            notifyType =
+                if (notifyEnabled) NotificationNotifyType.Sound
+                else NotificationNotifyType.Silent,
             title = "Вы добрались до $name",
         )
     }

@@ -3,11 +3,9 @@ package ru.khinkal.locationNotifier.feature.settings.presentation.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -31,8 +29,7 @@ class SettingsViewModel(
             initialValue = _state.value,
         )
 
-    private var setLocationUpdateSecondsJob by canceledJob()
-    private var setIsVibrationEnabledJob by canceledJob()
+    private var setNotifyEnabledJob by canceledJob()
 
     private fun fetchData() {
         viewModelScope.launchCatching(
@@ -45,13 +42,10 @@ class SettingsViewModel(
             _state.update { state ->
                 state.copy(isLoading = true)
             }
-            val locationUpdateSeconds = async { settingsManager.getLocationUpdateSeconds().first() }
-            val isVibrationEnabled = async { settingsManager.isVibrationEnabled() }
 
             _state.update { state ->
                 state.copy(
-                    locationUpdateSeconds = locationUpdateSeconds.await(),
-                    isVibrationEnabled = isVibrationEnabled.await(),
+                    isNotifyEnabled = settingsManager.isNotifyEnabled(),
                 )
             }
         }
@@ -60,11 +54,8 @@ class SettingsViewModel(
     fun onAction(action: SettingsAction) {
         when (action) {
             is SettingsAction.OnBackClicked -> onBackClicked()
-            is SettingsAction.SetVibrationEnabled ->
-                onSetVibrationEnabled(action.vibrationEnabled)
-
-            is SettingsAction.SetLocationUpdateSeconds ->
-                onSetLocationUpdateSeconds(action.locationUpdateSecondsInterval)
+            is SettingsAction.SetNotifyEnabled ->
+                onSetNotifyEnabled(action.notifyEnabled)
         }
     }
 
@@ -72,23 +63,11 @@ class SettingsViewModel(
         navController.popBackStack()
     }
 
-    private fun onSetVibrationEnabled(vibrationEnabled: Boolean) {
-        _state.value = _state.value.copy(isVibrationEnabled = vibrationEnabled)
+    private fun onSetNotifyEnabled(vibrationEnabled: Boolean) {
+        _state.value = _state.value.copy(isNotifyEnabled = vibrationEnabled)
 
-        setIsVibrationEnabledJob = viewModelScope.launchCatching {
-            settingsManager.setIsVibrationEnabled(vibrationEnabled)
-        }
-    }
-
-    private fun onSetLocationUpdateSeconds(locationUpdateSeconds: Int) {
-        _state.update { state ->
-            state.copy(
-                locationUpdateSeconds = locationUpdateSeconds
-            )
-        }
-
-        setLocationUpdateSecondsJob = viewModelScope.launchCatching {
-            settingsManager.setLocationUpdateSeconds(locationUpdateSeconds)
+        setNotifyEnabledJob = viewModelScope.launchCatching {
+            settingsManager.setIsNotifyEnabled(vibrationEnabled)
         }
     }
 }
