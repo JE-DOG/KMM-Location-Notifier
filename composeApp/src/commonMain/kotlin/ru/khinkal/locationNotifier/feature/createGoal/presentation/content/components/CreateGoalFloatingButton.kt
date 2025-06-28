@@ -8,18 +8,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kmm_location_notifier.composeapp.generated.resources.Res
-import kmm_location_notifier.composeapp.generated.resources.create_goal_start_broadcast
+import kmm_location_notifier.composeapp.generated.resources.create_goal_create
 import org.jetbrains.compose.resources.stringResource
 import ru.khinkal.locationNotifier.shared.theme.AppTypography
 
 @Composable
 fun CreateGoalFloatingButton(
-    modifier: Modifier = Modifier,
+    enabled: Boolean,
     onCreateGoalClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Button(
         modifier = modifier
             .fillMaxWidth(),
+        enabled = enabled,
         onClick = onCreateGoalClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -27,7 +29,7 @@ fun CreateGoalFloatingButton(
         ),
     ) {
         Text(
-            text = stringResource(Res.string.create_goal_start_broadcast),
+            text = stringResource(Res.string.create_goal_create),
             style = AppTypography.Medium_14_500,
         )
     }
