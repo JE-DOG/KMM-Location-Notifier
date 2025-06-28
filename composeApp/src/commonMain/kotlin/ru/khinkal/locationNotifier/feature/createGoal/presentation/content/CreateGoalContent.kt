@@ -41,6 +41,7 @@ fun CreateGoalContent(
             CreateGoalFloatingButton(
                 modifier = Modifier
                     .padding(horizontal = 16.dp),
+                enabled = state.canCreateGoal,
                 onCreateGoalClick = {
                     val action = CreateGoalAction.StartBroadcast
                     sendAction(action)

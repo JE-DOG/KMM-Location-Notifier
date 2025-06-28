@@ -7,13 +7,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import ru.khinkal.locationNotifier.core.ext.location.observeResult
 import ru.khinkal.locationNotifier.core.ext.location.returnResult
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
@@ -22,13 +23,26 @@ import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 
 class CreateGoalViewModel(
     private val navController: NavController,
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(CreateGoalState())
     val state = _state.asStateFlow()
 
     init {
+        observeState()
         observeBaseGeoPoint()
+    }
+
+    private fun observeState() {
+        state
+            .onEach {
+                _state.update { state ->
+                    state.copy(
+                        canCreateGoal = createGeoPoint(state) != null,
+                    )
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun observeBaseGeoPoint() {
@@ -88,9 +102,10 @@ class CreateGoalViewModel(
         _state.update { it.copy(meters = meters) }
     }
 
-    private fun createGeoPoint(): GoalGeoPoint? {
-        val state = state.value
-        if (state.name.isEmpty())  return null
+    private fun createGeoPoint(
+        state: CreateGoalState = this.state.value
+    ): GoalGeoPoint? {
+        if (state.name.isEmpty()) return null
         return GoalGeoPoint(
             name = state.name,
             meters = state.meters ?: return null,

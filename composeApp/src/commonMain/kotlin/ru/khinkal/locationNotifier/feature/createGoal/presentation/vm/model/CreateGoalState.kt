@@ -6,4 +6,5 @@ data class CreateGoalState(
     val name: String = "",
     val meters: Int? = null,
     val geoPoint: GeoPoint? = null,
+    val canCreateGoal: Boolean = false,
 )

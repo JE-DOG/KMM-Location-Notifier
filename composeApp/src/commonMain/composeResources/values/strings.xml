@@ -6,7 +6,7 @@
     <string name="create_goal_name_input_label">Name</string>
     <string name="create_goal_meters_distance_input_label">Meters distance</string>
     <string name="create_goal_location_input_label">Location</string>
-    <string name="create_goal_start_broadcast">Start broadcast</string>
+    <string name="create_goal_create">Create</string>
 
     <!--  Set geo point  -->
     <string name="set_geo_point_screen_title">Set geo point</string>
