@@ -3,15 +3,15 @@ package ru.khinkal.locationNotifier.feature.main.data.storage.room
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import kmp.room.locations.GoalGeoPointDaoDataBaseConstructor
+import kmp.room.locations.AppDataBaseConstructor
 import ru.khinkal.locationNotifier.feature.main.data.storage.model.GoalGeoPointEntity
 
 @Database(
     entities = [GoalGeoPointEntity::class],
     version = 1,
 )
-@ConstructedBy(GoalGeoPointDaoDataBaseConstructor::class)
-abstract class GoalGeoPointDaoDataBase : RoomDatabase() {
+@ConstructedBy(AppDataBaseConstructor::class)
+abstract class AppDataBase : RoomDatabase() {
 
     abstract fun goalGeoPointDao(): GoalGeoPointDao
 

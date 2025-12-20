@@ -1,5 +1,7 @@
 package ru.khinkal.locationNotifier.feature.main.data.storage
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ru.khinkal.locationNotifier.feature.main.data.storage.model.GoalGeoPointEntity
 import ru.khinkal.locationNotifier.feature.main.data.storage.room.GoalGeoPointDao
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
@@ -8,10 +10,10 @@ class GoalGeoPointStorageDataSourceImpl(
     private val locationListDao: GoalGeoPointDao,
 ) : GoalGeoPointStorageDataSource {
 
-    override suspend fun getAll(): List<GoalGeoPoint> =
+    override fun getAll(): Flow<List<GoalGeoPoint>> =
         locationListDao.getAll()
             .map { geoPointEntity ->
-                geoPointEntity.toDomain()
+                geoPointEntity.map { it.toDomain() }
             }
 
     override suspend fun add(goalGeoPoint: GoalGeoPoint) {
