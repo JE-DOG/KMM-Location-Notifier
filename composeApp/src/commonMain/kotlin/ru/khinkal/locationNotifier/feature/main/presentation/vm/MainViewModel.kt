@@ -18,7 +18,6 @@ import ru.khinkal.locationNotifier.feature.main.domain.GoalGeoPointRepository
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainAction
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainState
-import ru.khinkal.locationNotifier.feature.settings.presentation.navigation.SettingsScreen
 
 class MainViewModel(
     private val navController: NavController,
@@ -53,7 +52,6 @@ class MainViewModel(
     fun action(action: MainAction) {
         when (action) {
             is MainAction.OnAddLocationClick -> onAddLocationClick()
-            is MainAction.OnSettingsClick -> onSettingsClick()
             is MainAction.OnLocationClick -> onLocationClick(action.goalGeoPoint)
             is MainAction.OnDeleteLocationClick ->
                 onDeleteLocationClick(action.goalGeoPoint)
@@ -65,10 +63,6 @@ class MainViewModel(
 
     private fun onAddLocationClick() {
         navController.navigate(CreateGoalScreen())
-    }
-
-    private fun onSettingsClick() {
-        navController.navigate(SettingsScreen)
     }
 
     private fun onLocationClick(goalGeoPoint: GoalGeoPoint) {

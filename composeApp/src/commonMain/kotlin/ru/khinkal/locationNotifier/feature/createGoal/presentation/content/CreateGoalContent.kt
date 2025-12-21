@@ -1,10 +1,10 @@
 package ru.khinkal.locationNotifier.feature.createGoal.presentation.content
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.union
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
@@ -27,7 +27,7 @@ fun CreateGoalContent(
         modifier = modifier
             .fillMaxSize(),
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets
-            .add(WindowInsets.ime),
+            .union(WindowInsets.ime),
         topBar = {
             CreateGoalTopBar(
                 onBackClick = {

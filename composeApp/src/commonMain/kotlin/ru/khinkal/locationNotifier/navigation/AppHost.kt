@@ -11,7 +11,6 @@ import ru.khinkal.locationNotifier.feature.createGoal.presentation.navigation.cr
 import ru.khinkal.locationNotifier.feature.main.presentation.navigation.MainScreen
 import ru.khinkal.locationNotifier.feature.main.presentation.navigation.main
 import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.setGeoPoint
-import ru.khinkal.locationNotifier.feature.settings.presentation.navigation.settings
 
 @Composable
 fun AppHost(
@@ -29,7 +28,6 @@ fun AppHost(
         popExitTransition = { ExitTransition.None },
     ) {
         main(navController)
-        settings(navController)
         setGeoPoint(navController)
         createGoal(navController)
     }
