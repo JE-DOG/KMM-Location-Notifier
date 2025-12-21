@@ -6,7 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.di.deps.CreateGoalDeps
 import ru.khinkal.locationNotifier.feature.main.data.storage.room.AppDataBase
 import ru.khinkal.locationNotifier.feature.main.presentation.di.deps.MainDeps
-import ru.khinkal.locationNotifier.feature.settings.presentation.di.deps.SettingsDeps
 
 class DepsProvider(
     override val pathManager: PathManager,
@@ -14,5 +13,4 @@ class DepsProvider(
     override val coroutineScope: CoroutineScope,
     override val appDataBase: AppDataBase,
 ) : MainDeps,
-    SettingsDeps,
     CreateGoalDeps

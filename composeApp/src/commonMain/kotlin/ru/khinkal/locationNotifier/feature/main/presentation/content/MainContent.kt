@@ -22,12 +22,7 @@ fun MainContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            LocationListToolBar(
-                onSettingsClick = {
-                    val action = MainAction.OnSettingsClick
-                    sendAction(action)
-                },
-            )
+            LocationListToolBar()
         },
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {

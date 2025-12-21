@@ -25,7 +25,6 @@ import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive
 import ru.khinkal.locationNotifier.core.vibration.VibrationService
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.GoalGeoPointBroadcasterComponent
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
-import ru.khinkal.locationNotifier.feature.settings.domain.SettingsManager
 
 class GoalGeoPointBroadcastForegroundService : Service() {
 
@@ -33,7 +32,6 @@ class GoalGeoPointBroadcastForegroundService : Service() {
 
     private lateinit var locationService: LocationService
     private lateinit var notificationService: AndroidNotificationService
-    private lateinit var settingsManager: SettingsManager
     private lateinit var vibrationService: VibrationService
 
     override fun onCreate() {
@@ -44,7 +42,6 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         locationService = component.locationService
         notificationService = component.notificationService as AndroidNotificationService
         vibrationService = component.vibrationService
-        settingsManager = component.settingsManager
         super.onCreate()
     }
 
@@ -90,7 +87,6 @@ class GoalGeoPointBroadcastForegroundService : Service() {
                 if (metersToGoal <= goalGeoPoint.meters) {
                     onReachGoal(
                         goalGeoPoint = goalGeoPoint,
-                        notifyEnabled = settingsManager.isNotifyEnabled(),
                     )
                 } else {
                     onProgressToReachGoal(
@@ -109,27 +105,18 @@ class GoalGeoPointBroadcastForegroundService : Service() {
     }
 
     private fun onReachGoal(
-        notifyEnabled: Boolean,
         goalGeoPoint: GoalGeoPoint,
     ) {
-        val notificationData = goalGeoPoint.createReachGoalGeoPointNotificationData(
-            notifyEnabled = notifyEnabled,
-        )
+        val notificationData = goalGeoPoint.createReachGoalGeoPointNotificationData()
         notificationService.notify(notificationData)
-        if (notifyEnabled) {
-            vibrationService.vibrate()
-        }
+        vibrationService.vibrate()
         stopSelf()
     }
 
-    private fun GoalGeoPoint.createReachGoalGeoPointNotificationData(
-        notifyEnabled: Boolean,
-    ): NotificationData {
+    private fun GoalGeoPoint.createReachGoalGeoPointNotificationData(): NotificationData {
         return NotificationData(
             id = FOREGROUND_FINISH_NOTIFICATION_ID,
-            notifyType =
-                if (notifyEnabled) NotificationNotifyType.Sound
-                else NotificationNotifyType.Silent,
+            notifyType = NotificationNotifyType.Sound,
             title = "Вы добрались до $name",
         )
     }
