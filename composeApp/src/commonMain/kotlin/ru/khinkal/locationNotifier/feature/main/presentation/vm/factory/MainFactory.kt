@@ -14,7 +14,8 @@ fun rememberMainViewModelFactory(
     navController: NavController,
 ): ViewModelProvider.Factory = remember {
     viewModelFactory {
-        val component = MainComponent()
+        val component = MainComponent.INSTANCE
+
         initializer {
             MainViewModel(
                 navController = navController,

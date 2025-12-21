@@ -13,5 +13,5 @@ sealed interface CreateGoalAction {
 
     data object OnSetBaseGeoPointClicked : CreateGoalAction
 
-    data object StartBroadcast : CreateGoalAction
+    data object CreateGoalGeoPoint : CreateGoalAction
 }

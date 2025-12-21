@@ -12,22 +12,26 @@ class MainComponent(
 ) {
 
     private val goalGeoPointDataModule: GoalGeoPointDataModule by lazy {
-        GoalGeoPointDataModule(
-            systemDeps = deps.systemDeps,
-            pathManager = deps.pathManager,
-        )
+        GoalGeoPointDataModule()
     }
     private val goalGeoPointBroadcasterModule: GoalGeoPointBroadcasterModule by lazy {
         GoalGeoPointBroadcasterModule()
     }
 
     val goalGeoPointRepository: GoalGeoPointRepository by lazy {
-        goalGeoPointDataModule.provideGoalGeoPointRepository()
+        goalGeoPointDataModule.provideGoalGeoPointRepository(
+            appDataBase = deps.appDataBase,
+        )
     }
     val goalGeoPointBroadcaster: GoalGeoPointBroadcaster by lazy {
         goalGeoPointBroadcasterModule.provideGoalGeoPointBroadcaster(
             systemDeps = deps.systemDeps,
             coroutineScope = deps.coroutineScope,
         )
+    }
+
+    companion object {
+
+        val INSTANCE by lazy { MainComponent() }
     }
 }

@@ -43,7 +43,7 @@ fun CreateGoalContent(
                     .padding(horizontal = 16.dp),
                 enabled = state.canCreateGoal,
                 onCreateGoalClick = {
-                    val action = CreateGoalAction.StartBroadcast
+                    val action = CreateGoalAction.CreateGoalGeoPoint
                     sendAction(action)
                 },
             )

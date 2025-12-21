@@ -12,20 +12,27 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import ru.khinkal.locationNotifier.core.ext.coroutines.launchCatching
 import ru.khinkal.locationNotifier.core.ext.location.observeResult
-import ru.khinkal.locationNotifier.core.ext.location.returnResult
 import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
+import ru.khinkal.locationNotifier.feature.main.domain.GoalGeoPointRepository
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointScreen
 import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
 
 class CreateGoalViewModel(
     private val navController: NavController,
+    private val initialGoalGeoPoint: GoalGeoPoint?,
+    private val geoPointRepository: GoalGeoPointRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(CreateGoalState())
+    private val isEdit = initialGoalGeoPoint != null
+
+    private val _state = MutableStateFlow(
+        CreateGoalState.initial(initialGoalGeoPoint)
+    )
     val state = _state.asStateFlow()
 
     init {
@@ -38,7 +45,7 @@ class CreateGoalViewModel(
             .onEach {
                 _state.update { state ->
                     state.copy(
-                        canCreateGoal = createGeoPoint(state) != null,
+                        canCreateGoal = createGoalGeoPoint(state) != null,
                     )
                 }
             }
@@ -64,7 +71,7 @@ class CreateGoalViewModel(
         when (action) {
             is CreateGoalAction.SetProperty -> onSetPropertyAction(action)
             CreateGoalAction.GoBack -> onBack()
-            CreateGoalAction.StartBroadcast -> onStartBroadcast()
+            CreateGoalAction.CreateGoalGeoPoint -> onCreateGoalGeoPoint()
             CreateGoalAction.OnSetBaseGeoPointClicked -> onSetBaseGeoPointClicked()
         }
     }
@@ -73,14 +80,21 @@ class CreateGoalViewModel(
         navController.popBackStack()
     }
 
-    private fun onStartBroadcast() {
-        val geoPoint = createGeoPoint() ?: return
-        val geoPointJson = Json.encodeToString(geoPoint)
-        navController.returnResult(
-            key = ResultKeys.GOAL_CREATED,
-            result = geoPointJson,
-        )
-        navController.popBackStack()
+    private fun onCreateGoalGeoPoint() {
+        viewModelScope.launchCatching(
+            onFailure = { throwable ->
+                throwable.printStackTrace()
+            },
+        ) {
+            val goalGeoPoint = createGoalGeoPoint() ?: return@launchCatching
+
+            if (isEdit) {
+                geoPointRepository.update(goalGeoPoint)
+            } else {
+                geoPointRepository.add(goalGeoPoint)
+            }
+            navController.popBackStack()
+        }
     }
 
     private fun onSetBaseGeoPointClicked() {
@@ -102,11 +116,12 @@ class CreateGoalViewModel(
         _state.update { it.copy(meters = meters) }
     }
 
-    private fun createGeoPoint(
+    private fun createGoalGeoPoint(
         state: CreateGoalState = this.state.value
     ): GoalGeoPoint? {
         if (state.name.isEmpty()) return null
         return GoalGeoPoint(
+            id = initialGoalGeoPoint?.id ?: 0,
             name = state.name,
             meters = state.meters ?: return null,
             geoPoint = state.geoPoint ?: return null,

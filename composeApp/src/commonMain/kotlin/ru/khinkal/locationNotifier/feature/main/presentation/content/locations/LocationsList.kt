@@ -30,6 +30,14 @@ fun LocationsList(
                 val action = MainAction.OnLocationClick(geoPoint)
                 sendAction(action)
             },
+            onEditClick = { geoPoint ->
+                val action = MainAction.OnEditLocationClick(geoPoint)
+                sendAction(action)
+            },
+            onDeleteClick = { geoPoint ->
+                val action = MainAction.OnDeleteLocationClick(geoPoint)
+                sendAction(action)
+            },
         )
     }
 }

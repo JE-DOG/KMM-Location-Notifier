@@ -8,15 +8,15 @@ android-sdk-min = "29"
 java = "17"
 # -------------------------- Not for depencencies --------------------------
 
-kotlin = "2.2.0-RC2"
+kotlin = "2.2.21"
 kotlinx-coroutines = "1.10.2"
-kotlinx-serialization = "1.8.1"
-ksp = "2.2.0-RC2-2.0.2"
-compose = "1.8.1"
-compose-navigation = "2.9.0-beta02"
-room = "2.7.1"
-sqlite = "2.5.1"
-agp = "8.7.3"
+kotlinx-serialization = "1.9.0"
+ksp = "2.3.3"
+compose = "1.9.3"
+compose-navigation = "2.9.1"
+room = "2.8.4"
+sqlite = "2.6.2"
+agp = "8.13.1"
 buildConfig = "5.6.5"
 gms-location = "21.3.0"
 
@@ -47,7 +47,7 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "sqlite" }
 
 # Settings storage
-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.7"
+datastore-preferences = "androidx.datastore:datastore-preferences:1.2.0"
 
 # Plugins for composite build
 gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }

@@ -21,12 +21,19 @@ class AppComponent(
     val pathManager by lazy {
         coreModule.providePathManager(systemDeps)
     }
+    private val appDataBase by lazy {
+        coreModule.provideAppDataBase(
+            pathManager = pathManager,
+            systemDeps = systemDeps,
+        )
+    }
 
     val depsProvider: DepsProvider by lazy {
         DepsProvider(
             pathManager = pathManager,
             systemDeps = systemDeps,
             coroutineScope = coroutineScope,
+            appDataBase = appDataBase,
         )
     }
 }
