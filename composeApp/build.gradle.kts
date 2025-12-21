@@ -42,6 +42,7 @@ kotlin {
 
                 implementation(components.resources)
             }
+
             with(libs) {
                 with(kotlinx) {
                     implementation(serialization.json)
@@ -53,6 +54,7 @@ kotlin {
                 }
 
                 implementation(datastore.preferences)
+                implementation(permissions)
             }
         }
     }

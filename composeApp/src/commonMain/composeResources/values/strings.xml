@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Location Notifier</string>
 
+    <!--region Main Screen-->
     <string name="main_screen_location_edit">Edit</string>
     <string name="main_screen_location_delete">Delete</string>
+    <string name="main_screen_necessary_permissions_title">Necessary permissions for Location Notifier</string>
+    <string name="main_screen_necessary_permissions_notification">Notification</string>
+    <string name="main_screen_necessary_permissions_location">Location</string>
+    <!--endregion-->
 
     <!--  Create goal  -->
     <string name="create_goal_screen_title">Create goal</string>

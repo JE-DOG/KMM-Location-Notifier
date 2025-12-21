@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ru.khinkal.locationNotifier.feature.main.presentation.content.MainContent
+import ru.khinkal.locationNotifier.feature.main.presentation.content.necessssary_permissions.NecessaryPermissionDialog
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.MainViewModel
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.factory.rememberMainViewModelFactory
 
@@ -21,6 +22,8 @@ fun MainScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
+
+    NecessaryPermissionDialog()
 
     MainContent(
         modifier = modifier,
