@@ -9,18 +9,16 @@
     <string name="main_screen_necessary_permissions_location">Location</string>
     <!--endregion-->
 
-    <!--  Create goal  -->
+    <!--region Create goal screen-->
     <string name="create_goal_screen_title">Create goal</string>
     <string name="create_goal_name_input_label">Name</string>
     <string name="create_goal_meters_distance_input_label">Meters distance</string>
     <string name="create_goal_location_input_label">Location</string>
     <string name="create_goal_create">Create</string>
+    <!--endregion-->
 
-    <!--  Set geo point  -->
+    <!--region Set geo point screen-->
     <string name="set_geo_point_screen_title">Set geo point</string>
     <string name="set_geo_point_confirm_button_text">Confirm</string>
-
-    <!--  Settings  -->
-    <string name="settings_topbar_title">Settings</string>
-    <string name="settings_notify_title">Notify enabled</string>
+    <!--endregion-->
 </resources>

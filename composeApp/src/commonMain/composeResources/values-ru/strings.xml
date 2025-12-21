@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Location Notifier</string>
+
+    <!--region Main Screen-->
+    <string name="main_screen_location_edit">Редактировать</string>
+    <string name="main_screen_location_delete">Удалить</string>
+    <string name="main_screen_necessary_permissions_title">Обязательные разрешения для Location Notifier</string>
+    <string name="main_screen_necessary_permissions_notification">Уведомления</string>
+    <string name="main_screen_necessary_permissions_location">Геолокация</string>
+    <!--endregion-->
+
+    <!--region Create goal screen-->
+    <string name="create_goal_screen_title">Создать цель</string>
+    <string name="create_goal_name_input_label">Название</string>
+    <string name="create_goal_meters_distance_input_label">Дистанция в метрах</string>
+    <string name="create_goal_location_input_label">Локация</string>
+    <string name="create_goal_create">Создать</string>
+    <!--endregion-->
+
+    <!--region Set geo point screen-->
+    <string name="set_geo_point_screen_title">Выбрать место</string>
+    <string name="set_geo_point_confirm_button_text">Подтвердить</string>
+    <!--endregion-->
+</resources>
