@@ -1,8 +1,8 @@
 [versions]
 # -------------------------- Not for depencencies --------------------------
 # android sdk
-android-sdk-compile = "35"
-android-sdk-target = "35"
+android-sdk-compile = "36"
+android-sdk-target = "36"
 android-sdk-min = "29"
 
 java = "17"
@@ -18,6 +18,7 @@ room = "2.8.4"
 sqlite = "2.6.2"
 agp = "8.13.1"
 buildConfig = "5.6.5"
+permissions = "0.9.0"
 gms-location = "21.3.0"
 
 [libraries]
@@ -45,6 +46,9 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "sqlite" }
+
+# Permissions
+permissions = { module = "com.mohamedrejeb.calf:calf-permissions", version.ref = "permissions" }
 
 # Settings storage
 datastore-preferences = "androidx.datastore:datastore-preferences:1.2.0"
