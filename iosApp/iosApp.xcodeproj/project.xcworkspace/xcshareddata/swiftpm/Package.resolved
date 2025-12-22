@@ -1,22 +1,13 @@
 {
-  "originHash" : "78ad0c98a7953394848429745b60e49da26b2dbe8548d95b8136d17574b95515",
+  "originHash" : "190c366dd3c1179911c5f2e181081f704671e5c5e54b7065617a759e481fd20a",
   "pins" : [
     {
-      "identity" : "djinni",
+      "identity" : "maplibre-gl-native-distribution",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/UbiqueInnovation/djinni.git",
+      "location" : "https://github.com/maplibre/maplibre-gl-native-distribution.git",
       "state" : {
-        "revision" : "4bc30b565a2a90a7863e7393243aac293b9f4073",
-        "version" : "1.0.9"
-      }
-    },
-    {
-      "identity" : "maps-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/openmobilemaps/maps-core",
-      "state" : {
-        "revision" : "32258f1c173fe9f60d80863e51a0400967e40149",
-        "version" : "2.6.2"
+        "revision" : "850c3ff144f3234ec6de74354f2f8f63c6ca980d",
+        "version" : "6.13.0"
       }
     }
   ],

@@ -11,18 +11,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import map.Map
-import map.components.MapViewProperty
-import map.model.MapViewMarker
-import ru.khinkal.locationNotifier.core.location.model.BaseGeoPoint
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
+import ru.khinkal.locationNotifier.core.map.components.MapViewProperty
+import ru.khinkal.locationNotifier.core.map.model.MapViewMarker
+import ru.khinkal.locationNotifier.core.map.ui.Map
+
+private const val SET_GEO_POINT_MARKER_ID = "Set geo point marker"
 
 @Composable
 fun SetGeoPointContent(
     modifier: Modifier = Modifier,
     onBackClicked: () -> Unit,
-    onConfirm: (BaseGeoPoint) -> Unit,
+    onConfirm: (GeoPoint) -> Unit,
 ) {
-    var selectedGeoPoint: BaseGeoPoint? by remember {
+    var selectedGeoPoint: GeoPoint? by remember {
         mutableStateOf(null)
     }
 
@@ -40,29 +42,33 @@ fun SetGeoPointContent(
             SetGeoPointBottomBar(
                 modifier = Modifier
                     .navigationBarsPadding()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp),
                 onClick = {
                     onConfirm(selectedGeoPoint)
                 },
             )
-        }
+        },
     ) { _ ->
         Map(
             modifier = Modifier.fillMaxSize(),
-            mapViewManagerUpdate = { mapViewManager ->
+            initialize = { mapViewManager ->
                 with(mapViewManager.controller) {
-                    setCenter(MapViewProperty.START_BASE_GEO_POINT)
-                    zoomTo(MapViewProperty.START_ZOOM)
+                    setCenter(
+                        geoPoint = MapViewProperty.START_GEO_POINT,
+                        zoom = MapViewProperty.START_ZOOM,
+                    )
                 }
                 mapViewManager.handler.setOnClickListener { baseGeoPoint ->
                     selectedGeoPoint = baseGeoPoint
                 }
-
+            },
+            update = { mapViewManager ->
                 val selectedGeoPoint = selectedGeoPoint
                 if (selectedGeoPoint != null) {
                     val marker = MapViewMarker(
-                        id = "1",
-                        baseGeoPoint = selectedGeoPoint,
+                        id = SET_GEO_POINT_MARKER_ID,
+                        geoPoint = selectedGeoPoint,
                     )
                     mapViewManager.markerLayer.addMarker(marker)
                     mapViewManager.controller.moveTo(selectedGeoPoint)

@@ -1,19 +1,24 @@
 <resources>
     <string name="app_name">Location Notifier</string>
 
-    <!--  Create goal  -->
+    <!--region Main Screen-->
+    <string name="main_screen_location_edit">Edit</string>
+    <string name="main_screen_location_delete">Delete</string>
+    <string name="main_screen_necessary_permissions_title">Necessary permissions for Location Notifier</string>
+    <string name="main_screen_necessary_permissions_notification">Notification</string>
+    <string name="main_screen_necessary_permissions_location">Location</string>
+    <!--endregion-->
+
+    <!--region Create goal screen-->
     <string name="create_goal_screen_title">Create goal</string>
     <string name="create_goal_name_input_label">Name</string>
     <string name="create_goal_meters_distance_input_label">Meters distance</string>
     <string name="create_goal_location_input_label">Location</string>
-    <string name="create_goal_start_broadcast">Start broadcast</string>
+    <string name="create_goal_create">Create</string>
+    <!--endregion-->
 
-    <!--  Set geo point  -->
+    <!--region Set geo point screen-->
     <string name="set_geo_point_screen_title">Set geo point</string>
     <string name="set_geo_point_confirm_button_text">Confirm</string>
-
-    <!--  Settings  -->
-    <string name="settings_topbar_title">Settings</string>
-    <string name="settings_vibration_title">Notification vibration</string>
-    <string name="settings_location_update_seconds_title">Location update seconds</string>
+    <!--endregion-->
 </resources>

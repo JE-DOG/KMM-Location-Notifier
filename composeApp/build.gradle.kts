@@ -1,4 +1,4 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
+import ru.khinkal.locationNotifier.convention_plugins.base.ext.project.getLocalProperty
 
 plugins {
     with(libs) {
@@ -20,17 +20,17 @@ plugins {
 }
 
 kotlin {
-    val iosPlatforms = listOf(
+    listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
     )
-    iosPlatforms.forEach {
-        it.binaries.framework {
-            baseName = "composeApp"
-            isStatic = true
+        .forEach {
+            it.binaries.framework {
+                baseName = "composeApp"
+                isStatic = true
+            }
         }
-    }
 
     sourceSets {
         commonMain.dependencies {
@@ -40,15 +40,12 @@ kotlin {
                 implementation(foundation)
                 implementation(material3)
 
-                with(components) {
-                    implementation(resources)
-                    implementation(uiToolingPreview)
-                }
+                implementation(components.resources)
             }
+
             with(libs) {
                 with(kotlinx) {
                     implementation(serialization.json)
-                    implementation(datetime)
                     implementation(coroutines.core)
                 }
                 with(androidx) {
@@ -56,42 +53,9 @@ kotlin {
                     implementation(sqlite.bundled)
                 }
 
-                implementation(coil)
-                implementation(coil.network.ktor)
-                implementation(ktor.core)
-                implementation(composeIcons.featherIcons)
                 implementation(datastore.preferences)
+                implementation(permissions)
             }
-        }
-
-        commonTest.dependencies {
-            implementation(kotlin("test"))
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
-            implementation(libs.kotlinx.coroutines.test)
-        }
-
-        androidMain.dependencies {
-            with(libs) {
-                with(android) {
-                    implementation(map.core)
-                    implementation(lifecycle)
-                    implementation(ktx)
-                }
-                with(gms) {
-                    implementation(location)
-                }
-
-                implementation(androidx.activityCompose)
-                implementation(kotlinx.coroutines.android)
-                implementation(ktor.client.okhttp)
-            }
-            implementation(compose.uiTooling)
-        }
-
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-            implementation(libs.kotlinx.coroutines.core)
         }
     }
 }
@@ -104,7 +68,24 @@ android {
 
         applicationId = "ru.khinkal.locationNotifier"
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "0.0.1"
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+        }
+
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+//            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
+    lint {
+        // Without it crush on release build
+        disable.add("NullSafeMutableLiveData")
     }
 }
 
@@ -114,20 +95,35 @@ room {
 
 //https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
-    androidTestImplementation(libs.androidx.uitest.junit4)
-    debugImplementation(libs.androidx.uitest.testManifest)
-    //temporary fix: https://youtrack.jetbrains.com/issue/CMP-5864
-    androidTestImplementation("androidx.test:monitor") {
-        version { strictly("1.6.1") }
-    }
-
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosX64", libs.androidx.room.compiler)
     add("kspIosArm64", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+
+    with(libs) {
+        with(androidx) {
+            implementation(activity.compose)
+            implementation(runtime.android)
+            implementation(lifecycle)
+            implementation(ktx)
+        }
+
+        implementation(gms.location)
+        implementation(android.map)
+    }
+
+    implementation(compose.uiTooling)
+    implementation(compose.preview)
 }
 
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+
+    val mapStyleUrl = getLocalProperty("MAP_STYLE_URL")
+    buildConfigField(
+        type = "String",
+        name = "MAP_STYLE_URL",
+        value = requireNotNull(mapStyleUrl),
+    )
 }

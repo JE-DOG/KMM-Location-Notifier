@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import kmm_location_notifier.composeapp.generated.resources.Res
 import kmm_location_notifier.composeapp.generated.resources.create_goal_location_input_label
@@ -46,7 +48,7 @@ private fun InputBlock(
     sendAction: (CreateGoalAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val baseGeoPoint = state.baseGeoPoint
+    val geoPoint = state.geoPoint
 
     Column(
         modifier = modifier
@@ -74,10 +76,13 @@ private fun InputBlock(
                 sendAction(action)
             },
             label = stringResource(Res.string.create_goal_meters_distance_input_label),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+            ),
         )
 
-        val locationText = if (baseGeoPoint != null) {
-            "${baseGeoPoint.latitude}, ${baseGeoPoint.longitude}"
+        val locationText = if (geoPoint != null) {
+            "${geoPoint.latitude}, ${geoPoint.longitude}"
         } else {
             ""
         }
@@ -103,6 +108,7 @@ private fun InputField(
     onValueChange: (String) -> Unit,
     enabled: Boolean = true,
     modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
     val textFieldDefaultColors = TextFieldDefaults.colors()
 
@@ -124,6 +130,7 @@ private fun InputField(
                     style = AppTypography.Normal_14_400,
                 )
             }
-        }
+        },
+        keyboardOptions = keyboardOptions,
     )
 }

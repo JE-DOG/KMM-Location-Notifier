@@ -1,8 +1,14 @@
 import composeApp
 
 class DependencyInitializer {
-    
-    func initDeps() {
-        IosMapViewDepsProviderCompanion.shared.INSTANCE = IosMapViewDepsProviderFactoryImpl()
+
+    func invoke() {
+        let initializer = DiInitializer()
+        initializer.invoke()
+        provideMapViewProvider()
+    }
+
+    private func provideMapViewProvider() {
+        IosMapViewProviderFactoryCompanion.shared.INSTANCE = MapViewProviderFactoryImpl()
     }
 }
