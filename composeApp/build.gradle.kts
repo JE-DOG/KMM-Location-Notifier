@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import ru.khinkal.locationNotifier.convention_plugins.base.ext.project.getLocalProperty
 
 plugins {
@@ -11,6 +12,7 @@ plugins {
             alias(kotlinx.serialization)
             alias(room)
             alias(ksp)
+            alias(metro)
 
             with(convention) {
                 alias(android.base)
@@ -20,6 +22,12 @@ plugins {
 }
 
 kotlin {
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -48,6 +56,9 @@ kotlin {
                     implementation(serialization.json)
                     implementation(coroutines.core)
                 }
+                implementation(metro.runtime)
+                implementation(libs.lifecycle.runtime.compose)
+                implementation(libs.lifecycle.viewmodel.compose)
                 with(androidx) {
                     implementation(room.runtime)
                     implementation(sqlite.bundled)

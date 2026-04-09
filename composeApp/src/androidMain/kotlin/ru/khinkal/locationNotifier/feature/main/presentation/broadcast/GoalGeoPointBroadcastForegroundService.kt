@@ -23,7 +23,8 @@ import ru.khinkal.locationNotifier.core.notification.model.NotificationNotifyTyp
 import ru.khinkal.locationNotifier.core.utill.ext.cancelServie
 import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive
 import ru.khinkal.locationNotifier.core.vibration.VibrationService
-import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.GoalGeoPointBroadcasterComponent
+import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.createGoalGeoPointBroadcasterGraph
+import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.deps.GoalGeoPointBroadcasterDeps
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 
 class GoalGeoPointBroadcastForegroundService : Service() {
@@ -35,13 +36,15 @@ class GoalGeoPointBroadcastForegroundService : Service() {
     private lateinit var vibrationService: VibrationService
 
     override fun onCreate() {
-        val component = GoalGeoPointBroadcasterComponent(
-            systemDeps = AndroidSystemDeps(baseContext),
-            coroutineScope = coroutineScope,
-        )
-        locationService = component.locationService
-        notificationService = component.notificationService as AndroidNotificationService
-        vibrationService = component.vibrationService
+        val deps = object : GoalGeoPointBroadcasterDeps {
+            override val systemDeps = AndroidSystemDeps(baseContext)
+            override val coroutineScope =
+                this@GoalGeoPointBroadcastForegroundService.coroutineScope
+        }
+        val graph = createGoalGeoPointBroadcasterGraph(deps = deps)
+        locationService = graph.locationService
+        notificationService = graph.notificationService as AndroidNotificationService
+        vibrationService = graph.vibrationService
         super.onCreate()
     }
 

@@ -2,26 +2,26 @@ package ru.khinkal.locationNotifier
 
 import android.app.Application
 import kmp.core.AndroidSystemDeps
-import ru.khinkal.locationNotifier.di.AppComponent
-import ru.khinkal.locationNotifier.di.deps.DepsProvidingHelper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import ru.khinkal.locationNotifier.di.metro.FeatureDepsFactoryProvider
+import ru.khinkal.locationNotifier.di.metro.createAppGraph
 
 class LocationNotifierApp : Application() {
 
-    private val appComponent by lazy {
-        AppComponent(
-            systemDeps = AndroidSystemDeps(this),
-        )
-    }
-
-    // Add class for initialize?
     override fun onCreate() {
         INSTANCE = this
-        provideDeps()
+        val appGraph = createAppGraph(
+            systemDeps = AndroidSystemDeps(this),
+            coroutineScope = CoroutineScope(
+                Dispatchers.IO + SupervisorJob(),
+            ),
+        )
+        FeatureDepsFactoryProvider.provide(
+            appGraph = appGraph,
+        )
         super.onCreate()
-    }
-
-    private fun provideDeps() {
-        DepsProvidingHelper.provideDepsToFeatures(appComponent.depsProvider)
     }
 
     companion object {
