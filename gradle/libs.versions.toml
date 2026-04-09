@@ -8,11 +8,11 @@ android-sdk-min = "29"
 java = "17"
 # -------------------------- Not for depencencies --------------------------
 
-kotlin = "2.2.21"
+kotlin = "2.3.20"
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.9.0"
 ksp = "2.3.3"
-compose = "1.9.3"
+compose = "1.10.3"
 compose-navigation = "2.9.1"
 room = "2.8.4"
 sqlite = "2.6.2"
@@ -20,6 +20,8 @@ agp = "8.13.1"
 buildConfig = "5.6.5"
 permissions = "0.9.0"
 gms-location = "21.3.0"
+metro = "0.13.2"
+lifecycle = "2.10.0"
 
 [libraries]
 # -------------------------- Android --------------------------
@@ -37,10 +39,16 @@ androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", vers
 
 # Compose
 compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
+# Lifecycle
+lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
 # Kotlin
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+# DI
+metro-runtime = { module = "dev.zacsweers.metro:runtime", version.ref = "metro" }
 
 # Room
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -70,6 +78,7 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 
 # Convetion plugins
 convention-android-base = { id = "android.base" }

@@ -7,7 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.content.CreateGoalContent
-import ru.khinkal.locationNotifier.feature.createGoal.presentation.di.CreateGoalComponent
+import ru.khinkal.locationNotifier.feature.createGoal.presentation.di.createCreateGoalGraph
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.CreateGoalViewModel
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 
@@ -18,12 +18,12 @@ fun CreateGoalScreen(
     modifier: Modifier = Modifier,
 ) {
     val viewModel = viewModel {
-        val component = CreateGoalComponent.INSTANCE
+        val graph = createCreateGoalGraph()
 
         CreateGoalViewModel(
             navController = navController,
             initialGoalGeoPoint = goalGeoPoint,
-            geoPointRepository = component.goalGeoPointRepository,
+            geoPointRepository = graph.goalGeoPointRepository,
         )
     }
     val state by viewModel.state.collectAsStateWithLifecycle()
