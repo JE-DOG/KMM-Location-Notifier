@@ -2,28 +2,24 @@ package ru.khinkal.locationNotifier.feature.createGoal.presentation.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import ru.khinkal.locationNotifier.core.ext.coroutines.launchCatching
-import ru.khinkal.locationNotifier.core.ext.location.observeResult
 import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalAction
+import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalEvent
 import ru.khinkal.locationNotifier.feature.createGoal.presentation.vm.model.CreateGoalState
 import ru.khinkal.locationNotifier.feature.main.domain.GoalGeoPointRepository
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
-import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointScreen
-import ru.khinkal.locationNotifier.shared.navigation.ResultKeys
+import ru.khinkal.locationNotifier.feature.setGeoPoint.navigation.SetGeoPointRoute
 
 class CreateGoalViewModel(
-    private val navController: NavController,
     private val initialGoalGeoPoint: GoalGeoPoint?,
     private val geoPointRepository: GoalGeoPointRepository,
 ) : ViewModel() {
@@ -35,9 +31,11 @@ class CreateGoalViewModel(
     )
     val state = _state.asStateFlow()
 
+    private val _event = Channel<CreateGoalEvent>(capacity = Channel.BUFFERED)
+    val event = _event.receiveAsFlow()
+
     init {
         observeState()
-        observeBaseGeoPoint()
     }
 
     private fun observeState() {
@@ -52,21 +50,6 @@ class CreateGoalViewModel(
             .launchIn(viewModelScope)
     }
 
-    private fun observeBaseGeoPoint() {
-        viewModelScope.launch {
-            val baseGeoPointSelectedJsonFlow = navController.observeResult<String?>(
-                key = ResultKeys.GEO_POINT_SELECTED,
-                initialValue = null,
-            ) ?: return@launch
-            val geoPointSelectedJson = baseGeoPointSelectedJsonFlow
-                .filterNotNull()
-                .first()
-            val geoPointSelected = Json.decodeFromString<GeoPoint>(geoPointSelectedJson)
-
-            _state.update { it.copy(geoPoint = geoPointSelected) }
-        }
-    }
-
     fun onAction(action: CreateGoalAction) {
         when (action) {
             is CreateGoalAction.SetProperty -> onSetPropertyAction(action)
@@ -76,8 +59,13 @@ class CreateGoalViewModel(
         }
     }
 
+    fun onGeoPointSelectedJson(geoPointSelectedJson: String) {
+        val geoPointSelected = Json.decodeFromString<GeoPoint>(geoPointSelectedJson)
+        _state.update { it.copy(geoPoint = geoPointSelected) }
+    }
+
     private fun onBack() {
-        navController.popBackStack()
+        _event.trySend(CreateGoalEvent.NavigateBack)
     }
 
     private fun onCreateGoalGeoPoint() {
@@ -93,12 +81,12 @@ class CreateGoalViewModel(
             } else {
                 geoPointRepository.add(goalGeoPoint)
             }
-            navController.popBackStack()
+            _event.trySend(CreateGoalEvent.NavigateBack)
         }
     }
 
     private fun onSetBaseGeoPointClicked() {
-        navController.navigate(SetGeoPointScreen)
+        _event.trySend(CreateGoalEvent.NavigateTo(SetGeoPointRoute))
     }
 
     private fun onSetPropertyAction(action: CreateGoalAction.SetProperty) {

@@ -2,25 +2,26 @@ package ru.khinkal.locationNotifier.feature.main.presentation.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import ru.khinkal.locationNotifier.core.ext.coroutines.launchCatching
-import ru.khinkal.locationNotifier.feature.createGoal.presentation.navigation.CreateGoalScreen
+import ru.khinkal.locationNotifier.feature.createGoal.presentation.navigation.CreateGoalRoute
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.GoalGeoPointBroadcaster
 import ru.khinkal.locationNotifier.feature.main.domain.GoalGeoPointRepository
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainAction
+import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainEvent
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainState
 
 class MainViewModel(
-    private val navController: NavController,
     private val goalGeoPointRepository: GoalGeoPointRepository,
     private val goalGeoPointBroadcaster: GoalGeoPointBroadcaster,
 ) : ViewModel() {
@@ -33,6 +34,9 @@ class MainViewModel(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = _state.value,
         )
+
+    private val _event = Channel<MainEvent>(capacity = Channel.BUFFERED)
+    val event = _event.receiveAsFlow()
 
     private fun observeLocations() {
         _state.update { it.copy(isLoading = true) }
@@ -62,7 +66,7 @@ class MainViewModel(
     }
 
     private fun onAddLocationClick() {
-        navController.navigate(CreateGoalScreen())
+        _event.trySend(MainEvent.NavigateTo(CreateGoalRoute()))
     }
 
     private fun onLocationClick(goalGeoPoint: GoalGeoPoint) {
@@ -76,6 +80,6 @@ class MainViewModel(
     }
 
     private fun onEditLocationClick(goalGeoPoint: GoalGeoPoint) {
-        navController.navigate(CreateGoalScreen(goalGeoPoint))
+        _event.trySend(MainEvent.NavigateTo(CreateGoalRoute(goalGeoPoint)))
     }
 }

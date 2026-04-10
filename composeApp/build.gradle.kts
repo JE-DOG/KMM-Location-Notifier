@@ -43,7 +43,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             with(compose) {
-                implementation(libs.compose.navigation)
+                implementation(libs.compose.navigation3.ui)
                 implementation(runtime)
                 implementation(foundation)
                 implementation(material3)
@@ -59,6 +59,7 @@ kotlin {
                 implementation(metro.runtime)
                 implementation(libs.lifecycle.runtime.compose)
                 implementation(libs.lifecycle.viewmodel.compose)
+                implementation(libs.lifecycle.viewmodel.nav3)
                 with(androidx) {
                     implementation(room.runtime)
                     implementation(sqlite.bundled)
