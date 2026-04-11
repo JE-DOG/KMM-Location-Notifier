@@ -10,15 +10,15 @@ java = "17"
 
 kotlin = "2.3.20"
 kotlinx-coroutines = "1.10.2"
-kotlinx-serialization = "1.9.0"
-ksp = "2.3.3"
+kotlinx-serialization = "1.11.0"
+ksp = "2.3.6"
 compose = "1.10.3"
 compose-navigation3 = "1.0.0-alpha06"
 room = "2.8.4"
 sqlite = "2.6.2"
-agp = "8.13.1"
-buildConfig = "5.6.5"
-permissions = "0.9.0"
+agp = "9.1.0"
+buildConfig = "6.0.9"
+permissions = "0.11.0"
 gms-location = "21.3.0"
 metro = "0.13.2"
 lifecycle = "2.10.0"
@@ -32,9 +32,9 @@ android-map = { module = "org.maplibre.gl:android-sdk", version = "11.8.7" }
 gms-location = { module = "com.google.android.gms:play-services-location", version.ref = "gms-location" }
 
 #AndroidX
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.10.1" }
-androidx-ktx = { module = "androidx.activity:activity-ktx", version = "1.10.1" }
-androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version = "2.9.1" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.13.0" }
+androidx-ktx = { module = "androidx.activity:activity-ktx", version = "1.13.0" }
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version = "2.10.0" }
 # -------------------------- Android --------------------------
 
 # Compose
@@ -60,12 +60,12 @@ androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", 
 permissions = { module = "com.mohamedrejeb.calf:calf-permissions", version.ref = "permissions" }
 
 # Settings storage
-datastore-preferences = "androidx.datastore:datastore-preferences:1.2.0"
+datastore-preferences = "androidx.datastore:datastore-preferences:1.2.1"
 
 # Plugins for composite build
 gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version = "1.8.2" }
+androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version = "1.10.6" }
 
 [plugins]
 
