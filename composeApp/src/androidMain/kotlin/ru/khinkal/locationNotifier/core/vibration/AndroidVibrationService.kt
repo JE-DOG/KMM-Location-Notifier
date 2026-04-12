@@ -24,7 +24,7 @@ class AndroidVibrationService(
         val vibrationEffect =
             VibrationEffect.createOneShot(
                 /* milliseconds = */ seconds,
-                /* amplitude = */ 5,
+                /* amplitude = */ VibrationEffect.DEFAULT_AMPLITUDE,
             )
 
         vibrate(

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="base_channel_name">General</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_description_meters">%1$d meters</string>
+    <string name="distance_description_kilometers">%1$s km</string>
+    <string name="goal_reached_title">You have reached %1$s</string>
 </resources>

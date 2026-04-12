@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
+import ru.khinkal.locationNotifier.R
 import ru.khinkal.locationNotifier.core.ext.location.distanceInMetersTo
 import ru.khinkal.locationNotifier.core.location.LocationService
 import ru.khinkal.locationNotifier.core.notification.AndroidNotificationService
-import ru.khinkal.locationNotifier.core.notification.model.NotificationData
-import ru.khinkal.locationNotifier.core.notification.model.NotificationNotifyType
+import ru.khinkal.locationNotifier.core.utill.DistanceFormatter
 import ru.khinkal.locationNotifier.core.utill.ext.cancelServie
 import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive
 import ru.khinkal.locationNotifier.core.vibration.VibrationService
@@ -75,6 +75,8 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         return notificationService.notification(name) {
             setOngoing(true)
             setOnlyAlertOnce(true)
+            setCategory(NotificationCompat.CATEGORY_STATUS)
+            setRequestPromotedOngoing(true)
         }
     }
 
@@ -110,18 +112,21 @@ class GoalGeoPointBroadcastForegroundService : Service() {
     private fun onReachGoal(
         goalGeoPoint: GoalGeoPoint,
     ) {
-        val notificationData = goalGeoPoint.createReachGoalGeoPointNotificationData()
-        notificationService.notify(notificationData)
-        vibrationService.vibrate()
+        val notification = createGoalReachedNotification(goalName = goalGeoPoint.name)
+
+        notificationService.notify(FOREGROUND_FINISH_NOTIFICATION_ID, notification.build())
         stopSelf()
     }
 
-    private fun GoalGeoPoint.createReachGoalGeoPointNotificationData(): NotificationData {
-        return NotificationData(
-            id = FOREGROUND_FINISH_NOTIFICATION_ID,
-            notifyType = NotificationNotifyType.Sound,
-            title = "Вы добрались до $name",
-        )
+    private fun createGoalReachedNotification(
+        goalName: String,
+    ): NotificationCompat.Builder {
+        return notificationService.notification(
+            title = getString(R.string.goal_reached_title, goalName),
+        ) {
+            setCategory(NotificationCompat.CATEGORY_ALARM)
+            setVibrate(longArrayOf(0, 1000))
+        }
     }
 
     private fun onProgressToReachGoal(
@@ -129,7 +134,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         foregroundNotificationBuilder: NotificationCompat.Builder,
     ) {
         val notification = foregroundNotificationBuilder
-            .setOnProgressToReachGoal(metersToGoal)
+            .setOnProgressToReachGoal(metersToGoal, baseContext)
             .build()
 
         notificationService.notify(
@@ -140,15 +145,12 @@ class GoalGeoPointBroadcastForegroundService : Service() {
 
     private fun NotificationCompat.Builder.setOnProgressToReachGoal(
         metersToGoal: Int,
+        context: Context,
     ): NotificationCompat.Builder {
         return apply {
-            val description = getDescription(metersToGoal)
-            setContentText(description)
+            setContentText(DistanceFormatter.format(metersToGoal, context, isForChip = false))
+            setShortCriticalText(DistanceFormatter.format(metersToGoal, context, isForChip = true))
         }
-    }
-
-    private fun getDescription(metersToGoal: Int): String {
-        return "$metersToGoal meters"
     }
 
     override fun onDestroy() {
