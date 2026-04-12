@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">α Location Notifier</string>
     <string name="base_channel_name">General</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_description_meters">%1$d meters</string>
