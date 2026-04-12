@@ -178,6 +178,13 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         val notification = createGoalReachedNotification(goalName = goalGeoPoint.name)
 
         notificationService.notify(FOREGROUND_FINISH_NOTIFICATION_ID, notification.build())
+
+        val intent = Intent(baseContext, GoalReachedActivity::class.java).apply {
+            putExtra(GOAL_NAME_KEY, goalGeoPoint.name)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        baseContext.startActivity(intent)
+
         stopSelf()
     }
 
@@ -290,6 +297,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         private const val FOREGROUND_ACTIVE_NOTIFICATION_ID = 2
         private const val FOREGROUND_FINISH_NOTIFICATION_ID = 3
         private const val GOAL_GEO_POINT_KEY = "GOAL_GEO_POINT_KEY"
+        private const val GOAL_NAME_KEY = "GOAL_NAME_KEY"
 
         const val ACTION_STOP_SERVICE = "ru.khinkal.locationNotifier.ACTION_STOP_BROADCAST"
 
