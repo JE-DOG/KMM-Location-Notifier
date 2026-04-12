@@ -59,7 +59,7 @@ class AndroidLocationService(
 
     private fun createLocationRequest(
         secondsInterval: Int,
-        priority: Int = Priority.PRIORITY_HIGH_ACCURACY,
+        priority: Int = Priority.PRIORITY_BALANCED_POWER_ACCURACY,
     ): LocationRequest {
 
         return LocationRequest.Builder(secondsInterval * 1000L).apply {
