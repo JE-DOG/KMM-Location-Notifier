@@ -5,5 +5,7 @@
     <string name="distance_meters">%1$d m</string>
     <string name="distance_description_meters">%1$d meters</string>
     <string name="distance_description_kilometers">%1$s km</string>
-    <string name="goal_reached_title">You have reached %1$s</string>
+    <string name="goal_reached_notification_title">You have reached %1$s</string>
+    <string name="goal_reached_screen_title">You have arrived!</string>
+    <string name="goal_reached_close_button">Close</string>
 </resources>
