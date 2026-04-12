@@ -27,22 +27,19 @@ class AndroidNotificationService(
         val channel = NotificationChannel(
             CHANNEL_ID,
             channelName,
-            NotificationManager.IMPORTANCE_DEFAULT,
+            NotificationManager.IMPORTANCE_HIGH,
         )
+            .apply {
+                enableVibration(true)
+            }
         notificationManager.createNotificationChannel(channel)
     }
 
     @SuppressLint("MissingPermission")
     override fun notify(notificationData: NotificationData) {
-        val notification = notification(notificationData.title) {
-            setContentText(notificationData.description)
-        }
-            .build()
+        val notification = notificationData.toNotificationBuilder(context).build()
 
-        notify(
-            /* id = */ notificationData.id,
-            /* notification = */ notification,
-        )
+        notify(notificationData.id, notification)
     }
 
     @SuppressLint("MissingPermission")
