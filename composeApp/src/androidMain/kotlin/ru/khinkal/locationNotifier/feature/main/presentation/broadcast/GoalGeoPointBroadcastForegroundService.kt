@@ -1,11 +1,14 @@
 package ru.khinkal.locationNotifier.feature.main.presentation.broadcast
 
+import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import kmp.core.AndroidSystemDeps
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,18 +21,23 @@ import kotlinx.serialization.json.Json
 import ru.khinkal.locationNotifier.R
 import ru.khinkal.locationNotifier.core.ext.location.distanceInMetersTo
 import ru.khinkal.locationNotifier.core.location.LocationService
+import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import ru.khinkal.locationNotifier.core.notification.AndroidNotificationService
 import ru.khinkal.locationNotifier.core.utill.DistanceFormatter
 import ru.khinkal.locationNotifier.core.utill.ext.cancelServie
 import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive
+import ru.khinkal.locationNotifier.core.utill.ext.isUseFullScreenIntentPermissionGranted
 import ru.khinkal.locationNotifier.core.vibration.VibrationService
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.createGoalGeoPointBroadcasterGraph
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.deps.GoalGeoPointBroadcasterDeps
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
+import ru.khinkal.locationNotifier.feature.main.presentation.alarm.GoalReachedActivity
 
 class GoalGeoPointBroadcastForegroundService : Service() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
+
+    private var furthestGeoPoint: GeoPoint? = null
 
     private lateinit var locationService: LocationService
     private lateinit var notificationService: AndroidNotificationService
@@ -76,6 +84,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
             setOngoing(true)
             setOnlyAlertOnce(true)
             setCategory(NotificationCompat.CATEGORY_STATUS)
+            setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             setRequestPromotedOngoing(true)
         }
     }
@@ -88,14 +97,23 @@ class GoalGeoPointBroadcastForegroundService : Service() {
             .filterNotNull()
             .onEach { geoPoint ->
                 val metersToGoal = geoPoint distanceInMetersTo goalGeoPoint.geoPoint
+                val furthestDistance = furthestGeoPoint
+                    ?.distanceInMetersTo(goalGeoPoint.geoPoint) ?: 0
+                if (metersToGoal > furthestDistance) {
+                    furthestGeoPoint = geoPoint
+                }
 
                 if (metersToGoal <= goalGeoPoint.meters) {
                     onReachGoal(
                         goalGeoPoint = goalGeoPoint,
                     )
                 } else {
+                    val totalDistance = furthestGeoPoint?.distanceInMetersTo(goalGeoPoint.geoPoint)
+                        ?: metersToGoal
+
                     onProgressToReachGoal(
                         metersToGoal = metersToGoal,
+                        totalDistance = totalDistance,
                         foregroundNotificationBuilder = foregroundNotificationBuilder,
                     )
                 }
@@ -122,19 +140,60 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         goalName: String,
     ): NotificationCompat.Builder {
         return notificationService.notification(
-            title = getString(R.string.goal_reached_title, goalName),
+            title = getString(R.string.goal_reached_notification_title, goalName),
         ) {
             setCategory(NotificationCompat.CATEGORY_ALARM)
+            setPriority(NotificationCompat.PRIORITY_MAX)
+            setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            setShowReachGoalFullScreen(goalName)
             setVibrate(longArrayOf(0, 1000))
+        }
+    }
+
+    @SuppressLint("FullScreenIntentPolicy")
+    private fun NotificationCompat.Builder.setShowReachGoalFullScreen(
+        goalName: String,
+    ): NotificationCompat.Builder = apply {
+        val canUseFullScreenIntent = notificationService.canUseFullScreenIntent()
+        if (!canUseFullScreenIntent || !isUseFullScreenIntentPermissionGranted()) return@apply
+        val fullScreenPendingIntent = createReachGoalFullScreenPendingIntent(goalName)
+
+        setFullScreenIntent(fullScreenPendingIntent, true)
+    }
+
+    private fun createReachGoalFullScreenPendingIntent(goalName: String): PendingIntent {
+        val intent = createReachGoalFullScreenIntent(goalName)
+
+        return PendingIntent.getActivity(
+            baseContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+
+    private fun createReachGoalFullScreenIntent(goalName: String): Intent {
+        return GoalReachedActivity.createIntent(
+            context = baseContext,
+            goalName = goalName,
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
     }
 
     private fun onProgressToReachGoal(
         metersToGoal: Int,
+        totalDistance: Int,
         foregroundNotificationBuilder: NotificationCompat.Builder,
     ) {
+        val progress = if (totalDistance > 0) {
+            ((totalDistance - metersToGoal) * 100 / totalDistance).coerceIn(0, 100)
+        } else {
+            100
+        }
+
         val notification = foregroundNotificationBuilder
-            .setOnProgressToReachGoal(metersToGoal, baseContext)
+            .setOnProgressToReachGoal(metersToGoal, progress, baseContext)
             .build()
 
         notificationService.notify(
@@ -145,11 +204,20 @@ class GoalGeoPointBroadcastForegroundService : Service() {
 
     private fun NotificationCompat.Builder.setOnProgressToReachGoal(
         metersToGoal: Int,
+        progress: Int,
         context: Context,
     ): NotificationCompat.Builder {
         return apply {
+            setStyle(
+                NotificationCompat.ProgressStyle()
+                    .setProgress(progress)
+                    .setProgressIndeterminate(false),
+            )
             setContentText(DistanceFormatter.format(metersToGoal, context, isForChip = false))
             setShortCriticalText(DistanceFormatter.format(metersToGoal, context, isForChip = true))
+            setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            setCategory(NotificationCompat.CATEGORY_STATUS)
+            setPriority(NotificationCompat.PRIORITY_HIGH)
         }
     }
 
@@ -182,12 +250,14 @@ class GoalGeoPointBroadcastForegroundService : Service() {
                 return
             }
             val geoPointJson = Json.encodeToString(goalGeoPoint)
-            val intent =
-                Intent(context, GoalGeoPointBroadcastForegroundService::class.java).apply {
-                    putExtra(GOAL_GEO_POINT_KEY, geoPointJson)
-                }
+            val intent = Intent(
+                context,
+                GoalGeoPointBroadcastForegroundService::class.java
+            ).apply {
+                putExtra(GOAL_GEO_POINT_KEY, geoPointJson)
+            }
 
-            context.startService(intent)
+            ContextCompat.startForegroundService(context, intent)
         }
     }
 }

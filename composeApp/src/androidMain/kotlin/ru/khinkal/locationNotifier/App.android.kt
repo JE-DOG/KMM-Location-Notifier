@@ -1,5 +1,7 @@
 package ru.khinkal.locationNotifier
 
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -23,11 +25,21 @@ class AppActivity : ComponentActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 add(android.Manifest.permission.POST_NOTIFICATIONS)
             }
+            add(android.Manifest.permission.USE_FULL_SCREEN_INTENT)
         }
         requestPermissions(
             permissions.toTypedArray(),
             1,
         )
+    }
+
+    companion object {
+
+        fun createIntent(context: Context): Intent =
+            Intent(
+                context,
+                AppActivity::class.java,
+            )
     }
 }
 
