@@ -1,5 +1,6 @@
 package ru.khinkal.locationNotifier.feature.main.presentation.broadcast
 
+import android.R.attr.name
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.Service
@@ -42,7 +43,6 @@ class GoalGeoPointBroadcastForegroundService : Service() {
 
     private var furthestGeoPoint: GeoPoint? = null
     private var locationObserverJob: Job? = null
-    private var currentGoalGeoPoint: GoalGeoPoint? = null
 
     private lateinit var locationService: LocationService
     private lateinit var notificationService: AndroidNotificationService
@@ -86,7 +86,6 @@ class GoalGeoPointBroadcastForegroundService : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val goalGeoPoint: GoalGeoPoint = intent.goalGeoPoint
-        currentGoalGeoPoint = goalGeoPoint
         val foregroundNotificationBuilder = goalGeoPoint.createForegroundNotificationBuilder()
 
         startForeground(
@@ -108,13 +107,18 @@ class GoalGeoPointBroadcastForegroundService : Service() {
             return goalGeoPoint
         }
 
+    @SuppressLint("FullScreenIntentPolicy")
     private fun GoalGeoPoint.createForegroundNotificationBuilder(): NotificationCompat.Builder {
         val stopAction = createStopBroadcastAction()
+        val fullScreenPendingIntent = createFullScreenPendingIntent()
 
         return notificationService.notification(name) {
             setOngoing(true)
             setOnlyAlertOnce(true)
-            setCategory(NotificationCompat.CATEGORY_STATUS)
+            setCategory(NotificationCompat.CATEGORY_ALARM)
+            setPriority(NotificationCompat.PRIORITY_HIGH)
+            setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            setFullScreenIntent(fullScreenPendingIntent, true)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             setRequestPromotedOngoing(true)
             addAction(stopAction)
@@ -130,6 +134,19 @@ class GoalGeoPointBroadcastForegroundService : Service() {
             stopIntent,
         )
             .build()
+    }
+
+    private fun createFullScreenPendingIntent(): PendingIntent {
+        val fullScreenIntent = Intent(baseContext, GoalReachedActivity::class.java).apply {
+            putExtra(GOAL_NAME_KEY, name)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        return PendingIntent.getActivity(
+            baseContext,
+            0,
+            fullScreenIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
     }
 
     private fun observeLocation(
@@ -178,13 +195,6 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         val notification = createGoalReachedNotification(goalName = goalGeoPoint.name)
 
         notificationService.notify(FOREGROUND_FINISH_NOTIFICATION_ID, notification.build())
-
-        val intent = Intent(baseContext, GoalReachedActivity::class.java).apply {
-            putExtra(GOAL_NAME_KEY, goalGeoPoint.name)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        baseContext.startActivity(intent)
-
         stopSelf()
     }
 
@@ -197,13 +207,13 @@ class GoalGeoPointBroadcastForegroundService : Service() {
             setCategory(NotificationCompat.CATEGORY_ALARM)
             setPriority(NotificationCompat.PRIORITY_MAX)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            setShowReachGoalFullScreen(goalName)
+            setShowReachGoalFullScreenIfCan(goalName)
             setVibrate(longArrayOf(0, 1000))
         }
     }
 
     @SuppressLint("FullScreenIntentPolicy")
-    private fun NotificationCompat.Builder.setShowReachGoalFullScreen(
+    private fun NotificationCompat.Builder.setShowReachGoalFullScreenIfCan(
         goalName: String,
     ): NotificationCompat.Builder = apply {
         val canUseFullScreenIntent = notificationService.canUseFullScreenIntent()
