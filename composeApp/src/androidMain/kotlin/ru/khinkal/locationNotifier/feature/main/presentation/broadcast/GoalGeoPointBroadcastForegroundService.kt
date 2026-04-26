@@ -3,8 +3,10 @@ package ru.khinkal.locationNotifier.feature.main.presentation.broadcast
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.IBinder
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -12,6 +14,7 @@ import androidx.core.content.ContextCompat
 import kmp.core.AndroidSystemDeps
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
@@ -24,7 +27,7 @@ import ru.khinkal.locationNotifier.core.location.LocationService
 import ru.khinkal.locationNotifier.core.location.model.GeoPoint
 import ru.khinkal.locationNotifier.core.notification.AndroidNotificationService
 import ru.khinkal.locationNotifier.core.utill.DistanceFormatter
-import ru.khinkal.locationNotifier.core.utill.ext.cancelServie
+import ru.khinkal.locationNotifier.core.utill.ext.cancelService
 import ru.khinkal.locationNotifier.core.utill.ext.isServiceActive
 import ru.khinkal.locationNotifier.core.utill.ext.isUseFullScreenIntentPermissionGranted
 import ru.khinkal.locationNotifier.core.vibration.VibrationService
@@ -38,10 +41,22 @@ class GoalGeoPointBroadcastForegroundService : Service() {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     private var furthestGeoPoint: GeoPoint? = null
+    private var locationObserverJob: Job? = null
+    private var currentGoalGeoPoint: GoalGeoPoint? = null
 
     private lateinit var locationService: LocationService
     private lateinit var notificationService: AndroidNotificationService
     private lateinit var vibrationService: VibrationService
+
+    private val actionsBroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when (intent.action) {
+                ACTION_STOP_SERVICE -> {
+                    this@GoalGeoPointBroadcastForegroundService.stopSelf()
+                }
+            }
+        }
+    }
 
     override fun onCreate() {
         val deps = object : GoalGeoPointBroadcasterDeps {
@@ -53,11 +68,25 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         locationService = graph.locationService
         notificationService = graph.notificationService as AndroidNotificationService
         vibrationService = graph.vibrationService
+
+        registerActionsReceiver()
         super.onCreate()
+    }
+
+    private fun registerActionsReceiver() {
+        ContextCompat.registerReceiver(
+            baseContext,
+            actionsBroadcastReceiver,
+            IntentFilter().apply {
+                addAction(ACTION_STOP_SERVICE)
+            },
+            ContextCompat.RECEIVER_NOT_EXPORTED,
+        )
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val goalGeoPoint: GoalGeoPoint = intent.goalGeoPoint
+        currentGoalGeoPoint = goalGeoPoint
         val foregroundNotificationBuilder = goalGeoPoint.createForegroundNotificationBuilder()
 
         startForeground(
@@ -80,20 +109,35 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         }
 
     private fun GoalGeoPoint.createForegroundNotificationBuilder(): NotificationCompat.Builder {
+        val stopAction = createStopBroadcastAction()
+
         return notificationService.notification(name) {
             setOngoing(true)
             setOnlyAlertOnce(true)
             setCategory(NotificationCompat.CATEGORY_STATUS)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             setRequestPromotedOngoing(true)
+            addAction(stopAction)
         }
+    }
+
+    private fun createStopBroadcastAction(): NotificationCompat.Action {
+        val stopIntent = createActionPendingIntent(ACTION_STOP_SERVICE)
+
+        return NotificationCompat.Action.Builder(
+            android.R.drawable.ic_delete,
+            getString(R.string.notification_action_stop),
+            stopIntent,
+        )
+            .build()
     }
 
     private fun observeLocation(
         goalGeoPoint: GoalGeoPoint,
         foregroundNotificationBuilder: NotificationCompat.Builder,
     ) {
-        locationService.geoPoint
+        locationObserverJob?.cancel()
+        locationObserverJob = locationService.geoPoint
             .filterNotNull()
             .onEach { geoPoint ->
                 val metersToGoal = geoPoint distanceInMetersTo goalGeoPoint.geoPoint
@@ -125,6 +169,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
                 stopSelf()
             }
             .launchIn(coroutineScope)
+            .also { locationObserverJob = it }
     }
 
     private fun onReachGoal(
@@ -228,11 +273,25 @@ class GoalGeoPointBroadcastForegroundService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
+    private fun createActionPendingIntent(action: String): PendingIntent {
+        val intent = Intent(baseContext, this::class.java).apply {
+            this.action = action
+        }
+        return PendingIntent.getService(
+            baseContext,
+            action.hashCode(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+
     companion object {
 
         private const val FOREGROUND_ACTIVE_NOTIFICATION_ID = 2
         private const val FOREGROUND_FINISH_NOTIFICATION_ID = 3
         private const val GOAL_GEO_POINT_KEY = "GOAL_GEO_POINT_KEY"
+
+        const val ACTION_STOP_SERVICE = "ru.khinkal.locationNotifier.ACTION_STOP_BROADCAST"
 
         /**
          * Starts the service to listen for location updates until the destination point is reached.
@@ -246,7 +305,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
             goalGeoPoint: GoalGeoPoint,
         ) {
             if (context.isServiceActive<GoalGeoPointBroadcastForegroundService>()) {
-                context.cancelServie<GoalGeoPointBroadcastForegroundService>()
+                context.cancelService<GoalGeoPointBroadcastForegroundService>()
                 return
             }
             val geoPointJson = Json.encodeToString(goalGeoPoint)

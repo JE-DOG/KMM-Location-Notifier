@@ -20,7 +20,7 @@ inline fun <reified S : Service> Context.isServiceActive(): Boolean {
     return false
 }
 
-inline fun <reified S : Service> Context.cancelServie() {
+inline fun <reified S : Service> Context.cancelService() {
     val intent = Intent(this, S::class.java)
     stopService(intent)
 }
