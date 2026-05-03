@@ -1,11 +1,16 @@
 package ru.khinkal.locationNotifier.feature.main.presentation.content
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import ru.khinkal.locationNotifier.feature.main.presentation.content.components.ActiveGoalProgressContent
 import ru.khinkal.locationNotifier.feature.main.presentation.content.components.LocationListFloatingButton
 import ru.khinkal.locationNotifier.feature.main.presentation.content.components.LocationListToolBar
 import ru.khinkal.locationNotifier.feature.main.presentation.content.locations.LocationsList
@@ -34,12 +39,31 @@ fun MainContent(
             )
         },
     ) { paddingValues ->
-        LocationsList(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            goalGeoPoints = state.goalGeoPoints,
-            sendAction = sendAction,
-        )
+        ) {
+            val activeGoalProgress = state.activeGoalProgress
+
+            if (activeGoalProgress != null) {
+                ActiveGoalProgressContent(
+                    modifier = Modifier.fillMaxWidth(),
+                    progress = activeGoalProgress,
+                    contentPadding = PaddingValues(
+                        horizontal = 16.dp,
+                        vertical = 10.dp,
+                    ),
+                )
+            }
+
+            LocationsList(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                goalGeoPoints = state.goalGeoPoints,
+                sendAction = sendAction,
+            )
+        }
     }
 }

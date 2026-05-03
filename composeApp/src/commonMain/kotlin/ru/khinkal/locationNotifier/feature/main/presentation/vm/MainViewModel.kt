@@ -35,6 +35,10 @@ class MainViewModel(
             initialValue = _state.value,
         )
 
+    init {
+        observeGoalProgress()
+    }
+
     private val _event = Channel<MainEvent>(capacity = Channel.BUFFERED)
     val event = _event.receiveAsFlow()
 
@@ -48,6 +52,16 @@ class MainViewModel(
                         isLoading = false,
                         error = null,
                     )
+                }
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun observeGoalProgress() {
+        goalGeoPointBroadcaster.activeGoalProgress
+            .onEach { progress ->
+                _state.update { state ->
+                    state.copy(activeGoalProgress = progress)
                 }
             }
             .launchIn(viewModelScope)

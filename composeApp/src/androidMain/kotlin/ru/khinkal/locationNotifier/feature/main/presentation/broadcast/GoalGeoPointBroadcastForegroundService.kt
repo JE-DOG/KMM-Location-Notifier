@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import ru.khinkal.locationNotifier.R
+import ru.khinkal.locationNotifier.common.android.intent.util.setApplicationPackage
 import ru.khinkal.locationNotifier.core.ext.location.distanceInMetersTo
 import ru.khinkal.locationNotifier.core.location.LocationService
 import ru.khinkal.locationNotifier.core.location.model.GeoPoint
@@ -52,7 +53,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 ACTION_STOP_SERVICE -> {
-                    this@GoalGeoPointBroadcastForegroundService.stopSelf()
+                    cancelService<GoalGeoPointBroadcastForegroundService>()
                 }
             }
         }
@@ -173,6 +174,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
                         ?: metersToGoal
 
                     onProgressToReachGoal(
+                        goalName = goalGeoPoint.name,
                         metersToGoal = metersToGoal,
                         totalDistance = totalDistance,
                         foregroundNotificationBuilder = foregroundNotificationBuilder,
@@ -195,6 +197,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         val notification = createGoalReachedNotification(goalName = goalGeoPoint.name)
 
         notificationService.notify(FOREGROUND_FINISH_NOTIFICATION_ID, notification.build())
+        notifyGoalBroadcastFinished()
         stopSelf()
     }
 
@@ -244,6 +247,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
     }
 
     private fun onProgressToReachGoal(
+        goalName: String,
         metersToGoal: Int,
         totalDistance: Int,
         foregroundNotificationBuilder: NotificationCompat.Builder,
@@ -262,6 +266,33 @@ class GoalGeoPointBroadcastForegroundService : Service() {
             id = FOREGROUND_ACTIVE_NOTIFICATION_ID,
             notification = notification,
         )
+        notifyGoalBroadcastProgress(
+            goalName = goalName,
+            metersToGoal = metersToGoal,
+            progress = progress,
+        )
+    }
+
+    private fun notifyGoalBroadcastProgress(
+        goalName: String,
+        metersToGoal: Int,
+        progress: Int,
+    ) {
+        val intent = getIntentForBroadcastReceiver(ACTION_PROGRESS_UPDATE).apply {
+            putExtra(EXTRA_GOAL_NAME, goalName)
+            putExtra(EXTRA_METERS_TO_GOAL, metersToGoal)
+            putExtra(EXTRA_PROGRESS, progress / 100f)
+        }
+        sendBroadcast(intent)
+    }
+
+    private fun notifyGoalBroadcastFinished() {
+        sendBroadcast(getIntentForBroadcastReceiver(ACTION_BROADCAST_FINISH))
+    }
+
+    private fun getIntentForBroadcastReceiver(action: String): Intent {
+        return Intent(action)
+            .setApplicationPackage(baseContext)
     }
 
     private fun NotificationCompat.Builder.setOnProgressToReachGoal(
@@ -284,6 +315,7 @@ class GoalGeoPointBroadcastForegroundService : Service() {
     }
 
     override fun onDestroy() {
+        notifyGoalBroadcastFinished()
         coroutineScope.cancel()
         super.onDestroy()
     }
@@ -310,6 +342,14 @@ class GoalGeoPointBroadcastForegroundService : Service() {
         private const val GOAL_NAME_KEY = "GOAL_NAME_KEY"
 
         const val ACTION_STOP_SERVICE = "ru.khinkal.locationNotifier.ACTION_STOP_BROADCAST"
+        const val ACTION_PROGRESS_UPDATE =
+            "ru.khinkal.locationNotifier.ACTION_BROADCAST_PROGRESS_UPDATE"
+        const val ACTION_BROADCAST_FINISH =
+            "ru.khinkal.locationNotifier.ACTION_BROADCAST_FINISH"
+
+        const val EXTRA_GOAL_NAME = "EXTRA_GOAL_NAME"
+        const val EXTRA_METERS_TO_GOAL = "EXTRA_METERS_TO_GOAL"
+        const val EXTRA_PROGRESS = "EXTRA_PROGRESS"
 
         /**
          * Starts the service to listen for location updates until the destination point is reached.

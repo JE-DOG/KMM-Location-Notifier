@@ -1,14 +1,21 @@
 package ru.khinkal.locationNotifier.feature.goalBroadcaster
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.takeWhile
+import kotlinx.coroutines.flow.update
 import ru.khinkal.locationNotifier.core.ext.location.distanceInMetersTo
 import ru.khinkal.locationNotifier.core.location.LocationService
 import ru.khinkal.locationNotifier.core.notification.NotificationService
 import ru.khinkal.locationNotifier.core.notification.model.NotificationData
 import ru.khinkal.locationNotifier.core.notification.model.NotificationNotifyType
+import ru.khinkal.locationNotifier.feature.goalBroadcaster.model.GoalBroadcastProgress
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 
 class IosGoalGeoPointBroadcaster(
@@ -17,13 +24,39 @@ class IosGoalGeoPointBroadcaster(
     private val coroutineScope: CoroutineScope,
 ) : GoalGeoPointBroadcaster {
 
+    private val _activeGoalProgress = MutableStateFlow<GoalBroadcastProgress?>(null)
+    override val activeGoalProgress: StateFlow<GoalBroadcastProgress?> = _activeGoalProgress
+        .asStateFlow()
+
+    private var currentBroadcastJob: Job? = null
+
     override fun startBroadcast(goalGeoPoint: GoalGeoPoint) {
         val notificationData = goalGeoPoint.createDefaultNotificationData()
+        var totalDistance = 0
+
+        currentBroadcastJob?.cancel()
         locationService.geoPoint
             .filterNotNull()
             .takeWhile { geoPoint ->
                 val metersToGoal = goalGeoPoint.geoPoint distanceInMetersTo geoPoint
+                if (metersToGoal > totalDistance) {
+                    totalDistance = metersToGoal
+                }
+
                 if (metersToGoal > goalGeoPoint.meters) {
+                    val progress = if (totalDistance > 0) {
+                        ((totalDistance - metersToGoal).toFloat() / totalDistance).coerceIn(0f, 1f)
+                    } else {
+                        1f
+                    }
+                    _activeGoalProgress.update {
+                        GoalBroadcastProgress(
+                            goalName = goalGeoPoint.name,
+                            metersToGoal = metersToGoal,
+                            progress = progress,
+                        )
+                    }
+
                     val updatedNotificationData = notificationData
                         .copyAndUpdateDescription(metersToGoal)
                     notificationService.notify(updatedNotificationData)
@@ -35,7 +68,11 @@ class IosGoalGeoPointBroadcaster(
                     false
                 }
             }
+            .onCompletion {
+                _activeGoalProgress.update { null }
+            }
             .launchIn(coroutineScope)
+            .also { currentBroadcastJob = it }
     }
 
     private fun GoalGeoPoint.createDefaultNotificationData(): NotificationData {
