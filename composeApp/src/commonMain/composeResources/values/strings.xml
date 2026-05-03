@@ -7,6 +7,7 @@
     <string name="main_screen_necessary_permissions_title">Necessary permissions for Location Notifier</string>
     <string name="main_screen_necessary_permissions_notification">Notification</string>
     <string name="main_screen_necessary_permissions_location">Location</string>
+    <string name="main_screen_goal_progress_trying_get_location">Trying get geolocation</string>
     <string name="main_screen_goal_progress_title">Active goal: %1$s</string>
     <string name="main_screen_goal_progress_distance">Distance: %1$d m</string>
     <!--endregion-->

@@ -16,12 +16,14 @@ import androidx.compose.ui.unit.dp
 import kmm_location_notifier.composeapp.generated.resources.Res
 import kmm_location_notifier.composeapp.generated.resources.main_screen_goal_progress_distance
 import kmm_location_notifier.composeapp.generated.resources.main_screen_goal_progress_title
+import kmm_location_notifier.composeapp.generated.resources.main_screen_goal_progress_trying_get_location
 import org.jetbrains.compose.resources.stringResource
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.model.GoalBroadcastProgress
+import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.LocationListeningStatus
 
 @Composable
 fun ActiveGoalProgressContent(
-    progress: GoalBroadcastProgress,
+    locationListeningStatus: LocationListeningStatus,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -33,8 +35,50 @@ fun ActiveGoalProgressContent(
             )
             .padding(contentPadding),
     ) {
+        when (locationListeningStatus) {
+            is LocationListeningStatus.Tracking -> ProgressContent(
+                progress = locationListeningStatus.progress,
+            )
+
+            LocationListeningStatus.TryingToGetLocationData -> TryingToGetLocationDataContent()
+        }
+    }
+}
+
+@Composable
+private fun TryingToGetLocationDataContent(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
         Text(
-            text = stringResource(Res.string.main_screen_goal_progress_title, progress.goalName),
+            text = stringResource(Res.string.main_screen_goal_progress_trying_get_location),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary,
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+private fun ProgressContent(
+    progress: GoalBroadcastProgress,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            text = stringResource(
+                Res.string.main_screen_goal_progress_title,
+                progress.goalName,
+            ),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.primary,
         )

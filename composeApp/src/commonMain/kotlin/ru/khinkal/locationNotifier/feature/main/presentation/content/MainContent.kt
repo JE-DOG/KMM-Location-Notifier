@@ -44,12 +44,11 @@ fun MainContent(
                 .fillMaxSize()
                 .padding(paddingValues),
         ) {
-            val activeGoalProgress = state.activeGoalProgress
-
-            if (activeGoalProgress != null) {
+            val listeningProgress = state.locationListeningStatus
+            if (listeningProgress != null) {
                 ActiveGoalProgressContent(
                     modifier = Modifier.fillMaxWidth(),
-                    progress = activeGoalProgress,
+                    locationListeningStatus = listeningProgress,
                     contentPadding = PaddingValues(
                         horizontal = 16.dp,
                         vertical = 10.dp,

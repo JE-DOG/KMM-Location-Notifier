@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.model.GoalBroadcastProgress
+import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.LocationListeningStatus
 import ru.khinkal.locationNotifier.shared.theme.AppTheme
 
 @Preview
@@ -12,11 +13,23 @@ import ru.khinkal.locationNotifier.shared.theme.AppTheme
 private fun ActiveGoalProgressContentPreview() {
     AppTheme {
         ActiveGoalProgressContent(
-            progress = GoalBroadcastProgress(
-                goalName = "Office",
-                metersToGoal = 430,
-                progress = 0.58f,
+            locationListeningStatus = LocationListeningStatus.Tracking(
+                progress = GoalBroadcastProgress(
+                    goalName = "Office",
+                    metersToGoal = 430,
+                    progress = 0.58f,
+                ),
             ),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun TryingGetLocation_ActiveGoalProgressContentPreview() {
+    AppTheme {
+        ActiveGoalProgressContent(
+            locationListeningStatus = LocationListeningStatus.TryingToGetLocationData,
         )
     }
 }

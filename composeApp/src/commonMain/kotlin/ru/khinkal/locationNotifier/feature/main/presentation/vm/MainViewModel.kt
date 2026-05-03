@@ -17,6 +17,7 @@ import ru.khinkal.locationNotifier.feature.createGoal.presentation.navigation.Cr
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.GoalGeoPointBroadcaster
 import ru.khinkal.locationNotifier.feature.main.domain.GoalGeoPointRepository
 import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
+import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.LocationListeningStatus
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainAction
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainEvent
 import ru.khinkal.locationNotifier.feature.main.presentation.vm.model.MainState
@@ -61,7 +62,12 @@ class MainViewModel(
         goalGeoPointBroadcaster.activeGoalProgress
             .onEach { progress ->
                 _state.update { state ->
-                    state.copy(activeGoalProgress = progress)
+                    state.copy(
+                        locationListeningStatus = when (progress) {
+                            null -> null
+                            else -> LocationListeningStatus.Tracking(progress)
+                        },
+                    )
                 }
             }
             .launchIn(viewModelScope)
@@ -85,6 +91,11 @@ class MainViewModel(
 
     private fun onLocationClick(goalGeoPoint: GoalGeoPoint) {
         goalGeoPointBroadcaster.startBroadcast(goalGeoPoint)
+        _state.update { state ->
+            state.copy(
+                locationListeningStatus = LocationListeningStatus.TryingToGetLocationData,
+            )
+        }
     }
 
     private fun onDeleteLocationClick(goalGeoPoint: GoalGeoPoint) {

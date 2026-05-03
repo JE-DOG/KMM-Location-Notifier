@@ -8,6 +8,7 @@
     <string name="main_screen_necessary_permissions_notification">Уведомления</string>
     <string name="main_screen_necessary_permissions_location">Геолокация</string>
     <string name="main_screen_goal_progress_title">Текущая цель: %1$s</string>
+    <string name="main_screen_goal_progress_trying_get_location">Пытаемся получить геолокацию</string>
     <string name="main_screen_goal_progress_distance">Расстояние: %1$d м</string>
     <!--endregion-->
 
