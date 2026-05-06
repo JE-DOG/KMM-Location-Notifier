@@ -10,6 +10,8 @@
     <string name="main_screen_goal_progress_title">Текущая цель: %1$s</string>
     <string name="main_screen_goal_progress_trying_get_location">Пытаемся получить геолокацию</string>
     <string name="main_screen_goal_progress_distance">Расстояние: %1$d м</string>
+    <string name="main_screen_empty_locations_title">Локаций пока нет</string>
+    <string name="main_screen_add_location_tooltip">Нажмите для добавления</string>
     <!--endregion-->
 
     <!--region Create goal screen-->
