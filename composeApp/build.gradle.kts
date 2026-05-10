@@ -79,8 +79,8 @@ android {
         targetSdk = libs.versions.android.sdk.target.get().toInt()
 
         applicationId = "ru.khinkal.locationNotifier"
-        versionCode = 1
-        versionName = "0.0.1"
+        versionCode = 67
+        versionName = "6.7.69"
     }
 
     buildTypes {
