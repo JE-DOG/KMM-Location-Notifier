@@ -6,6 +6,7 @@ import ru.khinkal.locationNotifier.feature.main.domain.model.GoalGeoPoint
 data class MainState(
     val goalGeoPoints: List<GoalGeoPoint>,
     val isLoading: Boolean,
+    val locationListeningStatus: LocationListeningStatus?,
     val error: UiError?,
 ) {
 
@@ -15,6 +16,7 @@ data class MainState(
             get() = MainState(
                 goalGeoPoints = emptyList(),
                 isLoading = false,
+                locationListeningStatus = null,
                 error = null,
             )
     }

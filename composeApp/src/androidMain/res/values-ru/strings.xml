@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="base_channel_name">Общий</string>
+    <string name="distance_meters">%1$d м</string>
+    <string name="distance_description_meters">%1$d метров</string>
+    <string name="distance_description_kilometers">%1$s км</string>
+    <string name="goal_reached_notification_title">Вы добрались до %1$s</string>
+    <string name="goal_reached_screen_title">Вы прибыли!</string>
+    <string name="goal_reached_close_button">Закрыть</string>
+    <string name="notification_action_stop">Стоп</string>
+</resources>

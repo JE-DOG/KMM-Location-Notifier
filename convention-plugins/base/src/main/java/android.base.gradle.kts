@@ -8,7 +8,7 @@ import ru.khinkal.locationNotifier.convention_plugins.base.ext.project.libs
 androidConfig {
     compileSdk = libs.versions.android.sdk.compile.get().toInt()
 
-    defaultConfig {
+    defaultConfig.apply {
         minSdk = libs.versions.android.sdk.min.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

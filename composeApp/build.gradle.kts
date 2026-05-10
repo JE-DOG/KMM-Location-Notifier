@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import ru.khinkal.locationNotifier.convention_plugins.base.ext.project.getLocalProperty
 
 plugins {
@@ -11,6 +12,7 @@ plugins {
             alias(kotlinx.serialization)
             alias(room)
             alias(ksp)
+            alias(metro)
 
             with(convention) {
                 alias(android.base)
@@ -20,6 +22,12 @@ plugins {
 }
 
 kotlin {
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -35,7 +43,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             with(compose) {
-                implementation(libs.compose.navigation)
+                implementation(libs.compose.navigation3.ui)
                 implementation(runtime)
                 implementation(foundation)
                 implementation(material3)
@@ -48,6 +56,10 @@ kotlin {
                     implementation(serialization.json)
                     implementation(coroutines.core)
                 }
+                implementation(metro.runtime)
+                implementation(libs.lifecycle.runtime.compose)
+                implementation(libs.lifecycle.viewmodel.compose)
+                implementation(libs.lifecycle.viewmodel.nav3)
                 with(androidx) {
                     implementation(room.runtime)
                     implementation(sqlite.bundled)
@@ -67,8 +79,8 @@ android {
         targetSdk = libs.versions.android.sdk.target.get().toInt()
 
         applicationId = "ru.khinkal.locationNotifier"
-        versionCode = 1
-        versionName = "0.0.1"
+        versionCode = 67
+        versionName = "6.7.69"
     }
 
     buildTypes {

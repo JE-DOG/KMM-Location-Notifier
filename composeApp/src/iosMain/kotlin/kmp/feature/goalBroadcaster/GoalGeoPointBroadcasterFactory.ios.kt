@@ -4,7 +4,8 @@ import kmp.core.deps.SystemDeps
 import kotlinx.coroutines.CoroutineScope
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.GoalGeoPointBroadcaster
 import ru.khinkal.locationNotifier.feature.goalBroadcaster.IosGoalGeoPointBroadcaster
-import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.GoalGeoPointBroadcasterComponent
+import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.createGoalGeoPointBroadcasterGraph
+import ru.khinkal.locationNotifier.feature.goalBroadcaster.di.deps.GoalGeoPointBroadcasterDeps
 
 actual object GoalGeoPointBroadcasterFactory {
 
@@ -12,16 +13,16 @@ actual object GoalGeoPointBroadcasterFactory {
         systemDeps: SystemDeps,
         coroutineScope: CoroutineScope,
     ): GoalGeoPointBroadcaster {
-        val component = GoalGeoPointBroadcasterComponent(
-            coroutineScope = coroutineScope,
-            systemDeps = systemDeps,
-        )
+        val deps = object : GoalGeoPointBroadcasterDeps {
+            override val systemDeps: SystemDeps = systemDeps
+            override val coroutineScope: CoroutineScope = coroutineScope
+        }
+        val graph = createGoalGeoPointBroadcasterGraph(deps = deps)
 
         return IosGoalGeoPointBroadcaster(
-            notificationService = component.notificationService,
-            locationService = component.locationService,
-            coroutineScope = component.coroutineScope,
-            settingsManager = component.settingsManager,
+            notificationService = graph.notificationService,
+            locationService = graph.locationService,
+            coroutineScope = coroutineScope,
         )
     }
 }

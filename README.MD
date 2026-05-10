@@ -19,8 +19,8 @@ Key features:
 This is a **Kotlin Multiplatform (KMP)** project.
 
 - **UI**: Compose Multiplatform
-- **Dependency Injection**: ManualD
-- **Navigation**: Compose Navigation
+- **Dependency Injection**: Metro
+- **Navigation**: Jetpack Compose Navigation 3
 - **Database**: Room
 - **Serialization**: Kotlinx Serialization
 - **Concurrency**: Kotlin Coroutines

@@ -9,19 +9,6 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.getSystemService
 
-fun Context.checkPermission(
-    permission: String,
-    onPermissionDenied: () -> Unit = {},
-    onPermissionGranted: () -> Unit,
-) {
-    val permissionResult = ActivityCompat.checkSelfPermission(this, permission)
-    if (permissionResult == PackageManager.PERMISSION_GRANTED) {
-        onPermissionGranted()
-    } else {
-        onPermissionDenied()
-    }
-}
-
 inline fun <reified S : Service> Context.isServiceActive(): Boolean {
     val activityManager = requireNotNull(getSystemService<ActivityManager>())
     for (service: RunningServiceInfo in activityManager.getRunningServices(Int.MAX_VALUE)) {
@@ -33,7 +20,16 @@ inline fun <reified S : Service> Context.isServiceActive(): Boolean {
     return false
 }
 
-inline fun <reified S : Service> Context.cancelServie() {
+inline fun <reified S : Service> Context.cancelService() {
     val intent = Intent(this, S::class.java)
     stopService(intent)
+}
+
+fun Context.isPermissionGranted(permission: String): Boolean {
+    val permissionResult = ActivityCompat.checkSelfPermission(this, permission)
+    return permissionResult == PackageManager.PERMISSION_GRANTED
+}
+
+fun Context.isUseFullScreenIntentPermissionGranted(): Boolean {
+    return isPermissionGranted(android.Manifest.permission.USE_FULL_SCREEN_INTENT)
 }

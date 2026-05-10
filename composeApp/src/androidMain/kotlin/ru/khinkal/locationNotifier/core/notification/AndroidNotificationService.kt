@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import ru.khinkal.locationNotifier.AppActivity
 import ru.khinkal.locationNotifier.R
 import ru.khinkal.locationNotifier.core.notification.model.NotificationData
 
@@ -27,22 +29,19 @@ class AndroidNotificationService(
         val channel = NotificationChannel(
             CHANNEL_ID,
             channelName,
-            NotificationManager.IMPORTANCE_DEFAULT,
+            NotificationManager.IMPORTANCE_HIGH,
         )
+            .apply {
+                enableVibration(true)
+            }
         notificationManager.createNotificationChannel(channel)
     }
 
     @SuppressLint("MissingPermission")
     override fun notify(notificationData: NotificationData) {
-        val notification = notification(notificationData.title) {
-            setContentText(notificationData.description)
-        }
-            .build()
+        val notification = notificationData.toNotificationBuilder(context).build()
 
-        notify(
-            /* id = */ notificationData.id,
-            /* notification = */ notification,
-        )
+        notify(notificationData.id, notification)
     }
 
     @SuppressLint("MissingPermission")
@@ -65,7 +64,21 @@ class AndroidNotificationService(
             .apply {
                 setContentTitle(title)
                 setSmallIcon(R.drawable.app_icon)
+                setContentIntent(createAppLaunchPendingIntent())
             }
+    }
+
+    private fun createAppLaunchPendingIntent(): PendingIntent {
+        return PendingIntent.getActivity(
+            context,
+            0,
+            AppActivity.createIntent(context),
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+
+    fun canUseFullScreenIntent(): Boolean {
+        return notificationManager.canUseFullScreenIntent()
     }
 
     companion object {

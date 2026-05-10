@@ -6,7 +6,7 @@ fun interface CreateGoalDepsFactory {
 
     fun create(): CreateGoalDeps
 
-    companion object Companion {
+    companion object {
 
         var INSTANCE: CreateGoalDepsFactory by notNull()
             private set
